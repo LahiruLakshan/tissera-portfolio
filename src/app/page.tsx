@@ -29,6 +29,7 @@ import { Projects } from '@/components/projects';
 import { Experience } from '@/components/experience';
 import { Achievements } from '@/components/achievements';
 import { Contact } from '@/components/contact';
+import { Skills } from '@/components/skills';
 
 const services = [
   {
@@ -140,6 +141,7 @@ export default function Home() {
     <div className="flex flex-col">
       <Hero/>
       <About/>
+      <Skills/>
       <Services/>
       <Projects/>
       <Experience/>

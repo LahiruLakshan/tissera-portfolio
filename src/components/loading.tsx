@@ -18,7 +18,8 @@ import {
   Palette,
   CheckCircle,
   Monitor,
-  Braces
+  Braces,
+  Loader2
 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
@@ -323,7 +324,7 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                   >
-                    <Terminal className="w-4 h-4 text-primary" />
+                    <Loader2 className="w-4 h-4 text-primary" />
                   </motion.div>
                   <span className="text-sm text-muted-foreground">
                     {loadingSteps[currentStep]?.text || "Loading..."}
@@ -425,7 +426,7 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                       <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                     </div>
-                    <span className="text-xs text-gray-400 ml-2">terminal</span>
+                    <span className="text-xs text-gray-400 ml-2">Terminal</span>
                   </div>
                   
                   {/* Terminal Content */}
@@ -454,7 +455,7 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.9 }}
                     >
-                      ✓ Ready on http://localhost:3000
+                      ✓ Ready on https://lahirulakshan.web.app/
                     </motion.div>
                     
                     <motion.div 
