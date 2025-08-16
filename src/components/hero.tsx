@@ -388,7 +388,7 @@ export function Hero() {
                 <Avatar className="w-64 h-64 lg:w-80 lg:h-80 border-4 border-primary/30 shadow-2xl hover:shadow-primary/25 transition-all duration-500">
                   <Image
                     // src="https://media.licdn.com/dms/image/v2/D5603AQFIxldwSUganw/profile-displayphoto-shrink_800_800/B56ZTbJ6yyHEAc-/0/1738843599819?e=1758153600&v=beta&t=9BpUbCLBKPItzXiRt9Ax_WXb87nswTR3KNbDjUQWNcU"
-                    src="/images/profile.jpeg"
+                    src="/images/graduation-img.JPG"
                     alt="Lahiru Tissera"
                     className="object-cover hover:scale-110 transition-transform duration-700"
                     width={1000}
