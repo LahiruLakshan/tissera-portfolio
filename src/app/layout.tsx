@@ -19,7 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-body antialiased">
+      <body className="font-body antialiased"  data-new-gr-c-s-check-loaded="14.1248.0"
+                      data-gr-ext-installed="">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

@@ -42,6 +42,8 @@ import {
   faRobot,
   faTerminal,
 } from "@fortawesome/free-solid-svg-icons";
+import { RiRobot3Line } from "react-icons/ri";
+import { SiHiveBlockchain } from "react-icons/si";
 
 const roles = [
   {
@@ -49,15 +51,15 @@ const roles = [
     icon: Code2,
     color: "from-blue-500 to-cyan-500",
   },
-  { text: "Web3 Engineer", icon: Zap, color: "from-purple-500 to-pink-500" },
+  { text: "Web3 Engineer", icon: SiHiveBlockchain, color: "from-purple-500 to-pink-500" },
   {
     text: "UI/UX Designer",
     icon: Palette,
     color: "from-emerald-500 to-teal-500",
   },
   {
-    text: "React Specialist",
-    icon: Sparkles,
+    text: "AI/ML researcher",
+    icon: RiRobot3Line,
     color: "from-orange-500 to-red-500",
   },
 ];
@@ -143,7 +145,7 @@ export function Hero() {
     <motion.section
       
       // style={{ y, opacity }}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/80"
+      className="relative lg:min-h-screen  min-h-[1400px]  flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/80"
     >
       {/* Animated Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
@@ -229,6 +231,7 @@ export function Hero() {
               </h1>
 
               {/* Dynamic Role Display */}
+              
               <div className="h-16 flex items-center justify-center lg:justify-start">
                 <motion.div
                   key={currentRole}
@@ -236,12 +239,12 @@ export function Hero() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -20, scale: 0.8 }}
                   transition={{ duration: 0.5 }}
-                  className="flex items-center gap-3"
+                  className="flex items-center gap-3 "
                 >
                   <div
-                    className={`p-2 rounded-lg bg-gradient-to-r ${roles[currentRole].color} bg-opacity-10 backdrop-blur-sm`}
+                    className={`p-2 rounded-lg bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border border-primary/50 transition-all duration-300`}
                   >
-                    <CurrentRoleIcon className="w-6 h-6 text-foreground" />
+                    <CurrentRoleIcon className="w-6 h-6 text-primary" />
                   </div>
                   <span className="text-2xl sm:text-3xl font-medium text-muted-foreground">
                     {roles[currentRole].text}
@@ -477,7 +480,7 @@ export function Hero() {
         >
           <motion.div
             variants={itemVariants}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+            className="absolute lg:bottom-[150px] md:bottom-[10px] bottom-[0px] left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
           >
             <span className="text-xs text-muted-foreground">
               Scroll to explore
