@@ -22,6 +22,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Hero } from '@/components/hero';
+import { About } from '@/components/about';
+import { Services } from '@/components/services';
+import { Projects } from '@/components/projects';
+import { Experience } from '@/components/experience';
+import { Achievements } from '@/components/achievements';
+import { Contact } from '@/components/contact';
 
 const services = [
   {
@@ -131,7 +138,7 @@ const skills = [
 export default function Home() {
   return (
     <div className="flex flex-col">
-      <section id="hero" className="container py-24 sm:py-32">
+      {/* <section id="hero" className="container py-24 sm:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-6">
             <Badge
@@ -180,9 +187,12 @@ export default function Home() {
             </Avatar>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section id="about" className="py-24 sm:py-32 bg-card">
+      <Hero/>
+
+
+      {/* <section id="about" className="py-24 sm:py-32 bg-card">
         <div className="container">
           <Card>
             <CardHeader>
@@ -221,9 +231,11 @@ export default function Home() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </section> */}
 
-      <section id="services" className="py-24 sm:py-32">
+      <About/>
+
+      {/* <section id="services" className="py-24 sm:py-32">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold font-headline">
@@ -249,9 +261,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+      <Services/>
 
-      <section id="projects" className="py-24 sm:py-32 bg-card">
+      {/* <section id="projects" className="py-24 sm:py-32 bg-card">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold font-headline flex items-center justify-center gap-3">
@@ -294,9 +307,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+      <Projects/>
 
-      <section id="experience" className="py-24 sm:py-32">
+      {/* <section id="experience" className="py-24 sm:py-32">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold font-headline flex items-center justify-center gap-3">
@@ -334,9 +348,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+      <Experience/>
 
-      <section id="achievements" className="py-24 sm:py-32 bg-card">
+      {/* <section id="achievements" className="py-24 sm:py-32 bg-card">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold font-headline">
@@ -361,7 +376,31 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+      <Achievements/>
+      <Contact/>
     </div>
   );
 }
+
+
+
+// // src/app/page.tsx
+// import { Hero } from '@/components/hero';
+// import { Skills } from '@/components/skills';
+// import { Projects } from '@/components/projects';
+// // import { Experience } from '@/components/experience';
+// // import { Contact } from '@/components/contact';
+
+// export default function Home() {
+//   return (
+//     <>
+//       <Hero />
+//       <Skills />
+//       <Projects />
+//       {/* <Experience />
+//       <Contact /> */}
+//     </>
+//   );
+// }
+

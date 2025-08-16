@@ -1,40 +1,60 @@
+// src/app/layout.tsx - Improved with better fonts and meta
 import type { Metadata } from 'next';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
+import '@/lib/fontawesome';
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter'
+});
+
+const spaceGrotesk = Space_Grotesk({ 
+  subsets: ['latin'],
+  variable: '--font-space-grotesk'
+});
 
 export const metadata: Metadata = {
-  title: 'Tissera Portfolio',
-  description: 'A portfolio showcasing the work of Tissera.',
+  title: 'Lahiru Tissera | Full-Stack Software Engineer',
+  description: 'Creative Full-Stack Developer specializing in Web3, React, Next.js, and Machine Learning. Building elegant digital experiences.',
+  keywords: ['Full-Stack Developer', 'React', 'Next.js', 'Web3', 'NFT', 'TypeScript', 'Node.js'],
+  authors: [{ name: 'Lahiru Tissera' }],
+  creator: 'Lahiru Tissera',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://lahirulakshan.web.app',
+    title: 'Lahiru Tissera | Full-Stack Software Engineer',
+    description: 'Creative Full-Stack Developer specializing in Web3, React, Next.js, and Machine Learning.',
+    siteName: 'Lahiru Tissera Portfolio',
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="font-body antialiased">
-        <ThemeProvider storageKey="tissera-portfolio-theme">
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <Toaster />
+      <body className={`${inter.variable} ${spaceGrotesk.variable} font-body antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <div className="relative min-h-screen bg-gradient-to-br from-background to-background/80">
+            <Header />
+            <main className="relative">
+              {children}
+            </main>
+            <Footer />
+            <Toaster />
+          </div>
         </ThemeProvider>
       </body>
     </html>
