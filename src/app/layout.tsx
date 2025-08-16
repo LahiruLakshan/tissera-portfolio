@@ -47,7 +47,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
-          <div className="relative min-h-screen bg-gradient-to-br from-background to-background/80">
+          <div  className="relative min-h-screen bg-gradient-to-br from-background to-background/80">
             <Header />
             <main className="relative">
               {children}

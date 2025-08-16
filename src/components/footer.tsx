@@ -178,7 +178,7 @@ export function Footer() {
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-sm">
                     <MapPin className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">Kelaniya, Sri Lanka</span>
+                    <span className="text-muted-foreground">Kadawatha, Sri Lanka</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Clock className="w-4 h-4 text-accent" />

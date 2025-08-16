@@ -51,19 +51,19 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Location",
-    value: "Kelaniya, Sri Lanka",
+    value: "Kadawatha, Sri Lanka",
     href: "#",
     color: "from-purple-500 to-pink-500",
     description: "Based in Sri Lanka, Open to remote work"
   },
-  {
-    icon: Globe,
-    label: "Portfolio",
-    value: "lahirulakshan.web.app",
-    href: "https://lahirulakshan.web.app",
-    color: "from-orange-500 to-red-500",
-    description: "Explore my latest work"
-  }
+  // {
+  //   icon: Globe,
+  //   label: "Portfolio",
+  //   value: "lahirulakshan.web.app",
+  //   href: "https://lahirulakshan.web.app",
+  //   color: "from-orange-500 to-red-500",
+  //   description: "Explore my latest work"
+  // }
 ];
 
 const socialLinks = [
@@ -187,6 +187,7 @@ export function Contact() {
 
   return (
     <motion.section
+    id='contact'
       ref={ref}
       style={{ opacity }}
       className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-background via-muted/20 to-background"
@@ -513,7 +514,7 @@ export function Contact() {
               </div>
 
               {/* Social Links */}
-              <Card className="border-0 bg-card/50 backdrop-blur-sm shadow-lg">
+              {/* <Card className="border-0 bg-card/50 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-xl font-headline flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-primary" />
@@ -553,7 +554,7 @@ export function Contact() {
                     );
                   })}
                 </CardContent>
-              </Card>
+              </Card> */}
 
               {/* Quick Response Promise */}
               <Card className="border-0 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 backdrop-blur-sm">

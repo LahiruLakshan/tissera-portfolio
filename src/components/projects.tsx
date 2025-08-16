@@ -31,7 +31,7 @@ const projects = [
     title: "Vesta NFT Marketplace",
     category: "Web3",
     description: "A comprehensive Web3 NFT marketplace with creation, listing, trading features, and analytics dashboard. Built with modern React ecosystem and blockchain integration.",
-    image: "/api/placeholder/600/400",
+    image: "https://cdn.prod.website-files.com/66fd5165084e58f9a00f3ba4/67039eb62d33780dcec28d38_Group%201.svg",
     tech: ["React", "TypeScript", "Tailwind CSS", "Ethers.js", "React Query", "Wagmi", "AWS"],
     features: ["NFT Minting", "Trading System", "Analytics Dashboard", "Wallet Integration"],
     github: "https://github.com/example/vesta",
@@ -48,7 +48,7 @@ const projects = [
     title: "MoodifyLK",
     category: "AI/ML",
     description: "AI-powered music classification system using deep learning to predict and classify Sinhala songs based on emotional content and mood analysis.",
-    image: "/api/placeholder/600/400",
+    image: "/images/moodifyLK.png",
     tech: ["ReactJS", "Flask", "PyTorch", "Python", "CNN", "Deep Learning"],
     features: ["Emotion Detection", "Music Classification", "Real-time Processing", "Cultural Analysis"],
     github: "https://github.com/example/moodify",
@@ -65,7 +65,7 @@ const projects = [
     title: "Emirates Offroaders",
     category: "Mobile",
     description: "Mobile app and admin dashboard for UAE off-road community with event management, real-time chat, and social features.",
-    image: "/api/placeholder/600/400",
+    image: "/images/emirates_offroaders.png",
     tech: ["Flutter", "ReactJS", "NodeJS", "Firebase", "Firestore"],
     features: ["Community Platform", "Event Management", "Real-time Chat", "Social Features"],
     github: "https://github.com/example/emirates",
@@ -82,7 +82,7 @@ const projects = [
     title: "Hairthentic",
     category: "AI/ML",
     description: "Machine learning-powered mobile app for face shape detection and personalized hairstyle recommendations using computer vision.",
-    image: "/api/placeholder/600/400",
+    image: "/svg/hairthentic.svg",
     tech: ["OpenCV", "Scikit-learn", "Python", "Flask", "React Native", "AWS"],
     features: ["Face Detection", "AI Recommendations", "Style Matching", "AR Preview"],
     github: "https://github.com/example/hairthentic",
@@ -99,7 +99,7 @@ const projects = [
     title: "Signage Fox",
     category: "Web",
     description: "Digital signage management system for controlling and scheduling content across multiple displays with real-time updates.",
-    image: "/api/placeholder/600/400",
+    image: "/images/signagefox.png",
     tech: ["ReactJS", "Firebase", "PWA", "Real-time DB"],
     features: ["Multi-screen Control", "Content Scheduling", "Real-time Updates", "Analytics"],
     github: "https://github.com/example/signage",
@@ -116,7 +116,7 @@ const projects = [
     title: "ohhNFT Platform",
     category: "Web3",
     description: "Multi-featured NFT platform combining art collection, gaming, marketplace, and community features in one ecosystem.",
-    image: "/api/placeholder/600/400",
+    image: "https://miro.medium.com/v2/resize:fill:160:160/1*GVzBErI4D9vP1oRgmwaufg.png",
     tech: ["NextJS", "NodeJS", "Heroku", "MySQL", "GraphQL", "Web3"],
     features: ["Art Vault", "Gaming Center", "Marketplace", "Community Hub"],
     github: "https://github.com/example/ohhnft",
@@ -187,6 +187,7 @@ export function Projects() {
 
   return (
     <motion.section
+    id='projects'
       ref={ref}
       className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-muted/20 via-background to-muted/30"
     >
@@ -337,7 +338,7 @@ export function Projects() {
                             alt={project.title}
                             width={600}
                             height={400}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            className="w-full h-full object-contain p-20 group-hover:scale-110 transition-transform duration-700"
                           />
                           
                           {/* Overlay */}
@@ -482,7 +483,7 @@ export function Projects() {
                             alt={project.title}
                             width={400}
                             height={250}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                           />
                           <div className="absolute top-3 right-3">
                             <Badge variant="outline" className="bg-white/20 backdrop-blur-sm text-white border-white/30 text-xs">

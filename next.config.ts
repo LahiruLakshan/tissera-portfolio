@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+     domains: ["media.licdn.com", "cdn.prod.website-files.com", "miro.medium.com"],
     remotePatterns: [
       {
         protocol: 'https',

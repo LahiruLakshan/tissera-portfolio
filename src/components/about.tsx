@@ -389,6 +389,7 @@ export function About() {
 
   return (
     <motion.section
+    id="about"
       ref={ref}
       style={{ opacity }}
       className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-muted/30 via-background/50 to-muted/30"

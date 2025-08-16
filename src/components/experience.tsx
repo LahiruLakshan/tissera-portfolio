@@ -176,6 +176,7 @@ export function Experience() {
 
   return (
     <motion.section
+    id='experience'
       ref={ref}
       style={{ opacity }}
       className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-background via-muted/10 to-background"
@@ -482,7 +483,7 @@ export function Experience() {
           </div>
 
           {/* CTA Section */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             className="text-center mt-20"
           >
@@ -513,7 +514,7 @@ export function Experience() {
                 </motion.div>
               </motion.div>
             </Card>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
     </motion.section>

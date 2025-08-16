@@ -113,6 +113,7 @@ export function Header() {
   return (
     <>
       <motion.header
+      id="home"
         variants={headerVariants}
         initial="initial"
         animate="animate"
@@ -369,7 +370,7 @@ export function Header() {
                     asChild
                     className="w-full group hover:bg-primary hover:text-primary-foreground border-primary/30 hover:border-primary transition-all duration-300"
                   >
-                    <a href="/Lakshan-Tissera-SE.pdf" download className="flex items-center gap-2">
+                    <a href="/docs/Lakshan Tissera - SE.pdf" download className="flex items-center gap-2">
                       <Download className="w-4 h-4 group-hover:animate-bounce" />
                       Download CV
                       <ExternalLink className="w-4 h-4 ml-auto" />

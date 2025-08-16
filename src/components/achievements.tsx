@@ -137,7 +137,7 @@ const categoryStats = [
 ];
 
 const milestones = [
-  { year: "2020", event: "Started University", icon: GraduationCap },
+  { year: "2020", event: "Started University of Westminster", icon: GraduationCap },
   { year: "2021", event: "First Competitions", icon: Trophy },
   { year: "2022", event: "Industry Internship", icon: Building },
   { year: "2023", event: "Graduated & Professional Career", icon: Rocket },
@@ -191,6 +191,7 @@ export function Achievements() {
 
   return (
     <motion.section
+    id='achievements'
       ref={ref}
       style={{ opacity }}
       className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-muted/20 via-background to-muted/30"
@@ -273,7 +274,7 @@ export function Achievements() {
           </motion.div>
 
           {/* Achievement Categories Overview */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
           >
@@ -301,7 +302,7 @@ export function Achievements() {
                 </motion.div>
               );
             })}
-          </motion.div>
+          </motion.div> */}
 
           {/* Timeline Milestones */}
           <motion.div
@@ -492,7 +493,7 @@ export function Achievements() {
           </div>
 
           {/* CTA Section */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             className="text-center"
           >
@@ -525,7 +526,7 @@ export function Achievements() {
                 </motion.div>
               </motion.div>
             </Card>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
     </motion.section>

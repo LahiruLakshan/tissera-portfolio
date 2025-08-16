@@ -144,6 +144,7 @@ export function Services() {
 
   return (
     <motion.section
+    id='services'
       ref={ref}
       style={{ opacity }}
       className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-background via-muted/20 to-background"
@@ -397,7 +398,7 @@ export function Services() {
           </div>
 
           {/* CTA Section */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             className="text-center mt-20"
           >
@@ -426,7 +427,7 @@ export function Services() {
                 </motion.div>
               </motion.div>
             </Card>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
     </motion.section>

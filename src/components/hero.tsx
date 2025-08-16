@@ -1,34 +1,97 @@
 // src/components/hero.tsx
 "use client";
 
-import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, Download, Github, Linkedin, Mail, MapPin, Sparkles, Code2, Palette, Zap } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardContent } from '@/components/ui/card';
+import { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  ChevronDown,
+  Download,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+  Sparkles,
+  Code2,
+  Palette,
+  Zap,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
+import {
+  faAppStore,
+  faCodepen,
+  faGithub,
+  faNodeJs,
+  faPython,
+  faReact,
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCodeBranch,
+  faCodeCommit,
+  faCodeCompare,
+  faCodeFork,
+  faCodeMerge,
+  faCodePullRequest,
+  faDiagramNext,
+  faGear,
+  faMicrochip,
+  faRobot,
+  faTerminal,
+} from "@fortawesome/free-solid-svg-icons";
 
 const roles = [
-  { text: "Full-Stack Developer", icon: Code2, color: "from-blue-500 to-cyan-500" },
+  {
+    text: "Full-Stack Developer",
+    icon: Code2,
+    color: "from-blue-500 to-cyan-500",
+  },
   { text: "Web3 Engineer", icon: Zap, color: "from-purple-500 to-pink-500" },
-  { text: "UI/UX Designer", icon: Palette, color: "from-emerald-500 to-teal-500" },
-  { text: "React Specialist", icon: Sparkles, color: "from-orange-500 to-red-500" }
+  {
+    text: "UI/UX Designer",
+    icon: Palette,
+    color: "from-emerald-500 to-teal-500",
+  },
+  {
+    text: "React Specialist",
+    icon: Sparkles,
+    color: "from-orange-500 to-red-500",
+  },
 ];
 
 const floatingElements = [
-  { icon: "⚛️", x: "10%", y: "20%", delay: 0 },
-  { icon: "🚀", x: "80%", y: "10%", delay: 1 },
-  { icon: "💡", x: "85%", y: "70%", delay: 2 },
-  { icon: "🎨", x: "15%", y: "80%", delay: 3 },
-  { icon: "⚡", x: "70%", y: "40%", delay: 4 },
+  { key:1, icon: faCodeBranch, x: "10%", y: "20%", delay: 0 },
+  { key:2, icon: faCodeMerge, x: "80%", y: "10%", delay: 1 },
+  { key:3, icon: faCodeCommit, x: "85%", y: "70%", delay: 2 },
+  { key:4, icon: faCodePullRequest, x: "15%", y: "80%", delay: 3 },
+  { key:5, icon: faCodeCompare, x: "50%", y: "50%", delay: 4 },
+  { key:6, icon: faTerminal, x: "90%", y: "30%", delay: 4 },
+  { key:7, icon: faCodeFork, x: "60%", y: "20%", delay: 4 },
 ];
+
+const skillElements = [
+  { key:1, icon: faReact, x: "10%", y: "20%", delay: 0 },
+  { key:2, icon: faMicrochip, x: "80%", y: "10%", delay: 1 },
+  { key:3, icon: faNodeJs, x: "85%", y: "70%", delay: 2 },
+  { key:4, icon: faPython, x: "15%", y: "80%", delay: 3 },
+ 
+];
+
+const scrollToNext = () => {
+  const nextSection = document.getElementById("about");
+  if (nextSection) {
+    nextSection.scrollIntoView({ behavior: "smooth" });
+  }
+};
 
 export function Hero() {
   const [currentRole, setCurrentRole] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollY } = useScroll();
-  
+
   // Parallax effects
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -50,8 +113,8 @@ export function Hero() {
       });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   const containerVariants = {
@@ -60,30 +123,31 @@ export function Hero() {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        duration: 0.8
-      }
-    }
+        duration: 0.8,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
-    }
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
   };
 
   const CurrentRoleIcon = roles[currentRole].icon;
 
   return (
-    <motion.section 
-      style={{ y, opacity }}
+    <motion.section
+      
+      // style={{ y, opacity }}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/80"
     >
       {/* Animated Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-      
+
       {/* Floating Background Elements */}
       {floatingElements.map((element, index) => (
         <motion.div
@@ -105,23 +169,25 @@ export function Hero() {
             delay: element.delay,
           }}
         >
-          {element.icon}
+          <FontAwesomeIcon icon={element.icon} className="text-3xl" />
         </motion.div>
       ))}
 
       {/* Main Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
           {/* Left Content */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="flex flex-col gap-8 text-center lg:text-left"
+            className="flex flex-col gap-8 text-center lg:text-left items-center lg:items-start"
           >
             {/* Status Badge */}
-            <motion.div variants={itemVariants} className="flex justify-center lg:justify-start">
+            <motion.div
+              variants={itemVariants}
+              className="flex justify-center lg:justify-start"
+            >
               <Badge
                 variant="outline"
                 className="w-fit bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20 transition-colors duration-300 backdrop-blur-sm"
@@ -139,11 +205,13 @@ export function Hero() {
             <motion.div variants={itemVariants} className="space-y-4">
               <div className="flex items-center gap-2 justify-center lg:justify-start mb-2">
                 <MapPin className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Kelaniya, Sri Lanka</span>
+                <span className="text-sm text-muted-foreground">
+                  Kadawatha, Sri Lanka
+                </span>
               </div>
-              
+
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold font-headline tracking-tighter">
-                Hi, I'm{' '}
+                Hi, I'm{" "}
                 <motion.span
                   className="relative inline-block"
                   whileHover={{ scale: 1.05 }}
@@ -170,7 +238,9 @@ export function Hero() {
                   transition={{ duration: 0.5 }}
                   className="flex items-center gap-3"
                 >
-                  <div className={`p-2 rounded-lg bg-gradient-to-r ${roles[currentRole].color} bg-opacity-10 backdrop-blur-sm`}>
+                  <div
+                    className={`p-2 rounded-lg bg-gradient-to-r ${roles[currentRole].color} bg-opacity-10 backdrop-blur-sm`}
+                  >
                     <CurrentRoleIcon className="w-6 h-6 text-foreground" />
                   </div>
                   <span className="text-2xl sm:text-3xl font-medium text-muted-foreground">
@@ -181,43 +251,50 @@ export function Hero() {
             </motion.div>
 
             {/* Description */}
-            <motion.p 
+            <motion.p
               variants={itemVariants}
               className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl"
             >
-              Creative Full-Stack Developer with expertise in{' '}
-              <span className="text-primary font-semibold">Web3</span>,{' '}
-              <span className="text-accent font-semibold">React</span>, and{' '}
-              <span className="text-primary font-semibold">Machine Learning</span>.
-              I build elegant, efficient, and user-centric digital experiences that solve real-world problems.
+              Creative Full-Stack Developer with expertise in{" "}
+              <span className="text-primary font-semibold">Web3</span>,{" "}
+              <span className="text-accent font-semibold">React</span>, and{" "}
+              <span className="text-primary font-semibold">
+                Machine Learning
+              </span>
+              . I build elegant, efficient, and user-centric digital experiences
+              that solve real-world problems.
             </motion.p>
 
             {/* CTA Buttons */}
-            <motion.div 
+            <motion.div
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
-              <Button 
-                size="lg" 
-                className="group relative overflow-hidden bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+              <Button
+                size="lg"
+                className="group relative overflow-hidden bg-[linear-gradient(45deg,rgba(168,85,247,0.3),rgba(6,182,212,0.3))]  text-primary-foreground px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
                 asChild
               >
                 <a href="#projects" className="flex items-center">
                   <span className="relative z-10">View Projects</span>
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="absolute inset-0 bg-[linear-gradient(90deg,rgba(168,85,247,0.3),rgba(6,182,212,0.3))] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     whileHover={{ scale: 1.05 }}
                   />
                 </a>
               </Button>
-              
-              <Button 
+
+              <Button
                 size="lg"
-                variant="outline" 
-                className="group border-2 border-primary/30 hover:border-primary hover:bg-primary/5 px-8 py-4 text-lg font-medium backdrop-blur-sm transition-all duration-300"
+                variant="outline"
+                className=" border-2 border-primary/30 hover:bg-[linear-gradient(45deg,rgba(168,85,247,0.3),rgba(6,182,212,0.3))] bg-[linear-gradient(45deg,rgba(168,85,247,0.3),rgba(6,182,212,0.3))] px-8 py-4 text-lg font-medium backdrop-blur-sm transition-all duration-300"
                 asChild
               >
-                <a href="/Lakshan-Tissera-SE.pdf" download className="flex items-center">
+                <a
+                  href="/docs/Lakshan Tissera - SE.pdf"
+                  download
+                  className="flex items-center"
+                >
                   <Download className="w-5 h-5 mr-2 group-hover:animate-bounce" />
                   Download CV
                 </a>
@@ -225,14 +302,26 @@ export function Hero() {
             </motion.div>
 
             {/* Social Links */}
-            <motion.div 
+            <motion.div
               variants={itemVariants}
               className="flex justify-center lg:justify-start space-x-6"
             >
               {[
-                { icon: Github, href: "https://github.com/lahiru-lakshan-tissera", label: "GitHub" },
-                { icon: Linkedin, href: "https://linkedin.com/in/lahiru-lakshan-tissera", label: "LinkedIn" },
-                { icon: Mail, href: "mailto:balahirulakshan@gmail.com", label: "Email" }
+                {
+                  icon: Github,
+                  href: "https://github.com/lahiru-lakshan-tissera",
+                  label: "GitHub",
+                },
+                {
+                  icon: Linkedin,
+                  href: "https://linkedin.com/in/lahiru-lakshan-tissera",
+                  label: "LinkedIn",
+                },
+                {
+                  icon: Mail,
+                  href: "mailto:balahirulakshan@gmail.com",
+                  label: "Email",
+                },
               ].map(({ icon: Icon, href, label }) => (
                 <motion.a
                   key={label}
@@ -270,13 +359,13 @@ export function Hero() {
                 animate={{ rotate: -360 }}
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
               />
-              
+
               {/* Pulsing Gradient Background */}
               <motion.div
                 className="absolute w-72 h-72 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-full blur-3xl"
-                animate={{ 
+                animate={{
                   scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3]
+                  opacity: [0.3, 0.6, 0.3],
                 }}
                 transition={{ duration: 4, repeat: Infinity }}
               />
@@ -294,14 +383,17 @@ export function Hero() {
             >
               <div className="relative">
                 <Avatar className="w-64 h-64 lg:w-80 lg:h-80 border-4 border-primary/30 shadow-2xl hover:shadow-primary/25 transition-all duration-500">
-                  <AvatarImage 
-                    src="https://placehold.co/400x400.png?text=LT" 
-                    alt="Lahiru Tissera" 
-                    className="object-cover hover:scale-110 transition-transform duration-700" 
+                  <Image
+                    src="https://media.licdn.com/dms/image/v2/D5603AQFIxldwSUganw/profile-displayphoto-shrink_800_800/B56ZTbJ6yyHEAc-/0/1738843599819?e=1758153600&v=beta&t=9BpUbCLBKPItzXiRt9Ax_WXb87nswTR3KNbDjUQWNcU"
+                    // src="/images/profile.png"
+                    alt="Lahiru Tissera"
+                    className="object-cover hover:scale-110 transition-transform duration-700"
+                    width={1000}
+                    height={1000}
                   />
-                  <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-primary to-accent text-primary-foreground">
+                  {/* <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-primary to-accent text-primary-foreground">
                     LT
-                  </AvatarFallback>
+                  </AvatarFallback> */}
                 </Avatar>
 
                 {/* Status Indicators */}
@@ -315,42 +407,45 @@ export function Hero() {
 
                 {/* Skill Badges Around Avatar */}
                 <div className="absolute inset-0 pointer-events-none">
-                  {["React", "Node.js", "Web3", "Python"].map((skill, index) => (
-                    <motion.div
-                      key={skill}
-                      className="absolute"
-                      style={{
-                        top: `${20 + Math.sin((index * Math.PI) / 2) * 40}%`,
-                        left: `${20 + Math.cos((index * Math.PI) / 2) * 40}%`,
-                      }}
-                      animate={{
-                        y: [0, -10, 0],
-                        rotate: [0, 5, -5, 0],
-                      }}
-                      transition={{
-                        duration: 3 + index * 0.5,
-                        repeat: Infinity,
-                        delay: index * 0.5,
-                      }}
-                    >
-                      <Badge 
-                        variant="secondary" 
-                        className="bg-background/80 backdrop-blur-sm shadow-lg border border-primary/20"
+                  {skillElements.map(
+                    (skill, index) => (
+                      <motion.div
+                        key={skill.key}
+                        className="absolute"
+                        style={{
+                          top: `${20 + Math.sin((index * Math.PI) / 2) * 40}%`,
+                          left: `${20 + Math.cos((index * Math.PI) / 2) * 40}%`,
+                        }}
+                        animate={{
+                          y: [0, -10, 0],
+                          rotate: [0, 5, -5, 0],
+                        }}
+                        transition={{
+                          duration: 3 + index * 0.5,
+                          repeat: Infinity,
+                          delay: index * 0.5,
+                        }}
                       >
-                        {skill}
-                      </Badge>
-                    </motion.div>
-                  ))}
+                        <Badge
+                          variant="secondary"
+                          className="bg-background/80 backdrop-blur-sm shadow-lg border border-primary/20"
+                        >
+                           <FontAwesomeIcon icon={skill.icon} className="text-sm" />
+                          {/* {skill} */}
+                        </Badge>
+                      </motion.div>
+                    )
+                  )}
                 </div>
               </div>
             </motion.div>
 
             {/* Stats Cards */}
-            <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-4 pointer-events-none">
+            <div className="absolute bottom-[-120px] left-0 right-0 flex justify-center gap-4 pointer-events-none">
               {[
                 { label: "Years Exp", value: "3+" },
                 { label: "Projects", value: "20+" },
-                { label: "Technologies", value: "15+" }
+                { label: "Technologies", value: "15+" },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -360,8 +455,12 @@ export function Hero() {
                 >
                   <Card className="bg-background/80 backdrop-blur-sm border-primary/20 shadow-lg">
                     <CardContent className="p-3 text-center">
-                      <div className="text-lg font-bold text-primary">{stat.value}</div>
-                      <div className="text-xs text-muted-foreground">{stat.label}</div>
+                      <div className="text-lg font-bold text-primary">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {stat.label}
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -371,19 +470,30 @@ export function Hero() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div 
-          variants={itemVariants}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+        <button
+          onClick={scrollToNext}
+          className="group flex flex-col items-center space-y-2 text-white/80 hover:text-white transition-all duration-300"
+          aria-label="Scroll to next section"
         >
-          <span className="text-xs text-muted-foreground">Scroll to explore</span>
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="p-2 rounded-full bg-muted/50 backdrop-blur-sm"
+            variants={itemVariants}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
           >
-            <ChevronDown className="w-5 h-5 text-muted-foreground" />
+            <span className="text-xs text-muted-foreground">
+              Scroll to explore
+            </span>
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="p-2 rounded-full  backdrop-blur-sm items-center flex flex-col"
+            >
+              <div className="w-8 h-12 border-2 border-white/60 rounded-full flex justify-center items-start p-1 group-hover:border-white transition-colors duration-300">
+                <div className="w-1 h-3 bg-white/80 rounded-full animate-scroll-bounce group-hover:bg-white transition-colors duration-300"></div>
+              </div>
+              <ChevronDown className="w-5 h-5 text-muted-foreground" />
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </button>
       </div>
     </motion.section>
   );
