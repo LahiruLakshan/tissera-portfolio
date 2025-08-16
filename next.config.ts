@@ -1,7 +1,9 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  output: "export",
+  trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -9,13 +11,18 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-     domains: ["media.licdn.com", "cdn.prod.website-files.com", "miro.medium.com"],
+    unoptimized: true,
+    domains: [
+      "media.licdn.com",
+      "cdn.prod.website-files.com",
+      "miro.medium.com",
+    ],
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'placehold.co',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "placehold.co",
+        port: "",
+        pathname: "/**",
       },
     ],
   },
