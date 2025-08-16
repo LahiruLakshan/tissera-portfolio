@@ -371,10 +371,10 @@ export function Skills() {
 
       {/* Floating Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {[Code2, faDatabase, faMobile, faBrain, faChain].map((Icon, i) => (
+        {[faApple, faDatabase, faAndroid, faAws, faChain].map((Icon, i) => (
           <motion.div
             key={i}
-            className="absolute text-primary/5"
+            className="absolute text-primary/30"
             style={{
               left: `${10 + (i * 20)}%`,
               top: `${20 + (i * 15)}%`,
@@ -390,7 +390,7 @@ export function Skills() {
               delay: i * 0.5,
             }}
           >
-            {typeof Icon === 'function' ? <Icon size={60} /> : <FontAwesomeIcon icon={Icon} className="text-6xl" />}
+            <FontAwesomeIcon icon={Icon} className="text-3xl" />
           </motion.div>
         ))}
       </div>

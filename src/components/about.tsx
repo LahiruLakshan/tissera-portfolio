@@ -1,37 +1,62 @@
 // src/components/about.tsx
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { User, Target, Heart, Lightbulb, Coffee } from "lucide-react";
+import { User, Target, Heart, Lightbulb, Coffee, Terminal, Code2, CheckCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const highlights = [
   {
     icon: Target,
     title: "Problem Solver",
-    description:
-      "I love tackling complex challenges and finding elegant solutions",
+    description: "I love tackling complex challenges and finding elegant solutions",
+    command: "solve --complexity=high --approach=elegant",
   },
   {
     icon: Heart,
     title: "User-Focused",
-    description:
-      "Every line of code is written with the end user experience in mind",
+    description: "Every line of code is written with the end user experience in mind",
+    command: "design --user-centric --priority=ux",
   },
   {
     icon: Lightbulb,
     title: "Innovation Drive",
-    description:
-      "Constantly exploring new technologies and development approaches",
+    description: "Constantly exploring new technologies and development approaches",
+    command: "explore --tech=cutting-edge --mindset=growth",
   },
   {
     icon: Coffee,
     title: "Team Player",
-    description:
-      "Thriving in collaborative environments and mentoring fellow developers",
+    description: "Thriving in collaborative environments and mentoring fellow developers",
+    command: "collaborate --team=awesome --mentor=true",
   },
 ];
+
+const terminalCommands = [
+  { command: "whoami", output: "lahiru-tissera" },
+  { command: "cat experience.txt", output: "Full-Stack Engineer | Web3 | AI/ML | Mobile" },
+  { command: "ls skills/", output: "react/ nextjs/ python/ web3/ ai-ml/ mobile/" },
+  { command: "git log --oneline", output: "* Building innovative solutions since 2020" },
+];
+
+const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (currentIndex < text.length) {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }
+    }, delay + currentIndex * speed);
+
+    return () => clearTimeout(timer);
+  }, [currentIndex, text, delay, speed]);
+
+  return <span>{displayText}</span>;
+};
 
 export function About() {
   const ref = useRef(null);
@@ -64,36 +89,48 @@ export function About() {
     },
   };
 
+  const codeVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
+  };
+
   return (
     <motion.section
       id="about"
       ref={ref}
       style={{ opacity }}
-      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-muted/30 via-background/50 to-muted/30"
+      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-900 via-background to-gray-900"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
+      {/* Matrix-style Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
 
-      {/* Floating Background Elements */}
+      {/* Floating Code Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(6)].map((_, i) => (
+        {['<>', '{}', '[]', '()', '/>', '</', 'const', 'function', 'return', '&&', '||', '=>'].map((symbol, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-primary/10 rounded-full"
+            className="absolute text-primary/10 font-mono text-2xl select-none"
             style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + i * 10}%`,
+              left: `${10 + (i * 8) % 80}%`,
+              top: `${20 + (i * 12) % 60}%`,
             }}
             animate={{
               y: [-20, 20, -20],
-              opacity: [0.3, 0.8, 0.3],
+              opacity: [0.1, 0.3, 0.1],
+              rotate: [-5, 5, -5],
             }}
             transition={{
-              duration: 4 + i,
+              duration: 6 + i,
               repeat: Infinity,
-              delay: i * 0.5,
+              delay: i * 0.3,
             }}
-          />
+          >
+            {symbol}
+          </motion.div>
         ))}
       </div>
 
@@ -104,135 +141,247 @@ export function About() {
           animate={isInView ? "visible" : "hidden"}
           className="max-w-6xl mx-auto"
         >
-          {/* Section Header */}
+          {/* Terminal Header */}
           <motion.div variants={itemVariants} className="text-center mb-20">
             <motion.div
               className="inline-flex items-center gap-3 mb-6"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="p-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm">
-                <User className="w-8 h-8 text-primary" />
+              <div className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-500/30">
+                <Terminal className="w-8 h-8 text-green-400" />
               </div>
-              <h2 className="text-4xl sm:text-5xl font-headline font-bold">
-                About Me
+              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-400">
+                $ cat about_me.md
               </h2>
             </motion.div>
 
             <motion.div
-              className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"
+              className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             />
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-7 gap-16 items-start">
-            {/* Left Column - About Text */}
-            <motion.div
-              variants={itemVariants}
-              className="space-y-8 col-span-4"
-            >
-              <Card className="border-0 bg-card/50 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500">
-                <CardContent className="p-8">
-                  <div className="space-y-6 text-muted-foreground leading-relaxed">
-                    <motion.p
-                      className="text-lg"
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                      transition={{ delay: 0.3 }}
-                    >
-                      Hello! I'm{" "}
-                      <span className="text-primary font-semibold">
-                        Lahiru Tissera
-                      </span>
-                      , a passionate Full-Stack Engineer with expertise in
-                      building modern web applications and integrating
-                      cutting-edge technologies. With experience spanning
-                      <span className="text-accent font-semibold"> Web3</span>,
-                      <span className="text-primary font-semibold"> AI/ML</span>
-                      , and
-                      <span className="text-accent font-semibold">
-                        {" "}
-                        mobile development
-                      </span>
-                      , I create digital experiences that matter.
-                    </motion.p>
-
-                    <motion.p
-                      className="text-lg"
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                      transition={{ delay: 0.5 }}
-                    >
-                      My journey started with a BEng in Software Engineering
-                      from the University of Westminster (UK), and since then,
-                      I've been on a mission to bridge the gap between complex
-                      technologies and intuitive user experiences. I thrive on
-                      solving challenging problems and am constantly exploring
-                      new tools and frameworks.
-                    </motion.p>
-
-                    <motion.p
-                      className="text-lg"
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                      transition={{ delay: 0.7 }}
-                    >
-                      From building{" "}
-                      <span className="text-primary font-semibold">
-                        NFT marketplaces
-                      </span>{" "}
-                      with Web3 integration to developing{" "}
-                      <span className="text-accent font-semibold">
-                        AI-powered music classification systems
-                      </span>
-                      , I'm passionate about creating solutions that push
-                      technological boundaries while maintaining exceptional
-                      user experience.
-                    </motion.p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
+            {/* Left Column - Terminal Window */}
+            <motion.div variants={itemVariants}>
+              <Card className="border border-gray-700 bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+                {/* Terminal Header */}
+                <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 border-b border-gray-700">
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
+                  <span className="text-xs text-gray-400 ml-2 font-mono">lahiru@portfolio:~$</span>
+                </div>
+
+                <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-900">
+                  {terminalCommands.map((cmd, index) => (
+                    <motion.div
+                      key={index}
+                      variants={codeVariants}
+                      transition={{ delay: index * 0.8 }}
+                      className="space-y-2"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-green-400">$</span>
+                        <span className="text-white">
+                          {isInView && <TypewriterText text={cmd.command} delay={index * 800} />}
+                        </span>
+                      </div>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ delay: (index * 0.8) + 1 }}
+                        className="text-blue-300 ml-4"
+                      >
+                        {cmd.output}
+                      </motion.div>
+                    </motion.div>
+                  ))}
+
+                  {/* Blinking Cursor */}
+                  <motion.div
+                    className="flex items-center gap-2"
+                    initial={{ opacity: 0 }}
+                    animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ delay: 4 }}
+                  >
+                    <span className="text-green-400">$</span>
+                    <motion.div
+                      className="w-2 h-5 bg-green-400"
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                    />
+                  </motion.div>
                 </CardContent>
               </Card>
             </motion.div>
 
-            {/* Right Column - Highlights */}
-            <motion.div
-              variants={itemVariants}
-              className="space-y-8 col-span-3"
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
-                {highlights.map((highlight, index) => (
-                  <motion.div
-                    key={highlight.title}
-                    variants={itemVariants}
-                    custom={index}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <Card className="border-0 bg-card/30 backdrop-blur-sm hover:bg-card/50 transition-all duration-300 group">
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className="p-2 rounded-lg bg-gradient-to-r from-primary/20 to-accent/20 group-hover:from-primary/30 group-hover:to-accent/30 transition-all duration-300">
-                            <highlight.icon className="w-5 h-5 text-primary" />
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-foreground mb-1">
-                              {highlight.title}
-                            </h4>
-                            <p className="text-sm text-muted-foreground">
-                              {highlight.description}
-                            </p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+            {/* Right Column - Code Block */}
+            <motion.div variants={itemVariants}>
+              <Card className="border border-gray-700 bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+                {/* Code Editor Header */}
+                <div className="flex items-center justify-between px-4 py-3 bg-gray-800 border-b border-gray-700">
+                  <div className="flex items-center gap-2">
+                    <Code2 className="w-4 h-4 text-blue-400" />
+                    <span className="text-xs text-gray-400 font-mono">Developer.ts</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                </div>
+
+                <CardContent className="p-6 font-mono text-sm bg-gray-900 space-y-3">
+                  <motion.div variants={codeVariants} className="text-purple-400">
+                    interface <span className="text-yellow-300">Developer</span> {'{'}
                   </motion.div>
-                ))}
-              </div>
+                  
+                  <motion.div variants={codeVariants} className="ml-4 space-y-2">
+                    <div className="text-blue-300">
+                      name: <span className="text-green-300">"Lahiru Tissera"</span>;
+                    </div>
+                    <div className="text-blue-300">
+                      role: <span className="text-green-300">"Full-Stack Engineer"</span>;
+                    </div>
+                    <div className="text-blue-300">
+                      education: <span className="text-green-300">"BEng Software Engineering (UK)"</span>;
+                    </div>
+                    <div className="text-blue-300">
+                      passion: <span className="text-orange-300">["Web3", "AI/ML", "Mobile"]</span>;
+                    </div>
+                    <div className="text-blue-300">
+                      mission: <span className="text-green-300">"Building innovative solutions"</span>;
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={codeVariants} className="text-purple-400">
+                    {'}'}
+                  </motion.div>
+
+                  <motion.div variants={codeVariants} className="pt-4 text-gray-500">
+                    <span className="text-gray-600">// Constantly learning and evolving</span>
+                  </motion.div>
+                </CardContent>
+              </Card>
             </motion.div>
           </div>
+
+          {/* Enhanced Highlights with Terminal Commands */}
+          <motion.div variants={itemVariants} className="space-y-8">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl font-mono text-green-400 mb-4">$ ls capabilities/</h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {highlights.map((highlight, index) => (
+                <motion.div
+                  key={highlight.title}
+                  variants={itemVariants}
+                  custom={index}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="border border-gray-700 bg-gray-900/50 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group overflow-hidden">
+                    <CardContent className="p-6">
+                      {/* Terminal Command */}
+                      <div className="mb-4 p-3 bg-black/30 rounded border border-gray-700 font-mono text-xs">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-green-400">$</span>
+                          <span className="text-white">{highlight.command}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-green-300">
+                          <CheckCircle className="w-3 h-3" />
+                          <span>Success</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-4">
+                        <motion.div 
+                          className="p-3 rounded-lg bg-gradient-to-r from-green-500/20 to-blue-500/20 group-hover:from-green-500/30 group-hover:to-blue-500/30 transition-all duration-300 border border-green-500/30"
+                          whileHover={{ rotate: [0, -5, 5, 0] }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <highlight.icon className="w-6 h-6 text-green-400" />
+                        </motion.div>
+                        <div className="flex-1">
+                          <h4 className="font-bold text-white mb-2 font-mono">
+                            {highlight.title}
+                          </h4>
+                          <p className="text-gray-300 text-sm leading-relaxed">
+                            {highlight.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Glow Effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        whileHover={{
+                          background: "linear-gradient(45deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1))",
+                        }}
+                      />
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Footer Terminal Prompt */}
+          <motion.div 
+            variants={itemVariants}
+            className="mt-16 text-center"
+          >
+            <Card className="border border-gray-700 bg-gray-900/90 backdrop-blur-sm shadow-xl inline-block">
+              <CardContent className="p-4">
+                <div className="font-mono text-sm text-green-400 flex items-center gap-2">
+                  <Terminal className="w-4 h-4" />
+                  <span>Ready to collaborate? Let's build something amazing together!</span>
+                  <motion.div
+                    className="w-2 h-4 bg-green-400"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </motion.div>
+      </div>
+
+      {/* Matrix Rain Effect (Optional) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-5">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-green-400 font-mono text-xs"
+            style={{
+              left: `${i * 5}%`,
+              top: '-10%',
+            }}
+            animate={{
+              y: ['0vh', '110vh'],
+            }}
+            transition={{
+              duration: 10 + (i % 5),
+              repeat: Infinity,
+              delay: i * 0.5,
+              ease: 'linear',
+            }}
+          >
+            {Array.from({ length: 20 }, (_, j) => (
+              <div key={j} className="mb-2">
+                {Math.random() > 0.5 ? '1' : '0'}
+              </div>
+            ))}
+          </motion.div>
+        ))}
       </div>
     </motion.section>
   );
