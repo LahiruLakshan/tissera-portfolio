@@ -2,27 +2,18 @@
 "use client";
 
 import { useState, useRef } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { 
   Mail, 
   Phone, 
   MapPin, 
   Send, 
   MessageSquare,
-  User,
-  Calendar,
   Clock,
   CheckCircle,
-  ExternalLink,
-  Github,
-  Linkedin,
-  Twitter,
-  Globe,
-  Coffee,
   Zap,
-  Heart,
-  Sparkles,
-  ArrowRight
+  Coffee,
+  Heart
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -55,38 +46,6 @@ const contactInfo = [
     href: "#",
     color: "from-purple-500 to-pink-500",
     description: "Based in Sri Lanka, Open to remote work"
-  },
-  // {
-  //   icon: Globe,
-  //   label: "Portfolio",
-  //   value: "lahirulakshan.web.app",
-  //   href: "https://lahirulakshan.web.app",
-  //   color: "from-orange-500 to-red-500",
-  //   description: "Explore my latest work"
-  // }
-];
-
-const socialLinks = [
-  {
-    name: "GitHub",
-    icon: Github,
-    href: "https://github.com/lahiru-lakshan-tissera",
-    color: "from-gray-700 to-black",
-    followers: "50+ Followers"
-  },
-  {
-    name: "LinkedIn",
-    icon: Linkedin,
-    href: "https://linkedin.com/in/lahiru-lakshan-tissera",
-    color: "from-blue-600 to-blue-800",
-    followers: "500+ Connections"
-  },
-  {
-    name: "Twitter",
-    icon: Twitter,
-    href: "https://twitter.com/LahiruLakshan",
-    color: "from-sky-400 to-blue-500",
-    followers: "100+ Followers"
   }
 ];
 
@@ -117,14 +76,7 @@ export function Contact() {
   const { toast } = useToast();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
@@ -136,19 +88,54 @@ export function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      toast({
-        title: "Message sent successfully!",
-        description: "I'll get back to you within 24 hours.",
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: "5031ce40-7f53-48cc-9221-082ae57b8f16",
+          name: formData.name,
+          email: formData.email,
+          subject: `Portfolio Contact: ${formData.subject}`,
+          message: formData.message,
+          from_name: formData.name,
+          replyto: formData.email,
+          // Additional Web3Forms options
+          redirect: false, // Don't redirect after submission
+          captcha: false, // Disable captcha for now
+        })
       });
-      
-      // Reset success state after 3 seconds
-      setTimeout(() => setIsSubmitted(false), 3000);
-    }, 2000);
+
+      const result = await response.json();
+
+      if (result.success) {
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        toast({
+          title: "Message sent successfully! 🚀",
+          description: "I'll get back to you within 24 hours.",
+        });
+
+        // Reset success state after 3 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 3000);
+      } else {
+        throw new Error(result.message || 'Form submission failed');
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      toast({
+        title: "Failed to send message",
+        description: "Please try again or contact me directly via email.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const containerVariants = {
@@ -171,25 +158,10 @@ export function Contact() {
     }
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9, y: 30 },
-    visible: (index: number) => ({
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        delay: index * 0.1,
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    })
-  };
-
   return (
     <motion.section
-    id='contact'
+      id="contact"
       ref={ref}
-      style={{ opacity }}
       className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-background via-muted/20 to-background"
     >
       {/* Background Pattern */}
@@ -252,7 +224,7 @@ export function Contact() {
                 <MessageSquare className="w-8 h-8 text-primary" />
               </motion.div>
               <h2 className="text-4xl sm:text-5xl font-headline font-bold">
-                Let's Connect
+                Let&apos;s Connect
               </h2>
             </motion.div>
             
@@ -263,7 +235,7 @@ export function Contact() {
               transition={{ delay: 0.3, duration: 0.6 }}
             >
               Ready to bring your <span className="text-primary font-semibold">ideas to life</span>? 
-              I'm excited to discuss your project and explore how we can 
+              I&apos;m excited to discuss your project and explore how we can 
               <span className="text-accent font-semibold"> create something amazing</span> together.
             </motion.p>
             
@@ -320,7 +292,7 @@ export function Contact() {
                     Send me a message
                   </CardTitle>
                   <p className="text-muted-foreground">
-                    Fill out the form below and I'll get back to you as soon as possible.
+                    Fill out the form below and I&apos;ll get back to you as soon as possible.
                   </p>
                 </CardHeader>
 
@@ -414,14 +386,30 @@ export function Contact() {
                             Message Sent!
                           </motion.div>
                         ) : isSubmitting ? (
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                            className="flex items-center gap-2"
-                          >
-                            <Zap className="w-5 h-5" />
-                            Sending...
-                          </motion.div>
+                         <motion.div
+    className="flex items-center gap-2"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+  >
+    <motion.div
+      animate={{ 
+        rotate: [0, 360],
+        scale: [1, 1.1, 1]
+      }}
+      transition={{ 
+        rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+        scale: { duration: 1, repeat: Infinity, ease: "easeInOut" }
+      }}
+    >
+      <Zap className="w-5 h-5" />
+    </motion.div>
+    <motion.span
+      animate={{ opacity: [1, 0.5, 1] }}
+      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+    >
+      Sending...
+    </motion.span>
+  </motion.div>
                         ) : (
                           <div className="flex items-center gap-2">
                             <Send className="w-5 h-5" />
@@ -475,8 +463,6 @@ export function Contact() {
                   return (
                     <motion.div
                       key={info.label}
-                      variants={cardVariants}
-                      custom={index}
                       whileHover={{ scale: 1.05, y: -5 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
@@ -484,7 +470,7 @@ export function Contact() {
                         <CardContent className="p-6">
                           <div className="flex items-start gap-4">
                             <motion.div
-                              className={`p-3 rounded-xl bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border border-primary/50 transition-all shadow-lg`}
+                              className="p-3 rounded-xl bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border border-primary/50 transition-all shadow-lg"
                               whileHover={{ rotate: 15, scale: 1.1 }}
                               transition={{ type: "spring", stiffness: 400 }}
                             >
@@ -512,49 +498,6 @@ export function Contact() {
                   );
                 })}
               </div>
-
-              {/* Social Links */}
-              {/* <Card className="border-0 bg-card/50 backdrop-blur-sm shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-xl font-headline flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-primary" />
-                    Connect on Social
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {socialLinks.map((social) => {
-                    const IconComponent = social.icon;
-                    return (
-                      <motion.a
-                        key={social.name}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-4 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-all duration-300 group"
-                        whileHover={{ scale: 1.02, x: 5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        <motion.div
-                          className={`p-2 rounded-lg bg-gradient-to-r ${social.color}`}
-                          whileHover={{ rotate: 360 }}
-                          transition={{ duration: 0.6 }}
-                        >
-                          <IconComponent className="w-5 h-5 text-white" />
-                        </motion.div>
-                        <div className="flex-1">
-                          <h4 className="font-medium group-hover:text-primary transition-colors">
-                            {social.name}
-                          </h4>
-                          <p className="text-sm text-muted-foreground">
-                            {social.followers}
-                          </p>
-                        </div>
-                        <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                      </motion.a>
-                    );
-                  })}
-                </CardContent>
-              </Card> */}
 
               {/* Quick Response Promise */}
               <Card className="border-0 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 backdrop-blur-sm">

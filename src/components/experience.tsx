@@ -28,13 +28,39 @@ import { Button } from '@/components/ui/button';
 const experiences = [
   {
     id: 1,
+    role: "Software Engineer", 
+    company: "Beebee Digital Pvt Ltd",
+    location: "Colombo, Sri Lanka",
+    period: "Dec 2024 - Jul 2025",
+    duration: "8 months",
+    type: "Full-time",
+    status: "Recent",
+    description: "Developed and enhanced multiple client projects including NFT platforms and digital marketplaces with modern web technologies.",
+    achievements: [
+      "Enhanced ohhNFT platform UI components",
+      "Resolved critical mobile wallet integration issues",
+      "Implemented GraphQL endpoints for seamless functionality",
+      "Delivered 5+ client projects successfully"
+    ],
+    technologies: ["Next.js", "Node.js", "MySQL", "GraphQL", "Heroku", "Web3"],
+    projects: ["ohhNFT Platform"],
+    highlights: {
+      impact: "Improved platform performance by 40%",
+      growth: "Delivered 5+ successful projects",
+      team: "Collaborated with 3-person dev team"
+    },
+    color: "from-purple-500 to-pink-500",
+    icon: Code2
+  },
+  {
+    id: 2,
     role: "Full-Stack Developer",
     company: "PT. Crypto Canary Network",
     location: "Remote",
     period: "Nov 2023 - Nov 2024",
     duration: "1 year",
     type: "Full-time",
-    status: "Recent",
+    status: "Completed",
     description: "Led development of Vesta Web & Mobile Application, a comprehensive Web3 NFT marketplace with advanced trading features and analytics dashboard.",
     achievements: [
       "Built complete Web3 NFT marketplace from scratch",
@@ -53,7 +79,7 @@ const experiences = [
     icon: Zap
   },
   {
-    id: 2,
+    id: 3,
     role: "Full-Stack Developer", 
     company: "Beebee Digital Pvt Ltd",
     location: "Colombo, Sri Lanka",
@@ -79,7 +105,7 @@ const experiences = [
     icon: Code2
   },
   {
-    id: 3,
+    id: 4,
     role: "Software Engineer (Intern)",
     company: "Zynergyx Technologies Pvt Ltd",
     location: "Colombo, Sri Lanka", 
