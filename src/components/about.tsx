@@ -423,31 +423,55 @@ export function About() {
 
       {/* Matrix Rain Effect */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-9 dark:opacity-5">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-green-500 dark:text-green-400 font-mono text-xs"
-            style={{
-              left: `${i * 7}%`,
-              top: '-10%',
-            }}
-            animate={{
-              y: ['0vh', '110vh'],
-            }}
-            transition={{
-              duration: 10 + (i % 5),
-              repeat: Infinity,
-              delay: i * 0.5,
-              ease: 'linear',
-            }}
-          >
-            {Array.from({ length: 20 }, (_, j) => (
-              <div key={j} className="mb-2">
-                {Math.random() > 0.5 ? '1' : '0'}
-              </div>
-            ))}
-          </motion.div>
-        ))}
+          {/* Animated Glow Background */}
+<motion.div
+  aria-hidden
+  className="absolute inset-0 pointer-events-none z-0"
+>
+  {/* Animated radial glow at center */}
+  <motion.div
+    className="absolute left-1/2 top-1/2 w-[60vw] h-[60vw] md:w-[35vw] md:h-[35vw] rounded-full"
+    style={{
+      translateX: "-50%",
+      translateY: "-50%",
+      background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(34,197,94,0.11), rgba(59,130,246,0.07), transparent 95%)",
+      filter: "blur(0.5rem)"
+    }}
+    animate={{
+      scale: [1, 1.06, 1],
+      opacity: [0.60, 0.75, 0.60]
+    }}
+    transition={{
+      duration: 7,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  />
+  {/* Subtle floating code tokens */}
+  {['<div>', 'const', '//', '{}', 'function', 'return', '...', '<About />'].map((token, i) => (
+    <motion.div
+      key={i}
+      className="absolute text-green-500/10 font-mono text-xl md:text-2xl select-none"
+      style={{
+        left: `${12 + (i * 10) % 76}%`,
+        top: `${25 + (i * 7) % 60}%`,
+      }}
+      animate={{
+        y: [-8, 8, -8],
+        opacity: [0.12, 0.23, 0.12],
+        rotate: [-3, 3, -3],
+      }}
+      transition={{
+        duration: 9 + i,
+        repeat: Infinity,
+        delay: i * 0.4,
+      }}
+    >
+      {token}
+    </motion.div>
+  ))}
+</motion.div>
+
       </div>
     </motion.section>
   );

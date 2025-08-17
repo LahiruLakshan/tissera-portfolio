@@ -6,7 +6,7 @@ import { LoadingProvider } from '@/components/loading-provider';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
-
+import { CustomCursor } from '@/components/CustomCursor';
 export const metadata: Metadata = {
   title: 'Lahiru Tissera | Full-Stack Software Engineer',
   description: 'Creative Full-Stack Developer specializing in Web3, React, Next.js, and Machine Learning.',
@@ -21,6 +21,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="font-body antialiased"  data-new-gr-c-s-check-loaded="14.1248.0"
                       data-gr-ext-installed="">
+                        <CustomCursor />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
