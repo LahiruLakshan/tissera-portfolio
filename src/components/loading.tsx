@@ -139,7 +139,7 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                       Lahiru Tissera
                     </h1>
                     <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">
-                      Full-Stack Developer
+                      Software Engineer
                     </p>
                   </div>
                 </div>
