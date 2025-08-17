@@ -402,7 +402,7 @@ export function Experience() {
 
                         <CardContent className="space-y-6">
                           {/* Description */}
-                          <p className="text-muted-foreground leading-relaxed">
+                          <p className="text-muted-foreground leading-relaxed text-justify">
                             {exp.description}
                           </p>
 

@@ -269,7 +269,7 @@ export function Services() {
 
                     <CardContent className="relative z-10 space-y-6">
                       {/* Description */}
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-muted-foreground leading-relaxed text-justify">
                         {service.description}
                       </p>
 

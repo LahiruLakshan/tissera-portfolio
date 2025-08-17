@@ -490,8 +490,8 @@ export function Hero() {
               transition={{ duration: 2, repeat: Infinity }}
               className="p-2 rounded-full  backdrop-blur-sm items-center flex flex-col"
             >
-              <div className="w-8 h-12 border-2 border-white/60 rounded-full flex justify-center items-start p-1 group-hover:border-white transition-colors duration-300">
-                <div className="w-1 h-3 bg-white/80 rounded-full animate-scroll-bounce group-hover:bg-white transition-colors duration-300"></div>
+              <div className="w-8 h-12 border-2 dark:border-white/60 border-black/60 rounded-full flex justify-center items-start p-1 dark:group-hover:border-white group-hover:border-black transition-colors duration-300">
+                <div className="w-1 h-3 dark:bg-white/80 bg-black/80 rounded-full animate-scroll-bounce dark:group-hover:bg-white group-hover:bg-black transition-colors duration-300"></div>
               </div>
               <ChevronDown className="w-5 h-5 text-muted-foreground" />
             </motion.div>

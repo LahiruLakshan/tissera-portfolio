@@ -134,8 +134,8 @@ export function About() {
               className="space-y-8 col-span-4"
             >
               <Card className="border-0 bg-card/50 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500">
-                <CardContent className="p-8">
-                  <div className="space-y-6 text-muted-foreground leading-relaxed">
+                <CardContent className="p-8 ">
+                  <div className="space-y-6 text-muted-foreground leading-relaxed text-justify">
                     <motion.p
                       className="text-lg"
                       initial={{ opacity: 0 }}
@@ -220,7 +220,7 @@ export function About() {
                             <h4 className="font-semibold text-foreground mb-1">
                               {highlight.title}
                             </h4>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-muted-foreground text-justify">
                               {highlight.description}
                             </p>
                           </div>

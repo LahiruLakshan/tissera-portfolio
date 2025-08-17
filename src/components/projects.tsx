@@ -388,7 +388,7 @@ export function Projects() {
                               {project.year}
                             </div>
                           </div>
-                          <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
+                          <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 text-justify">
                             {project.description}
                           </p>
                         </CardHeader>
@@ -499,7 +499,7 @@ export function Projects() {
                             </CardTitle>
                             <div className="text-xs text-muted-foreground">{project.year}</div>
                           </div>
-                          <p className="text-muted-foreground text-sm line-clamp-2">
+                          <p className="text-muted-foreground text-sm line-clamp-2 text-justify">
                             {project.description}
                           </p>
                         </CardHeader>

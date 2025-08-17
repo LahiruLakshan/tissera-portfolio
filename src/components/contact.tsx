@@ -484,11 +484,11 @@ export function Contact() {
                         <CardContent className="p-6">
                           <div className="flex items-start gap-4">
                             <motion.div
-                              className={`p-3 rounded-xl bg-gradient-to-r ${info.color} shadow-lg`}
+                              className={`p-3 rounded-xl bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border border-primary/50 transition-all shadow-lg`}
                               whileHover={{ rotate: 15, scale: 1.1 }}
                               transition={{ type: "spring", stiffness: 400 }}
                             >
-                              <IconComponent className="w-6 h-6 text-white" />
+                              <IconComponent className="w-6 h-6 text-primary" />
                             </motion.div>
                             <div className="flex-1">
                               <h3 className="font-semibold group-hover:text-primary transition-colors">
