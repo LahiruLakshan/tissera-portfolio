@@ -5,7 +5,7 @@ import React, { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
-import { Code2 } from "lucide-react";
+import { Brain, Code, Code2 } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faReact,
@@ -49,6 +49,25 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/effect-coverflow";
 import NextJS from "./icons/nextjs";
+import { RiNextjsFill } from "react-icons/ri";
+import { SiTypescript } from "react-icons/si";
+import { SiMongodb } from "react-icons/si";
+import { BiLogoPostgresql } from "react-icons/bi";
+import { SiMysql } from "react-icons/si";
+import { IoLogoFirebase } from "react-icons/io5";
+import { TbBrandAdobeXd } from "react-icons/tb";
+import { FaFlutter } from "react-icons/fa6";
+import { TbBrandReactNative } from "react-icons/tb";
+import { SiWeb3Dotjs } from "react-icons/si";
+import { SiEthers } from "react-icons/si";
+import { RiTailwindCssFill } from "react-icons/ri";
+import { GrGraphQl } from "react-icons/gr";
+import { TbApi } from "react-icons/tb";
+import { SiPytorch } from "react-icons/si";
+import { SiTensorflow } from "react-icons/si";
+import { SiScikitlearn } from "react-icons/si";
+import { SiOpencv } from "react-icons/si";
+import { SiExpress } from "react-icons/si";
 
 // Enhanced tech stack with Font Awesome icons
 const techStack = [
@@ -62,7 +81,7 @@ const techStack = [
   {
     name: "Next.js",
     icon: faCode,
-    iconFile: NextJS,
+    iconFile: RiNextjsFill,
     category: "Frontend",
     color: "from-gray-700 to-black",
     type: "solid",
@@ -70,6 +89,7 @@ const techStack = [
   {
     name: "TypeScript",
     icon: faCode,
+    iconFile: SiTypescript,
     category: "Language",
     color: "from-blue-500 to-blue-700",
     type: "solid",
@@ -105,6 +125,7 @@ const techStack = [
   {
     name: "MongoDB",
     icon: faDatabase,
+    iconFile: SiMongodb,
     category: "Database",
     color: "from-green-400 to-green-600",
     type: "solid",
@@ -112,6 +133,7 @@ const techStack = [
   {
     name: "PostgreSQL",
     icon: faDatabase,
+    iconFile: BiLogoPostgresql,
     category: "Database",
     color: "from-blue-600 to-blue-800",
     type: "solid",
@@ -119,6 +141,7 @@ const techStack = [
   {
     name: "MySQL",
     icon: faDatabase,
+    iconFile: SiMysql,
     category: "Database",
     color: "from-orange-400 to-orange-600",
     type: "solid",
@@ -126,6 +149,7 @@ const techStack = [
   {
     name: "Firebase",
     icon: faFire,
+    iconFile: IoLogoFirebase,
     category: "Backend",
     color: "from-orange-400 to-yellow-500",
     type: "solid",
@@ -168,6 +192,7 @@ const techStack = [
   {
     name: "Adobe XD",
     icon: faPalette,
+    iconFile: TbBrandAdobeXd,
     category: "Design",
     color: "from-purple-500 to-pink-600",
     type: "solid",
@@ -175,6 +200,7 @@ const techStack = [
   {
     name: "Flutter",
     icon: faMobile,
+    iconFile: FaFlutter,
     category: "Mobile",
     color: "from-blue-400 to-cyan-500",
     type: "solid",
@@ -182,6 +208,7 @@ const techStack = [
   {
     name: "React Native",
     icon: faReact,
+    iconFile: TbBrandReactNative,
     category: "Mobile",
     color: "from-blue-500 to-purple-600",
     type: "brand",
@@ -189,6 +216,7 @@ const techStack = [
   {
     name: "Web3",
     icon: faChain,
+    iconFile: SiWeb3Dotjs,
     category: "Blockchain",
     color: "from-purple-500 to-indigo-600",
     type: "solid",
@@ -196,6 +224,7 @@ const techStack = [
   {
     name: "Ethers.js",
     icon: faLightbulb,
+    iconFile: SiEthers,
     category: "Blockchain",
     color: "from-yellow-400 to-orange-500",
     type: "solid",
@@ -210,6 +239,7 @@ const techStack = [
   {
     name: "TailwindCSS",
     icon: faCss3Alt,
+    iconFile: RiTailwindCssFill,
     category: "Styling",
     color: "from-cyan-400 to-blue-500",
     type: "brand",
@@ -224,6 +254,7 @@ const techStack = [
   {
     name: "GraphQL",
     icon: faChartBar,
+    iconFile: GrGraphQl,
     category: "API",
     color: "from-pink-500 to-purple-600",
     type: "solid",
@@ -231,6 +262,7 @@ const techStack = [
   {
     name: "REST API",
     icon: faPlug,
+    iconFile: TbApi,
     category: "API",
     color: "from-green-400 to-blue-500",
     type: "solid",
@@ -238,6 +270,7 @@ const techStack = [
   {
     name: "PyTorch",
     icon: faBrain,
+    iconFile: SiPytorch,
     category: "AI/ML",
     color: "from-orange-500 to-red-600",
     type: "solid",
@@ -245,6 +278,7 @@ const techStack = [
   {
     name: "TensorFlow",
     icon: faBrain,
+    iconFile: SiTensorflow,
     category: "AI/ML",
     color: "from-orange-400 to-yellow-500",
     type: "solid",
@@ -252,6 +286,7 @@ const techStack = [
   {
     name: "Scikit-learn",
     icon: faRocket,
+    iconFile: SiScikitlearn,
     category: "AI/ML",
     color: "from-blue-400 to-green-500",
     type: "solid",
@@ -259,6 +294,7 @@ const techStack = [
   {
     name: "OpenCV",
     icon: faEye,
+    iconFile: SiOpencv,
     category: "AI/ML",
     color: "from-green-400 to-blue-600",
     type: "solid",
@@ -280,6 +316,7 @@ const techStack = [
   {
     name: "Express.js",
     icon: faServer,
+    iconFile: SiExpress,
     category: "Backend",
     color: "from-green-600 to-green-800",
     type: "solid",
@@ -410,7 +447,7 @@ export function Skills() {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="p-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm">
-                <Code2 className="w-8 h-8 text-primary" />
+                <Code className="w-8 h-8 text-primary" />
               </div>
               <h2 className="text-4xl sm:text-5xl font-headline font-bold">
                 Technical Skills
@@ -468,7 +505,7 @@ export function Skills() {
                       }}
                     >
                       <div
-                        className={`relative w-full h-full rounded-2xl bg-gradient-to-br ${tech.color} p-4 flex flex-col items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/10`}
+                        className={`relative w-full h-full rounded-2xl bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border border-primary/50 p-4 flex flex-col items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 `}
                       >
                         {/* Tech Icon - Font Awesome */}
                         <motion.div
@@ -483,23 +520,23 @@ export function Skills() {
                           }}
                         >
                           {tech?.iconFile ? (
-                            React.createElement(tech.iconFile) 
+                             <tech.iconFile className="text-3xl text-primary "/>
                           ) : (
                             <FontAwesomeIcon
                               icon={tech.icon}
-                              className="text-3xl"
+                              className="text-3xl text-primary"
                             />
                           )}
                         </motion.div>
 
                         {/* Tech Name */}
-                        <span className="text-xs font-bold text-white text-center leading-tight opacity-90 group-hover:opacity-100 transition-opacity duration-200">
+                        <span className="text-xs font-bold  text-center leading-tight opacity-90 group-hover:opacity-100 transition-opacity duration-200 font-headline mb-2 group-hover:text-primary">
                           {tech.name}
                         </span>
 
                         {/* Category Badge */}
                         <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                          <span className="px-2 py-1 text-xs font-medium bg-white/20 backdrop-blur-sm rounded-full text-white border border-white/20">
+                          <span className="px-2 py-1 text-xs font-medium  backdrop-blur-sm rounded-full  border dark:bg-white/10 dark:border-white/10 bg-black/10 border-black/10">
                             {tech.category}
                           </span>
                         </div>

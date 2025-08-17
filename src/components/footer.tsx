@@ -17,45 +17,51 @@ import {
   Clock,
   Star,
   Zap,
-  Send
+  Send,
+  Brain,
+  Code
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
+import { RiTailwindCssFill } from "react-icons/ri";
+import { TbBrandFramerMotion } from "react-icons/tb";
+import { SiSkillshare } from 'react-icons/si';
 
 const socialLinks = [
   {
     name: "GitHub",
     icon: Github,
-    href: "https://github.com/lahiru-lakshan-tissera",
+    href: "https://github.com/LahiruLakshan",
     color: "hover:bg-gray-900 hover:text-white",
     followers: "50+ repos"
   },
   {
     name: "LinkedIn",
     icon: Linkedin,
-    href: "https://linkedin.com/in/lahiru-lakshan-tissera",
-    color: "hover:bg-blue-600 hover:text-white",
+    href: "https://www.linkedin.com/in/lahiru-lakshan-tissera/",
+    color: "hover:bg-gray-900 hover:text-white",
     followers: "500+ connections"
   },
   {
     name: "Email",
     icon: Mail,
     href: "mailto:balahirulakshan@gmail.com",
-    color: "hover:bg-red-500 hover:text-white",
+    color: "hover:bg-gray-900 hover:text-white",
     followers: "Quick response"
   },
   {
     name: "Phone",
     icon: Phone,
     href: "tel:+94711837836",
-    color: "hover:bg-green-500 hover:text-white",
+    color: "hover:bg-gray-900 hover:text-white",
     followers: "Available for calls"
   }
 ];
 
 const quickLinks = [
   { name: "About", href: "#about", icon: Code2 },
+  { name: "Skills", href: "#skills", icon: Code },
   { name: "Services", href: "#services", icon: Zap },
   { name: "Projects", href: "#projects", icon: Star },
   { name: "Experience", href: "#experience", icon: Coffee },
@@ -289,6 +295,8 @@ export function Footer() {
                         whileHover={{ rotate: 360 }}
                         transition={{ duration: 0.6 }}
                       >
+                       
+
                         <IconComponent className="w-4 h-4" />
                       </motion.div>
                       <div className="flex-1">
@@ -347,25 +355,22 @@ export function Footer() {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <motion.div
-                    animate={{ rotate: [0, 180, 360] }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                  >
-                    <Code2 className="w-4 h-4" />
-                  </motion.div>
-                  <span className="text-xs">Made with</span>
+                  <span className="text-xs">Styled by</span>
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <Heart className="w-4 h-4 text-red-500" />
+                     <RiTailwindCssFill className="w-4 h-4 text-blue-400"/>
+                    {/* <Heart className="w-4 h-4 text-red-500" /> */}
                   </motion.div>
-                  <span className="text-xs">and lots of</span>
+                  <span className="text-xs">with</span>
                   <motion.div
                     animate={{ rotate: [0, 10, -10, 0] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
-                    <Coffee className="w-4 h-4 text-amber-500" />
+                    <TbBrandFramerMotion className="w-4 h-4 text-pink-700"/>
+
+                    {/* <Coffee className="w-4 h-4 text-amber-500" /> */}
                   </motion.div>
                 </div>
               </motion.div>

@@ -42,6 +42,8 @@ import {
   faRobot,
   faTerminal,
 } from "@fortawesome/free-solid-svg-icons";
+import { RiRobot3Line } from "react-icons/ri";
+import { SiHiveBlockchain } from "react-icons/si";
 
 const roles = [
   {
@@ -49,15 +51,15 @@ const roles = [
     icon: Code2,
     color: "from-blue-500 to-cyan-500",
   },
-  { text: "Web3 Engineer", icon: Zap, color: "from-purple-500 to-pink-500" },
+  { text: "Web3 Engineer", icon: SiHiveBlockchain, color: "from-purple-500 to-pink-500" },
   {
     text: "UI/UX Designer",
     icon: Palette,
     color: "from-emerald-500 to-teal-500",
   },
   {
-    text: "React Specialist",
-    icon: Sparkles,
+    text: "AI/ML Researcher",
+    icon: RiRobot3Line,
     color: "from-orange-500 to-red-500",
   },
 ];
@@ -143,7 +145,7 @@ export function Hero() {
     <motion.section
       
       // style={{ y, opacity }}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/80"
+      className="relative lg:min-h-screen  min-h-[1400px]  flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/80"
     >
       {/* Animated Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
@@ -229,6 +231,7 @@ export function Hero() {
               </h1>
 
               {/* Dynamic Role Display */}
+              
               <div className="h-16 flex items-center justify-center lg:justify-start">
                 <motion.div
                   key={currentRole}
@@ -236,12 +239,12 @@ export function Hero() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -20, scale: 0.8 }}
                   transition={{ duration: 0.5 }}
-                  className="flex items-center gap-3"
+                  className="flex items-center gap-3 "
                 >
                   <div
-                    className={`p-2 rounded-lg bg-gradient-to-r ${roles[currentRole].color} bg-opacity-10 backdrop-blur-sm`}
+                    className={`p-2 rounded-lg bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border border-primary/50 transition-all duration-300`}
                   >
-                    <CurrentRoleIcon className="w-6 h-6 text-foreground" />
+                    <CurrentRoleIcon className="w-6 h-6 text-primary" />
                   </div>
                   <span className="text-2xl sm:text-3xl font-medium text-muted-foreground">
                     {roles[currentRole].text}
@@ -309,12 +312,12 @@ export function Hero() {
               {[
                 {
                   icon: Github,
-                  href: "https://github.com/lahiru-lakshan-tissera",
+                  href: "https://github.com/LahiruLakshan",
                   label: "GitHub",
                 },
                 {
                   icon: Linkedin,
-                  href: "https://linkedin.com/in/lahiru-lakshan-tissera",
+                  href: "https://www.linkedin.com/in/lahiru-lakshan-tissera/",
                   label: "LinkedIn",
                 },
                 {
@@ -385,7 +388,7 @@ export function Hero() {
                 <Avatar className="w-64 h-64 lg:w-80 lg:h-80 border-4 border-primary/30 shadow-2xl hover:shadow-primary/25 transition-all duration-500">
                   <Image
                     // src="https://media.licdn.com/dms/image/v2/D5603AQFIxldwSUganw/profile-displayphoto-shrink_800_800/B56ZTbJ6yyHEAc-/0/1738843599819?e=1758153600&v=beta&t=9BpUbCLBKPItzXiRt9Ax_WXb87nswTR3KNbDjUQWNcU"
-                    src="/images/profile.jpeg"
+                    src="/images/graduation-img.JPG"
                     alt="Lahiru Tissera"
                     className="object-cover hover:scale-110 transition-transform duration-700"
                     width={1000}
@@ -477,7 +480,7 @@ export function Hero() {
         >
           <motion.div
             variants={itemVariants}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+            className="absolute lg:bottom-[150px] md:bottom-[10px] bottom-[0px] left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
           >
             <span className="text-xs text-muted-foreground">
               Scroll to explore
@@ -487,8 +490,8 @@ export function Hero() {
               transition={{ duration: 2, repeat: Infinity }}
               className="p-2 rounded-full  backdrop-blur-sm items-center flex flex-col"
             >
-              <div className="w-8 h-12 border-2 border-white/60 rounded-full flex justify-center items-start p-1 group-hover:border-white transition-colors duration-300">
-                <div className="w-1 h-3 bg-white/80 rounded-full animate-scroll-bounce group-hover:bg-white transition-colors duration-300"></div>
+              <div className="w-8 h-12 border-2 dark:border-white/60 border-black/60 rounded-full flex justify-center items-start p-1 dark:group-hover:border-white group-hover:border-black transition-colors duration-300">
+                <div className="w-1 h-3 dark:bg-white/80 bg-black/80 rounded-full animate-scroll-bounce dark:group-hover:bg-white group-hover:bg-black transition-colors duration-300"></div>
               </div>
               <ChevronDown className="w-5 h-5 text-muted-foreground" />
             </motion.div>

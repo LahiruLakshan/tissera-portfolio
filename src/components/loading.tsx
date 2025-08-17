@@ -350,27 +350,7 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
               )}
             </AnimatePresence>
 
-            {/* Fun Loading Messages */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2 }}
-              className="flex justify-center"
-            >
-              <Badge 
-                variant="secondary" 
-                className="bg-muted/50 text-muted-foreground border-border/50"
-              >
-                <motion.div
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="mr-2"
-                >
-                  <Coffee className="w-3 h-3" />
-                </motion.div>
-                Made with ❤️ and lots of ☕
-              </Badge>
-            </motion.div>
+           
           </motion.div>
 
           {/* Loading Dots Animation */}

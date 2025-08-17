@@ -109,7 +109,9 @@ export function Header() {
       transition: { type: "spring", stiffness: 400 }
     }
   };
-
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
   return (
     <>
       <motion.header
@@ -120,13 +122,14 @@ export function Header() {
         className={`fixed top-0 z-50 w-full transition-all duration-300 ${
           isScrolled 
             ? 'border-b border-border/50 bg-background/80 backdrop-blur-md shadow-lg' 
-            : 'border-b border-border/20 bg-background/60 backdrop-blur-sm'
+            : ''
         }`}
       >
         <div className="container flex h-16 max-w-screen-2xl items-center justify-between">
           
           {/* Logo Section */}
           <motion.div 
+          onClick={scrollToTop}
             className="flex items-center gap-3 cursor-pointer"
             variants={logoVariants}
             whileHover="hover"
@@ -186,7 +189,6 @@ export function Header() {
               </Badge>
             </motion.div>
           </motion.div>
-
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
             {navigationItems.map((item, index) => {
