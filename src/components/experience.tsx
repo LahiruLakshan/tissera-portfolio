@@ -1,14 +1,14 @@
 // src/components/experience.tsx
 "use client";
 
-import { useRef } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { 
-  Briefcase, 
-  MapPin, 
-  Calendar, 
-  Users, 
-  Trophy, 
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import {
+  Briefcase,
+  MapPin,
+  Calendar,
+  Users,
+  Trophy,
   TrendingUp,
   ExternalLink,
   Building,
@@ -19,38 +19,59 @@ import {
   Palette,
   Smartphone,
   Zap,
-  Award
-} from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+  Award,
+  Terminal,
+  Activity,
+  GitBranch,
+  FileCode,
+  CheckCircle,
+  Monitor,
+  Server,
+  Database
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const experiences = [
   {
     id: 1,
-    role: "Software Engineer", 
+    role: "Software Engineer",
     company: "Beebee Digital Pvt Ltd",
     location: "Colombo, Sri Lanka",
     period: "Dec 2024 - Jul 2025",
     duration: "8 months",
     type: "Full-time",
-    status: "Recent",
-    description: "Developed and enhanced multiple client projects including NFT platforms and digital marketplaces with modern web technologies.",
+    status: "CURRENT",
+    description: "Built and maintained NFT marketplace platforms including ohhNFT and Owlies NFT Store with strong focus on Web3 integration, analytics, and user experience.",
     achievements: [
-      "Enhanced ohhNFT platform UI components",
-      "Resolved critical mobile wallet integration issues",
-      "Implemented GraphQL endpoints for seamless functionality",
-      "Delivered 5+ client projects successfully"
+      "Developed and maintained ohhNFT web and Owlies NFT Store",
+      "Implemented NFT creation, listing, and trading features",
+      "Designed and built an analytics dashboard for marketplace insights",
+      "Integrated blockchain functionalities and wallet connectivity",
+      "Conducted code reviews and optimized application performance",
     ],
-    technologies: ["Next.js", "Node.js", "MySQL", "GraphQL", "Heroku", "Web3"],
-    projects: ["ohhNFT Platform"],
+    technologies: [
+      "React.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Ethers.js",
+      "React Query",
+      "Web3",
+      "Wagmi",
+      "AWS",
+      "React Native",
+    ],
+    projects: ["ohhNFT", "Owlies NFT Store"],
     highlights: {
-      impact: "Improved platform performance by 40%",
-      growth: "Delivered 5+ successful projects",
-      team: "Collaborated with 3-person dev team"
+      impact: "Built high-performing NFT marketplaces",
+      growth: "Enhanced insights with analytics dashboards",
+      team: "Collaborated with teams for timely delivery",
     },
-    color: "from-purple-500 to-pink-500",
-    icon: Code2
+    command: "git checkout feature/web3-marketplace",
+    deployments: ["AWS", "Vercel"],
+    metrics: { users: "5K+", volume: "$1M+", uptime: "99.9%" },
+    icon: Code2,
   },
   {
     id: 2,
@@ -60,98 +81,137 @@ const experiences = [
     period: "Nov 2023 - Nov 2024",
     duration: "1 year",
     type: "Full-time",
-    status: "Completed",
+    status: "COMPLETED",
     description: "Led development of Vesta Web & Mobile Application, a comprehensive Web3 NFT marketplace with advanced trading features and analytics dashboard.",
     achievements: [
       "Built complete Web3 NFT marketplace from scratch",
       "Implemented advanced trading algorithms and analytics",
       "Managed React Native mobile app development",
-      "Integrated multiple blockchain networks and wallets"
+      "Integrated multiple blockchain networks and wallets",
     ],
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Ethers.js", "React Native", "Web3", "AWS"],
+    technologies: [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Ethers.js",
+      "React Native",
+      "Web3",
+      "AWS",
+    ],
     projects: ["Vesta NFT Marketplace"],
     highlights: {
       impact: "Led core product development",
       growth: "Handled $500K+ in transactions",
-      team: "Mentored 2 junior developers"
+      team: "Mentored 2 junior developers",
     },
-    color: "from-purple-500 to-indigo-600",
-    icon: Zap
+    command: "npm run vesta --production",
+    deployments: ["AWS", "Mobile Stores"],
+    metrics: { transactions: "10K+", volume: "$500K+", rating: "4.8★" },
+    icon: Zap,
   },
   {
     id: 3,
-    role: "Full-Stack Developer", 
+    role: "Full-Stack Developer",
     company: "Beebee Digital Pvt Ltd",
     location: "Colombo, Sri Lanka",
     period: "Jan 2023 - Oct 2023",
     duration: "10 months",
     type: "Full-time",
-    status: "Completed",
+    status: "COMPLETED",
     description: "Developed and enhanced multiple client projects including NFT platforms and digital marketplaces with modern web technologies.",
     achievements: [
       "Enhanced ohhNFT platform UI components",
       "Resolved critical mobile wallet integration issues",
       "Implemented GraphQL endpoints for seamless functionality",
-      "Delivered 5+ client projects successfully"
+      "Delivered 5+ client projects successfully",
     ],
     technologies: ["Next.js", "Node.js", "MySQL", "GraphQL", "Heroku", "Web3"],
     projects: ["ohhNFT Platform"],
     highlights: {
       impact: "Improved platform performance by 40%",
       growth: "Delivered 5+ successful projects",
-      team: "Collaborated with 3-person dev team"
+      team: "Collaborated with 3-person dev team",
     },
-    color: "from-emerald-500 to-teal-600",
-    icon: Code2
+    command: "docker-compose up --scale backend=3",
+    deployments: ["Heroku", "Firebase"],
+    metrics: { performance: "+40%", projects: "5+", team: "3 devs" },
+    icon: Code2,
   },
   {
     id: 4,
     role: "Software Engineer (Intern)",
     company: "Zynergyx Technologies Pvt Ltd",
-    location: "Colombo, Sri Lanka", 
+    location: "Colombo, Sri Lanka",
     period: "Sep 2021 - Sep 2022",
     duration: "1 year",
     type: "Internship",
-    status: "Foundation",
+    status: "FOUNDATION",
     description: "Started my professional journey developing enterprise solutions, admin dashboards, and blockchain-based platforms while learning industry best practices.",
     achievements: [
       "Built enterprise admin dashboard from scratch",
       "Developed VIP blockchain verification platform",
       "Created Emirates Offroaders mobile app and admin panel",
-      "Learned modern development practices and team collaboration"
+      "Learned modern development practices and team collaboration",
     ],
-    technologies: ["React.js", "Scala", "Flutter", "Firebase", "Azure", "MySQL"],
+    technologies: [
+      "React.js",
+      "Scala",
+      "Flutter",
+      "Firebase",
+      "Azure",
+      "MySQL",
+    ],
     projects: ["VIP Platform", "Emirates Offroaders", "Enterprise Dashboard"],
     highlights: {
       impact: "Built 3 major applications",
       growth: "Transitioned from intern to full-time offer",
-      team: "Worked closely with senior architects"
+      team: "Worked closely with senior architects",
     },
-    color: "from-orange-500 to-red-500",
-    icon: Building
-  }
+    command: "flutter build apk --release",
+    deployments: ["Azure", "Firebase", "Play Store"],
+    metrics: { apps: "3", transition: "Intern→FTE", rating: "A+" },
+    icon: Building,
+  },
 ];
 
 const stats = [
-  { label: "Years Experience", value: "3+", icon: Clock },
-  { label: "Companies Worked", value: "3", icon: Building },
-  { label: "Projects Delivered", value: "15+", icon: Trophy },
-  { label: "Technologies Mastered", value: "20+", icon: Star }
+  { label: "Years Experience", value: "3+", icon: Clock, command: "uptime" },
+  { label: "Companies Worked", value: "3", icon: Building, command: "ls companies/" },
+  { label: "Projects Delivered", value: "15+", icon: Trophy, command: "git log --count" },
+  { label: "Technologies Mastered", value: "20+", icon: Star, command: "npm list -g" },
 ];
 
-const skills = [
-  { name: "Leadership", level: 85, category: "Soft Skills" },
-  { name: "Problem Solving", level: 95, category: "Soft Skills" },
-  { label: "Full-Stack Development", level: 90, category: "Technical" },
-  { name: "Team Collaboration", level: 88, category: "Soft Skills" }
+const terminalExperience = [
+  { command: "whoami", output: "senior-developer with 3+ years experience", delay: 0 },
+  { command: "ls -la experience/", output: "📁 4 positions across 3 companies", delay: 0.8 },
+  { command: "grep -r 'success' projects/", output: "✅ 15+ projects delivered successfully", delay: 1.6 },
+  { command: "git log --since='2021' --oneline", output: "🚀 From intern to senior in 3 years", delay: 2.4 },
 ];
+
+const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (currentIndex < text.length) {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }
+    }, delay + currentIndex * speed);
+
+    return () => clearTimeout(timer);
+  }, [currentIndex, text, delay, speed]);
+
+  return <span>{displayText}</span>;
+};
 
 export function Experience() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
@@ -163,27 +223,27 @@ export function Experience() {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        duration: 0.8
-      }
-    }
+        duration: 0.8,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
-    }
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
   };
 
   const timelineVariants = {
     hidden: { opacity: 0, scaleY: 0 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scaleY: 1,
-      transition: { duration: 1.2, ease: "easeInOut", delay: 0.5 }
-    }
+      transition: { duration: 1.2, ease: "easeInOut", delay: 0.5 },
+    },
   };
 
   const cardVariants = {
@@ -195,42 +255,53 @@ export function Experience() {
       transition: {
         delay: 0.8 + index * 0.3,
         duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    })
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    }),
+  };
+
+  const codeVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
   };
 
   return (
     <motion.section
-    id='experience'
+      id="experience"
       ref={ref}
       style={{ opacity }}
-      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-background via-muted/10 to-background"
+      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 from-gray-50 via-gray-100 to-gray-50"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
-      
-      {/* Floating Background Elements */}
+      {/* Matrix-style Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
+
+      {/* Floating Code Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(10)].map((_, i) => (
+        {['git', 'npm', 'docker', 'deploy', 'build', 'commit', 'push', 'merge', 'test', 'prod'].map((symbol, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-primary/10 rounded-full"
+            className="absolute text-green-400/10 dark:text-green-400/10 text-gray-600/10 font-mono text-lg select-none"
             style={{
-              left: `${15 + (i * 10)}%`,
-              top: `${20 + (i * 8)}%`,
+              left: `${15 + (i * 8) % 70}%`,
+              top: `${10 + (i * 9) % 80}%`,
             }}
             animate={{
               y: [-15, 15, -15],
-              opacity: [0.3, 0.7, 0.3],
-              scale: [1, 1.3, 1],
+              opacity: [0.1, 0.3, 0.1],
+              rotate: [-2, 2, -2],
             }}
             transition={{
-              duration: 4 + i * 0.5,
+              duration: 6 + i,
               repeat: Infinity,
               delay: i * 0.4,
             }}
-          />
+          >
+            {symbol}
+          </motion.div>
         ))}
       </div>
 
@@ -241,84 +312,160 @@ export function Experience() {
           animate={isInView ? "visible" : "hidden"}
           className="max-w-6xl mx-auto"
         >
-          {/* Section Header */}
-          <motion.div 
-            variants={itemVariants}
-            className="text-center mb-20"
-          >
+          {/* Terminal Header */}
+          <motion.div variants={itemVariants} className="text-center mb-20">
             <motion.div
               className="inline-flex items-center gap-3 mb-6"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               <motion.div
-                className="p-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm"
+                className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-500/30"
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 8, repeat: Infinity }}
               >
-                <Briefcase className="w-8 h-8 text-primary" />
+                <Terminal className="w-8 h-8 text-green-400" />
               </motion.div>
-              <h2 className="text-4xl sm:text-5xl font-headline font-bold">
-                Professional Journey
+              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-400 dark:text-green-400 text-gray-900">
+                $ cat career_journey.md
               </h2>
             </motion.div>
-            
-            <motion.p 
-              className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-            >
-              My evolution as a developer, from intern to full-stack engineer, 
-              building <span className="text-primary font-semibold">innovative solutions</span> and 
-              gaining <span className="text-accent font-semibold">valuable experience</span> along the way.
-            </motion.p>
-            
-            <motion.div 
-              className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"
+
+            <motion.div
+              className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full mb-8"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             />
+
+            <motion.p
+              className="text-lg sm:text-xl text-gray-300 dark:text-gray-300 text-gray-600 max-w-3xl mx-auto font-mono"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              <span className="text-gray-500 dark:text-gray-500 text-gray-400">// </span>
+              Evolution from <span className="text-green-400">intern</span> to 
+              <span className="text-blue-400"> senior engineer</span>, building 
+              <span className="text-purple-400"> innovative solutions</span>
+            </motion.p>
           </motion.div>
 
-          {/* Experience Stats */}
+          {/* Terminal Info Panel */}
+          <motion.div variants={itemVariants} className="mb-16">
+            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+              {/* Terminal Header */}
+              <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 dark:bg-gray-800 bg-gray-200 border-b border-gray-700 dark:border-gray-700 border-gray-300">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+                <span className="text-xs text-gray-400 dark:text-gray-400 text-gray-600 ml-2 font-mono">experience@portfolio:~$</span>
+              </div>
+
+              <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-900 dark:bg-gray-900 bg-white min-h-[180px]">
+                {terminalExperience.map((cmd, index) => (
+                  <motion.div
+                    key={index}
+                    variants={codeVariants}
+                    transition={{ delay: cmd.delay }}
+                    className="space-y-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-400">$</span>
+                      <span className="text-white dark:text-white text-gray-900">
+                        {isInView && <TypewriterText text={cmd.command} delay={cmd.delay * 1000} />}
+                      </span>
+                    </div>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                      transition={{ delay: cmd.delay + 1 }}
+                      className="text-blue-300 dark:text-blue-300 text-blue-600 ml-4"
+                    >
+                      {cmd.output}
+                    </motion.div>
+                  </motion.div>
+                ))}
+
+                {/* Blinking Cursor */}
+                <motion.div
+                  className="flex items-center gap-2"
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ delay: 4 }}
+                >
+                  <span className="text-green-400">$</span>
+                  <motion.div
+                    className="w-2 h-5 bg-green-400"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                </motion.div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Experience Stats - Terminal Style */}
           <motion.div
             variants={itemVariants}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
+            className="mb-20"
           >
-            {stats.map((stat, index) => {
-              const IconComponent = stat.icon;
-              return (
-                <motion.div
-                  key={stat.label}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <Card className="text-center border-0 bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-300">
-                    <CardContent className="p-6">
-                      <motion.div
-                        className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 flex items-center justify-center"
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <IconComponent className="w-6 h-6 text-primary" />
-                      </motion.div>
-                      <div className="text-2xl font-bold text-primary mb-1">{stat.value}</div>
-                      <div className="text-sm text-muted-foreground">{stat.label}</div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
+            <div className="text-center mb-8">
+              <h3 className="text-xl font-mono text-green-400 dark:text-green-400 text-gray-900 mb-4">$ system --stats</h3>
+            </div>
+            
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+              {stats.map((stat, index) => {
+                const IconComponent = stat.icon;
+                return (
+                  <motion.div
+                    key={stat.label}
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/80 dark:bg-gray-900/80 bg-white/80 backdrop-blur-sm hover:bg-gray-800/90 dark:hover:bg-gray-800/90 hover:bg-gray-50/90 transition-all duration-300">
+                      {/* Terminal Command Header */}
+                      <div className="px-3 py-2 bg-gray-800 dark:bg-gray-800 bg-gray-200 border-b border-gray-700 dark:border-gray-700 border-gray-300 font-mono text-xs">
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-400">$</span>
+                          <span className="text-white dark:text-white text-gray-900">{stat.command}</span>
+                        </div>
+                      </div>
+
+                      <CardContent className="p-6 text-center">
+                        <motion.div
+                          className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-r from-green-500/20 to-blue-500/20 border border-green-500/30 flex items-center justify-center"
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                        >
+                          <IconComponent className="w-6 h-6 text-green-400" />
+                        </motion.div>
+                        <div className="text-2xl font-bold text-green-400 font-mono mb-1">
+                          {stat.value}
+                        </div>
+                        <div className="text-sm text-gray-300 dark:text-gray-300 text-gray-600 font-mono">
+                          {stat.label.toLowerCase().replace(/\s/g, '_')}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </div>
           </motion.div>
 
           {/* Experience Timeline */}
           <div className="relative">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl font-mono text-green-400 dark:text-green-400 text-gray-900 mb-4">$ git log --graph --oneline</h3>
+            </div>
+
             {/* Timeline Line */}
             <motion.div
               variants={timelineVariants}
-              className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary transform -translate-x-px md:-translate-x-1/2 origin-top"
+              className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-400 via-blue-400 to-green-400 transform -translate-x-px md:-translate-x-1/2 origin-top"
             />
 
             {/* Experience Cards */}
@@ -326,32 +473,32 @@ export function Experience() {
               {experiences.map((exp, index) => {
                 const IconComponent = exp.icon;
                 const isEven = index % 2 === 0;
-                
+
                 return (
                   <motion.div
                     key={exp.id}
                     variants={cardVariants}
                     custom={index}
                     className={`relative flex items-center ${
-                      isEven ? 'md:flex-row' : 'md:flex-row-reverse'
+                      isEven ? "md:flex-row" : "md:flex-row-reverse"
                     } group`}
                   >
                     {/* Timeline Node */}
                     <motion.div
-                      className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-primary to-accent shadow-lg transform -translate-x-1/2 z-10"
+                      className="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-green-400 to-blue-400 shadow-lg transform -translate-x-1/2 z-10 border-4 border-gray-900 dark:border-gray-900 border-gray-50"
                       whileHover={{ scale: 1.5 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
                       <motion.div
-                        className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-accent"
-                        animate={{ 
+                        className="absolute inset-0 rounded-full bg-gradient-to-r from-green-400 to-blue-400"
+                        animate={{
                           scale: [1, 1.5, 1],
-                          opacity: [1, 0.5, 1]
+                          opacity: [1, 0.5, 1],
                         }}
-                        transition={{ 
-                          duration: 2, 
+                        transition={{
+                          duration: 2,
                           repeat: Infinity,
-                          delay: index * 0.5
+                          delay: index * 0.5,
                         }}
                       />
                     </motion.div>
@@ -359,57 +506,63 @@ export function Experience() {
                     {/* Experience Card */}
                     <motion.div
                       className={`w-full md:w-5/12 ml-16 md:ml-0 ${
-                        isEven ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
+                        isEven ? "md:mr-auto md:pr-8" : "md:ml-auto md:pl-8"
                       }`}
                       whileHover={{ scale: 1.02, y: -5 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
-                      <Card className="border-0 bg-card/50 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 overflow-hidden group/card">
-                        {/* Card Header Background */}
-                        <motion.div
-                          className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${exp.color}`}
-                          initial={{ scaleX: 0 }}
-                          animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-                          transition={{ delay: 1 + index * 0.2, duration: 0.6 }}
-                        />
-
-                        <CardHeader className="pb-4 relative">
-                          {/* Status Badge */}
-                          <div className="absolute top-4 right-4">
-                            <Badge 
-                              variant={exp.status === 'Recent' ? 'default' : 'secondary'}
-                              className={
-                                exp.status === 'Recent' 
-                                  ? 'bg-green-500 text-white' 
-                                  : exp.status === 'Foundation'
-                                  ? 'bg-blue-500 text-white'
-                                  : ''
-                              }
+                      <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm hover:bg-gray-800/95 dark:hover:bg-gray-800/95 hover:bg-gray-50/95 hover:shadow-2xl transition-all duration-500 overflow-hidden group/card">
+                        {/* Terminal Command Header */}
+                        <div className="px-4 py-3 bg-gray-800 dark:bg-gray-800 bg-gray-200 border-b border-gray-700 dark:border-gray-700 border-gray-300 font-mono text-xs">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <span className="text-green-400">$</span>
+                              <span className="text-white dark:text-white text-gray-900">{exp.command}</span>
+                            </div>
+                            <Badge
+                              variant={exp.status === "CURRENT" ? "default" : "secondary"}
+                              className={`text-xs font-mono ${
+                                exp.status === "CURRENT" ? 'bg-green-500/20 text-green-400 border-green-500/30' :
+                                exp.status === "FOUNDATION" ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' :
+                                'bg-gray-500/20 text-gray-400 border-gray-500/30'
+                              }`}
                             >
                               {exp.status}
                             </Badge>
                           </div>
+                          <div className="flex items-center gap-4">
+                            <span className="text-gray-400 dark:text-gray-400 text-gray-600">Deployments:</span>
+                            <div className="flex gap-2">
+                              {exp.deployments.map((deploy) => (
+                                <Badge key={deploy} variant="outline" className="text-xs font-mono bg-gray-700/50 dark:bg-gray-700/50 bg-gray-200/50 text-gray-300 dark:text-gray-300 text-gray-600 border-gray-600 dark:border-gray-600 border-gray-400">
+                                  {deploy}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
 
+                        <CardHeader className="pb-4 relative">
                           {/* Role & Company */}
-                          <div className="space-y-2">
-                            <CardTitle className="text-xl group-hover/card:text-primary transition-colors flex items-center gap-3">
+                          <div className="space-y-3">
+                            <CardTitle className="text-xl font-mono text-white dark:text-white text-gray-900 group-hover/card:text-green-400 dark:group-hover/card:text-green-400 group-hover/card:text-green-600 transition-colors flex items-center gap-3">
                               <motion.div
-                                className={`p-2 rounded-lg bg-gradient-to-r ${exp.color} bg-opacity-10`}
+                                className="p-2 rounded-lg bg-gradient-to-r from-green-500/20 to-blue-500/20 border border-green-500/30"
                                 whileHover={{ rotate: 15, scale: 1.1 }}
                                 transition={{ type: "spring", stiffness: 400 }}
                               >
-                                <IconComponent className="w-5 h-5 text-primary" />
+                                <IconComponent className="w-5 h-5 text-green-400" />
                               </motion.div>
                               {exp.role}
                             </CardTitle>
-                            
-                            <div className="space-y-1">
-                              <div className="flex items-center gap-2 text-accent font-semibold">
+
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2 text-blue-400 dark:text-blue-400 text-blue-600 font-semibold font-mono">
                                 <Building className="w-4 h-4" />
                                 {exp.company}
                               </div>
-                              
-                              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+
+                              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 dark:text-gray-400 text-gray-500 font-mono">
                                 <div className="flex items-center gap-1">
                                   <MapPin className="w-4 h-4" />
                                   {exp.location}
@@ -418,7 +571,7 @@ export function Experience() {
                                   <Calendar className="w-4 h-4" />
                                   {exp.period}
                                 </div>
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="outline" className="text-xs font-mono bg-gray-800/50 dark:bg-gray-800/50 bg-gray-100/50 border-gray-600 dark:border-gray-600 border-gray-400">
                                   {exp.duration}
                                 </Badge>
                               </div>
@@ -428,27 +581,36 @@ export function Experience() {
 
                         <CardContent className="space-y-6">
                           {/* Description */}
-                          <p className="text-muted-foreground leading-relaxed text-justify">
+                          <p className="text-gray-300 dark:text-gray-300 text-gray-600 leading-relaxed text-sm">
+                            <span className="text-gray-500 dark:text-gray-500 text-gray-400 font-mono">// </span>
                             {exp.description}
                           </p>
 
                           {/* Key Achievements */}
                           <div>
-                            <h4 className="font-semibold mb-3 flex items-center gap-2">
-                              <Trophy className="w-4 h-4 text-accent" />
-                              Key Achievements
+                            <h4 className="font-semibold mb-3 flex items-center gap-2 text-green-400 font-mono">
+                              <FileCode className="w-4 h-4" />
+                              achievements/
                             </h4>
                             <div className="space-y-2">
                               {exp.achievements.map((achievement, idx) => (
                                 <motion.div
                                   key={idx}
-                                  className="flex items-start gap-2 text-sm"
+                                  className="flex items-start gap-2 text-sm font-mono"
                                   initial={{ opacity: 0, x: -10 }}
-                                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                                  transition={{ delay: 1.2 + index * 0.3 + idx * 0.1 }}
+                                  animate={
+                                    isInView
+                                      ? { opacity: 1, x: 0 }
+                                      : { opacity: 0, x: -10 }
+                                  }
+                                  transition={{
+                                    delay: 1.2 + index * 0.3 + idx * 0.1,
+                                  }}
                                 >
-                                  <ChevronRight className="w-3 h-3 text-primary shrink-0 mt-0.5" />
-                                  <span className="text-muted-foreground">{achievement}</span>
+                                  <CheckCircle className="w-3 h-3 text-green-400 shrink-0 mt-0.5" />
+                                  <span className="text-gray-300 dark:text-gray-300 text-gray-600">
+                                    {achievement}
+                                  </span>
                                 </motion.div>
                               ))}
                             </div>
@@ -456,30 +618,37 @@ export function Experience() {
 
                           {/* Technologies */}
                           <div>
-                            <h4 className="font-semibold mb-3 flex items-center gap-2">
-                              <Code2 className="w-4 h-4 text-primary" />
-                              Technologies Used
+                            <h4 className="font-semibold mb-3 flex items-center gap-2 text-blue-400 font-mono">
+                              <Code2 className="w-4 h-4" />
+                              dependencies/
                             </h4>
                             <div className="flex flex-wrap gap-2">
                               {exp.technologies.map((tech) => (
-                                <Badge key={tech} variant="secondary" className="text-xs hover:bg-primary/20 transition-colors cursor-default">
+                                <Badge
+                                  key={tech}
+                                  variant="secondary"
+                                  className="text-xs font-mono bg-gray-800/50 dark:bg-gray-800/50 bg-gray-100/50 text-gray-300 dark:text-gray-300 text-gray-600 hover:bg-green-500/20 dark:hover:bg-green-500/20 hover:bg-green-600/20 transition-colors cursor-default"
+                                >
                                   {tech}
                                 </Badge>
                               ))}
                             </div>
                           </div>
 
-                          {/* Impact Highlights */}
+                          {/* Metrics */}
                           <div>
-                            <h4 className="font-semibold mb-3 flex items-center gap-2">
-                              <TrendingUp className="w-4 h-4 text-accent" />
-                              Impact & Growth
+                            <h4 className="font-semibold mb-3 flex items-center gap-2 text-purple-400 font-mono">
+                              <TrendingUp className="w-4 h-4" />
+                              metrics.json
                             </h4>
-                            <div className="grid grid-cols-1 gap-2">
-                              {Object.entries(exp.highlights).map(([key, value]) => (
-                                <div key={key} className="flex items-center justify-between text-sm bg-muted/30 rounded-lg p-2">
-                                  <span className="text-muted-foreground capitalize">{key}:</span>
-                                  <span className="font-medium text-primary">{value}</span>
+                            <div className="grid grid-cols-3 gap-3">
+                              {Object.entries(exp.metrics).map(([key, value]) => (
+                                <div
+                                  key={key}
+                                  className="text-center p-2 bg-gray-800/30 dark:bg-gray-800/30 bg-gray-100/30 rounded border border-gray-700 dark:border-gray-700 border-gray-300"
+                                >
+                                  <div className="text-sm font-bold text-green-400 font-mono">{value}</div>
+                                  <div className="text-xs text-gray-400 dark:text-gray-400 text-gray-500 capitalize font-mono">{key}</div>
                                 </div>
                               ))}
                             </div>
@@ -491,11 +660,14 @@ export function Experience() {
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                             >
-                              <Button variant="outline" size="sm" className="w-full group border-primary/30 hover:border-primary hover:bg-primary/5">
-                                <span className="group-hover:text-primary transition-colors">
-                                  View Projects ({exp.projects.length})
-                                </span>
-                                <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="w-full font-mono bg-green-500/10 dark:bg-green-500/10 bg-green-600/10 text-green-400 dark:text-green-400 text-green-600 border-green-500/30 hover:bg-green-500/20 dark:hover:bg-green-500/20 hover:bg-green-600/20"
+                              >
+                                <span className="text-green-400">$ </span>
+                                ./view_projects.sh ({exp.projects.length})
+                                <ExternalLink className="w-4 h-4 ml-2" />
                               </Button>
                             </motion.div>
                           )}
@@ -508,39 +680,38 @@ export function Experience() {
             </div>
           </div>
 
-          {/* CTA Section */}
-          {/* <motion.div
+          {/* Terminal Footer */}
+          <motion.div
             variants={itemVariants}
             className="text-center mt-20"
           >
-            <Card className="border-0 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 backdrop-blur-sm p-8">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="space-y-6"
-              >
-                <h3 className="text-2xl font-headline font-bold flex items-center justify-center gap-2">
-                  <Award className="w-6 h-6 text-primary" />
-                  Ready for New Opportunities
-                </h3>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  I'm always excited to take on new challenges and contribute to innovative projects. 
-                  Let's discuss how my experience can help your team succeed.
-                </p>
+            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-xl inline-block">
+              <CardContent className="p-6">
+                <div className="font-mono text-sm text-green-400 dark:text-green-400 text-green-600 flex items-center gap-2 mb-4">
+                  <Activity className="w-4 h-4" />
+                  <span>Career journey loaded. Ready for new opportunities!</span>
+                  <motion.div
+                    className="w-2 h-4 bg-green-400"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                </div>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button 
                     size="lg"
-                    className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="bg-gradient-to-r from-green-500/20 to-blue-500/20 hover:from-green-500/30 hover:to-blue-500/30 text-green-400 dark:text-green-400 text-green-600 border border-green-500/30 font-mono px-8 py-4 transition-all duration-300"
                   >
-                    Let's Connect
+                    <span className="text-green-400">$ </span>
+                    ./connect.sh --new-opportunities
                     <ChevronRight className="w-5 h-5 ml-2" />
                   </Button>
                 </motion.div>
-              </motion.div>
+              </CardContent>
             </Card>
-          </motion.div> */}
+          </motion.div>
         </motion.div>
       </div>
     </motion.section>

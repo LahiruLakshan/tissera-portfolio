@@ -26,6 +26,7 @@ import { Badge } from "./ui/badge";
 const navigationItems = [
   { name: "Home", href: "#", icon: Home, command: "cd ~/" },
   { name: "About", href: "#about", icon: User, command: "cat about.md" },
+  { name: "Skills", href: "#skills", icon: Code2, command: "ls skills/" },
   { name: "Services", href: "#services", icon: Zap, command: "ls services/" },
   { name: "Projects", href: "#projects", icon: FolderOpen, command: "git log --projects" },
   { name: "Experience", href: "#experience", icon: Briefcase, command: "cat experience.json" },
@@ -71,7 +72,6 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [showTerminal, setShowTerminal] = useState(false);
 
   // Handle scroll effects
   useEffect(() => {
@@ -143,8 +143,8 @@ export function Header() {
         animate="animate"
         className={`fixed top-0 z-50 w-full transition-all duration-300 ${
           isScrolled 
-            ? 'border-b border-green-500/20 bg-gray-900/90 backdrop-blur-md shadow-lg shadow-green-500/10' 
-            : 'bg-gray-900/50 backdrop-blur-sm'
+            ? 'border-b border-green-500/20 bg-gray-900/90 dark:bg-gray-900/90 light:bg-white/90 backdrop-blur-md shadow-lg shadow-green-500/10' 
+            : 'bg-gray-900/50 dark:bg-gray-900/50 light:bg-white/50 backdrop-blur-sm'
         }`}
       >
         <div className="container flex h-16 max-w-screen-2xl items-center justify-between">
@@ -158,7 +158,7 @@ export function Header() {
           >
             {/* Terminal Window */}
             <motion.div
-              className="flex items-center gap-2 bg-black/80 border border-green-500/30 rounded-lg px-3 py-2 shadow-lg"
+              className="flex items-center gap-2 bg-black/80 dark:bg-black/80 light:bg-gray-800/80 border border-green-500/30 rounded-lg px-3 py-2 shadow-lg"
               whileHover={{ 
                 boxShadow: "0 0 20px rgba(34, 197, 94, 0.3)",
                 borderColor: "rgba(34, 197, 94, 0.5)"
@@ -231,7 +231,7 @@ export function Header() {
                     className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-mono font-medium transition-all duration-300 ${
                       isActive 
                         ? 'text-green-400 bg-green-500/10 shadow-lg border border-green-500/30' 
-                        : 'text-gray-300 hover:text-green-300 hover:bg-gray-800/50 border border-transparent'
+                        : 'text-gray-300 dark:text-gray-300 light:text-gray-700 hover:text-green-300 dark:hover:text-green-300 light:hover:text-green-600 hover:bg-gray-800/50 dark:hover:bg-gray-800/50 light:hover:bg-gray-200/50 border border-transparent'
                     }`}
                   >
                     <IconComponent className="w-4 h-4" />
@@ -251,7 +251,7 @@ export function Header() {
 
                   {/* Terminal Command Tooltip */}
                   <motion.div
-                    className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 border border-green-500/30 rounded px-2 py-1 font-mono text-xs text-green-300 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 dark:bg-black/90 light:bg-white/90 border border-green-500/30 rounded px-2 py-1 font-mono text-xs text-green-300 dark:text-green-300 light:text-green-600 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-[60]"
                     initial={{ y: -10, opacity: 0 }}
                     whileHover={{ y: 0, opacity: 1 }}
                   >
@@ -277,7 +277,7 @@ export function Header() {
                 variant="outline" 
                 size="sm"
                 asChild
-                className="group bg-black/50 border-green-500/30 text-green-300 hover:bg-green-500/10 hover:text-green-400 hover:border-green-500/50 font-mono text-xs transition-all duration-300"
+                className="group bg-black/50 dark:bg-black/50 light:bg-gray-100/50 border-green-500/30 text-green-300 dark:text-green-300 light:text-green-600 hover:bg-green-500/10 hover:text-green-400 hover:border-green-500/50 font-mono text-xs transition-all duration-300"
               >
                 <a href="/docs/Lakshan Tissera - SE.pdf" download className="flex items-center gap-2">
                   <span className="text-green-400">$</span>
@@ -293,7 +293,7 @@ export function Header() {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
-              className="p-2 rounded-lg bg-black/50 border border-green-500/30 hover:border-green-500/50 transition-all duration-300"
+              className="p-2 rounded-lg bg-black/50 dark:bg-black/50 light:bg-gray-100/50 border border-green-500/30 hover:border-green-500/50 transition-all duration-300"
             >
               <ThemeToggle />
             </motion.div>
@@ -309,7 +309,7 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="relative bg-black/50 border border-green-500/30 hover:bg-green-500/10 hover:border-green-500/50 text-green-300"
+                className="relative bg-black/50 dark:bg-black/50 light:bg-gray-100/50 border border-green-500/30 hover:bg-green-500/10 hover:border-green-500/50 text-green-300 dark:text-green-300 light:text-green-600"
               >
                 <motion.div
                   animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
@@ -346,7 +346,7 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-black/80 dark:bg-black/80 light:bg-gray-900/80 backdrop-blur-sm md:hidden"
             />
 
             {/* Mobile Terminal Menu */}
@@ -357,9 +357,9 @@ export function Header() {
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="fixed top-16 left-4 right-4 z-50 md:hidden"
             >
-              <div className="bg-black/95 backdrop-blur-md border border-green-500/30 rounded-2xl shadow-2xl overflow-hidden">
+              <div className="bg-black/95 dark:bg-black/95 light:bg-white/95 backdrop-blur-md border border-green-500/30 rounded-2xl shadow-2xl overflow-hidden">
                 {/* Terminal Header */}
-                <div className="flex items-center gap-2 px-4 py-3 bg-gray-900/50 border-b border-green-500/20">
+                <div className="flex items-center gap-2 px-4 py-3 bg-gray-900/50 dark:bg-gray-900/50 light:bg-gray-100/50 border-b border-green-500/20">
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                     <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
@@ -387,7 +387,7 @@ export function Header() {
                           className={`w-full flex items-center gap-3 p-3 rounded-lg text-left font-mono transition-all duration-300 ${
                             isActive 
                               ? 'text-green-400 bg-green-500/10 border border-green-500/30' 
-                              : 'text-gray-300 hover:text-green-300 hover:bg-gray-800/50 border border-transparent'
+                              : 'text-gray-300 dark:text-gray-300 light:text-gray-700 hover:text-green-300 dark:hover:text-green-300 light:hover:text-green-600 hover:bg-gray-800/50 dark:hover:bg-gray-800/50 light:hover:bg-gray-200/50 border border-transparent'
                           }`}
                         >
                           {/* Terminal Prompt */}
@@ -395,7 +395,7 @@ export function Header() {
                           
                           {/* Icon */}
                           <motion.div
-                            className="p-1 rounded bg-gray-800/50"
+                            className="p-1 rounded bg-gray-800/50 dark:bg-gray-800/50 light:bg-gray-200/50"
                             whileHover={{ rotate: 15 }}
                             transition={{ type: "spring", stiffness: 400 }}
                           >
@@ -405,7 +405,7 @@ export function Header() {
                           {/* Command */}
                           <div className="flex-1">
                             <div className="font-medium">{item.command}</div>
-                            <div className="text-xs text-gray-500"># {item.name}</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-500 light:text-gray-400"># {item.name}</div>
                           </div>
                           
                           {/* Active indicator */}
@@ -434,7 +434,7 @@ export function Header() {
                       variant="outline" 
                       size="lg"
                       asChild
-                      className="w-full bg-black/50 border-green-500/30 text-green-300 hover:bg-green-500/10 hover:text-green-400 font-mono transition-all duration-300"
+                      className="w-full bg-black/50 dark:bg-black/50 light:bg-gray-100/50 border-green-500/30 text-green-300 dark:text-green-300 light:text-green-600 hover:bg-green-500/10 hover:text-green-400 font-mono transition-all duration-300"
                     >
                       <a href="/docs/Lakshan Tissera - SE.pdf" download className="flex items-center gap-2">
                         <span className="text-green-400">$</span>
@@ -446,7 +446,7 @@ export function Header() {
                 </div>
 
                 {/* Terminal Footer */}
-                <div className="px-4 py-2 bg-gray-900/50 border-t border-green-500/20 font-mono text-xs text-gray-500">
+                <div className="px-4 py-2 bg-gray-900/50 dark:bg-gray-900/50 light:bg-gray-100/50 border-t border-green-500/20 font-mono text-xs text-gray-500 dark:text-gray-500 light:text-gray-400">
                   <div className="flex items-center gap-2">
                     <Activity className="w-3 h-3 text-green-400" />
                     <span>System ready</span>
@@ -464,4 +464,4 @@ export function Header() {
       </AnimatePresence>
     </>
   );
-};
+}
