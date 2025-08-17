@@ -236,7 +236,7 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
             >
-              Full-Stack Developer
+              Software Engineer
             </motion.p>
           </motion.div>
 
