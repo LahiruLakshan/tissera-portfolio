@@ -58,7 +58,7 @@ const roles = [
     color: "from-emerald-500 to-teal-500",
   },
   {
-    text: "AI/ML researcher",
+    text: "AI/ML Researcher",
     icon: RiRobot3Line,
     color: "from-orange-500 to-red-500",
   },
@@ -312,12 +312,12 @@ export function Hero() {
               {[
                 {
                   icon: Github,
-                  href: "https://github.com/lahiru-lakshan-tissera",
+                  href: "https://github.com/LahiruLakshan",
                   label: "GitHub",
                 },
                 {
                   icon: Linkedin,
-                  href: "https://linkedin.com/in/lahiru-lakshan-tissera",
+                  href: "https://www.linkedin.com/in/lahiru-lakshan-tissera/",
                   label: "LinkedIn",
                 },
                 {
