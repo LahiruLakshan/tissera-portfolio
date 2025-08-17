@@ -217,17 +217,17 @@ export function Services() {
       id='services'
       ref={ref}
       style={{ opacity }}
-      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 from-gray-50 via-gray-100 to-gray-50"
+      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950"
     >
-      {/* Matrix-style Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+      {/* Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b98108_1px,transparent_1px),linear-gradient(to_bottom,#10b98108_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
       
       {/* Floating Code Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {['npm', 'git', 'docker', 'api', 'deploy', 'build', 'test', 'push'].map((symbol, i) => (
           <motion.div
             key={i}
-            className="absolute text-green-400/10 dark:text-green-400/10 text-gray-600/10 font-mono text-lg select-none"
+            className="absolute text-gray-400/10 dark:text-green-400/10 font-mono text-lg select-none"
             style={{
               left: `${15 + (i * 10) % 70}%`,
               top: `${10 + (i * 12) % 80}%`,
@@ -266,47 +266,47 @@ export function Services() {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-500/30">
-                <Terminal className="w-8 h-8 text-green-400" />
+                <Terminal className="w-8 h-8 text-green-600 dark:text-green-400" />
               </div>
-              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-400 dark:text-green-400 text-gray-900">
+              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-600 dark:text-green-400">
                 $ cat services.json
               </h2>
             </motion.div>
             
             <motion.div 
-              className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full mb-8"
+              className="w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full mb-8"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             />
 
             <motion.p 
-              className="text-lg sm:text-xl text-gray-300 dark:text-gray-300 text-gray-600 max-w-3xl mx-auto font-mono"
+              className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-mono"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              <span className="text-gray-500 dark:text-gray-500 text-gray-400">// </span>
-              End-to-end solutions with <span className="text-green-400">quality</span>, 
-              <span className="text-blue-400"> precision</span>, and 
-              <span className="text-purple-400"> innovation</span>
+              <span className="text-gray-400 dark:text-gray-500">// </span>
+              End-to-end solutions with <span className="text-green-600 dark:text-green-400">quality</span>, 
+              <span className="text-blue-600 dark:text-blue-400"> precision</span>, and 
+              <span className="text-purple-600 dark:text-purple-400"> innovation</span>
             </motion.p>
           </motion.div>
 
           {/* Terminal Info Panel */}
           <motion.div variants={itemVariants} className="mb-16">
-            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+            <Card className="border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
               {/* Terminal Header */}
-              <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 dark:bg-gray-800 bg-gray-200 border-b border-gray-700 dark:border-gray-700 border-gray-300">
+              <div className="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
                 <div className="flex gap-2">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 </div>
-                <span className="text-xs text-gray-400 dark:text-gray-400 text-gray-600 ml-2 font-mono">services@portfolio:~$</span>
+                <span className="text-xs text-gray-600 dark:text-gray-400 ml-2 font-mono">services@portfolio:~$</span>
               </div>
 
-              <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-900 dark:bg-gray-900 bg-white min-h-[180px]">
+              <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-50 dark:bg-gray-900 min-h-[180px]">
                 {terminalServices.map((cmd, index) => (
                   <motion.div
                     key={index}
@@ -315,8 +315,8 @@ export function Services() {
                     className="space-y-2"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-green-400">$</span>
-                      <span className="text-white dark:text-white text-gray-900">
+                      <span className="text-green-600 dark:text-green-400">$</span>
+                      <span className="text-gray-800 dark:text-white">
                         {isInView && <TypewriterText text={cmd.command} delay={cmd.delay * 1000} />}
                       </span>
                     </div>
@@ -324,7 +324,7 @@ export function Services() {
                       initial={{ opacity: 0 }}
                       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                       transition={{ delay: cmd.delay + 1 }}
-                      className="text-blue-300 dark:text-blue-300 text-blue-600 ml-4"
+                      className="text-blue-600 dark:text-blue-300 ml-4"
                     >
                       {cmd.output}
                     </motion.div>
@@ -338,9 +338,9 @@ export function Services() {
                   animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ delay: 4 }}
                 >
-                  <span className="text-green-400">$</span>
+                  <span className="text-green-600 dark:text-green-400">$</span>
                   <motion.div
-                    className="w-2 h-5 bg-green-400"
+                    className="w-2 h-5 bg-green-600 dark:bg-green-400"
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                   />
@@ -367,25 +367,25 @@ export function Services() {
                   }}
                   className="group relative"
                 >
-                  <Card className="relative h-full border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/80 dark:bg-gray-900/80 bg-white/80 backdrop-blur-sm hover:bg-gray-800/90 dark:hover:bg-gray-800/90 hover:bg-gray-50/90 transition-all duration-500 overflow-hidden">
+                  <Card className="relative h-full border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/80 backdrop-blur-sm hover:bg-gray-50/95 dark:hover:bg-gray-800/90 transition-all duration-500 overflow-hidden">
                     {/* Terminal Command Header */}
-                    <div className="px-4 py-3 bg-gray-800 dark:bg-gray-800 bg-gray-200 border-b border-gray-700 dark:border-gray-700 border-gray-300 font-mono text-xs">
+                    <div className="px-4 py-3 bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 font-mono text-xs">
                       <div className="flex items-center gap-2">
-                        <span className="text-green-400">$</span>
-                        <span className="text-white dark:text-white text-gray-900">{service.command}</span>
+                        <span className="text-green-600 dark:text-green-400">$</span>
+                        <span className="text-gray-800 dark:text-white">{service.command}</span>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
                         <Badge 
                           variant={service.status === 'POPULAR' ? 'default' : service.status === 'BETA' ? 'secondary' : 'outline'}
                           className={`text-xs font-mono ${
-                            service.status === 'POPULAR' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
-                            service.status === 'BETA' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' :
-                            'bg-blue-500/20 text-blue-400 border-blue-500/30'
+                            service.status === 'POPULAR' ? 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/50 dark:border-green-500/30' :
+                            service.status === 'BETA' ? 'bg-yellow-100 dark:bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border-yellow-500/50 dark:border-yellow-500/30' :
+                            'bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 border-blue-500/50 dark:border-blue-500/30'
                           }`}
                         >
                           {service.status}
                         </Badge>
-                        <span className="text-gray-400 dark:text-gray-400 text-gray-600">{service.deliveryTime}</span>
+                        <span className="text-gray-600 dark:text-gray-400">{service.deliveryTime}</span>
                       </div>
                     </div>
 
@@ -399,18 +399,18 @@ export function Services() {
                         }}
                         transition={{ duration: 0.5 }}
                       >
-                        <IconComponent className="w-6 h-6 text-green-400" />
+                        <IconComponent className="w-6 h-6 text-green-600 dark:text-green-400" />
                       </motion.div>
 
                       {/* Title */}
-                      <h3 className="text-xl font-semibold font-mono mb-2 text-white dark:text-white text-gray-900 group-hover:text-green-400 dark:group-hover:text-green-400 group-hover:text-green-600 transition-colors duration-300">
+                      <h3 className="text-xl font-semibold font-mono mb-2 text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
                         {service.title}
                       </h3>
 
                       {/* Price */}
                       <div className="flex items-center gap-2">
-                        <span className="text-2xl font-bold text-green-400 font-mono">{service.price}</span>
-                        <Badge variant="outline" className="font-mono text-xs bg-gray-800/50 dark:bg-gray-800/50 bg-gray-100/50 border-gray-600 dark:border-gray-600 border-gray-400">
+                        <span className="text-2xl font-bold text-green-600 dark:text-green-400 font-mono">{service.price}</span>
+                        <Badge variant="outline" className="font-mono text-xs bg-gray-100 dark:bg-gray-800/50 border-gray-400 dark:border-gray-600">
                           Starting from
                         </Badge>
                       </div>
@@ -418,14 +418,14 @@ export function Services() {
 
                     <CardContent className="relative z-10 space-y-6">
                       {/* Description */}
-                      <p className="text-gray-300 dark:text-gray-300 text-gray-600 leading-relaxed text-sm">
-                        <span className="text-gray-500 dark:text-gray-500 text-gray-400 font-mono">// </span>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
+                        <span className="text-gray-400 dark:text-gray-500 font-mono">// </span>
                         {service.description}
                       </p>
 
                       {/* Features */}
                       <div className="space-y-3">
-                        <h4 className="text-sm font-semibold text-green-400 flex items-center gap-2 font-mono">
+                        <h4 className="text-sm font-semibold text-green-600 dark:text-green-400 flex items-center gap-2 font-mono">
                           <FileCode className="w-4 h-4" />
                           include/
                         </h4>
@@ -438,8 +438,8 @@ export function Services() {
                               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
                               transition={{ delay: service.delay + idx * 0.1 }}
                             >
-                              <CheckCircle className="w-3 h-3 text-green-400 shrink-0" />
-                              <span className="text-gray-300 dark:text-gray-300 text-gray-600">{feature}</span>
+                              <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400 shrink-0" />
+                              <span className="text-gray-600 dark:text-gray-300">{feature}</span>
                             </motion.div>
                           ))}
                         </div>
@@ -452,7 +452,7 @@ export function Services() {
                       >
                         <Button 
                           variant="outline" 
-                          className="w-full bg-black/50 dark:bg-black/50 bg-gray-100/50 border-green-500/30 text-green-400 dark:text-green-400 text-green-600 hover:bg-green-500/10 font-mono transition-all duration-300"
+                          className="w-full bg-gray-100 dark:bg-black/50 border-green-500/50 dark:border-green-500/30 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-500/10 font-mono transition-all duration-300"
                         >
                           <Play className="w-4 h-4 mr-2" />
                           <span>./start_project.sh</span>
@@ -478,12 +478,12 @@ export function Services() {
             variants={itemVariants}
             className="text-center mb-16"
           >
-            <h3 className="text-3xl font-mono font-bold mb-4 text-green-400 dark:text-green-400 text-gray-900 flex items-center justify-center gap-3">
+            <h3 className="text-3xl font-mono font-bold mb-4 text-green-600 dark:text-green-400 flex items-center justify-center gap-3">
               <Terminal className="w-8 h-8" />
               $ cat workflow.md
             </h3>
-            <p className="text-gray-300 dark:text-gray-300 text-gray-600 max-w-2xl mx-auto font-mono">
-              <span className="text-gray-500 dark:text-gray-500 text-gray-400">// </span>
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-mono">
+              <span className="text-gray-400 dark:text-gray-500">// </span>
               Proven development pipeline for successful project delivery
             </p>
           </motion.div>
@@ -501,16 +501,16 @@ export function Services() {
                 transition={{ type: "spring", stiffness: 300 }}
                 className="text-center group relative"
               >
-                <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/80 dark:bg-gray-900/80 bg-white/80 backdrop-blur-sm hover:bg-gray-800/90 dark:hover:bg-gray-800/90 hover:bg-gray-50/90 transition-all duration-300 p-6 overflow-hidden">
+                <Card className="border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/80 backdrop-blur-sm hover:bg-gray-50/95 dark:hover:bg-gray-800/90 transition-all duration-300 p-6 overflow-hidden">
                   {/* Terminal Header */}
-                  <div className="mb-4 p-2 bg-black/20 dark:bg-black/20 bg-gray-100/20 rounded border border-gray-700 dark:border-gray-700 border-gray-300 font-mono text-xs">
-                    <div className="text-green-400">$ {step.title}</div>
-                    <div className="text-gray-500 dark:text-gray-500 text-gray-400 mt-1"># {step.subtitle}</div>
+                  <div className="mb-4 p-2 bg-gray-100 dark:bg-black/20 rounded border border-gray-300 dark:border-gray-700 font-mono text-xs">
+                    <div className="text-green-600 dark:text-green-400">$ {step.title}</div>
+                    <div className="text-gray-500 dark:text-gray-500 mt-1"># {step.subtitle}</div>
                   </div>
 
                   {/* Step Number */}
                   <motion.div
-                    className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-400 to-blue-400 flex items-center justify-center text-black font-bold text-sm shadow-lg"
+                    className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-500 to-blue-500 flex items-center justify-center text-white font-bold text-sm shadow-lg"
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
@@ -518,22 +518,22 @@ export function Services() {
                   </motion.div>
 
                   {/* Step Description */}
-                  <p className="text-sm text-gray-300 dark:text-gray-300 text-gray-600 leading-relaxed font-mono">
-                    <span className="text-gray-500 dark:text-gray-500 text-gray-400">// </span>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed font-mono">
+                    <span className="text-gray-400 dark:text-gray-500">// </span>
                     {step.description}
                   </p>
 
                   {/* Command */}
-                  <div className="mt-4 p-2 bg-black/30 dark:bg-black/30 bg-gray-100/30 rounded font-mono text-xs">
-                    <span className="text-green-400">$ </span>
-                    <span className="text-gray-300 dark:text-gray-300 text-gray-600">{step.command}</span>
+                  <div className="mt-4 p-2 bg-gray-100 dark:bg-black/30 rounded font-mono text-xs">
+                    <span className="text-green-600 dark:text-green-400">$ </span>
+                    <span className="text-gray-600 dark:text-gray-300">{step.command}</span>
                   </div>
                 </Card>
 
                 {/* Connection Line */}
                 {index < processSteps.length - 1 && (
                   <motion.div
-                    className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-green-400/50 to-blue-400/50 transform -translate-y-1/2"
+                    className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-green-500/50 to-blue-500/50 transform -translate-y-1/2"
                     initial={{ scaleX: 0 }}
                     animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
                     transition={{ delay: 1 + index * 0.2, duration: 0.6 }}
@@ -548,13 +548,13 @@ export function Services() {
             variants={itemVariants}
             className="mt-20 text-center"
           >
-            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-xl inline-block">
+            <Card className="border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-xl inline-block">
               <CardContent className="p-6">
-                <div className="font-mono text-sm text-green-400 dark:text-green-400 text-green-600 flex items-center gap-2">
+                <div className="font-mono text-sm text-green-600 dark:text-green-400 flex items-center gap-2">
                   <Activity className="w-4 h-4" />
                   <span>Services loaded successfully. Ready to execute your project!</span>
                   <motion.div
-                    className="w-2 h-4 bg-green-400"
+                    className="w-2 h-4 bg-green-600 dark:bg-green-400"
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                   />
@@ -562,9 +562,9 @@ export function Services() {
                 <div className="mt-4">
                   <Button 
                     size="lg"
-                    className="bg-gradient-to-r from-green-500/20 to-blue-500/20 hover:from-green-500/30 hover:to-blue-500/30 text-green-400 dark:text-green-400 text-green-600 border border-green-500/30 font-mono px-8 py-4 transition-all duration-300"
+                    className="bg-gradient-to-r from-green-100 to-blue-100 dark:from-green-500/20 dark:to-blue-500/20 hover:from-green-200 hover:to-blue-200 dark:hover:from-green-500/30 dark:hover:to-blue-500/30 text-green-600 dark:text-green-400 border border-green-500/50 dark:border-green-500/30 font-mono px-8 py-4 transition-all duration-300"
                   >
-                    <span className="text-green-400">$ </span>
+                    <span className="text-green-600 dark:text-green-400">$ </span>
                     ./contact_me.sh --start-project
                   </Button>
                 </div>

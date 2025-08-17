@@ -121,17 +121,17 @@ export function About() {
       id="about"
       ref={ref}
       style={{ opacity }}
-      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950"
+      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950"
     >
-      {/* Matrix-style Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
+      {/* Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b98108_1px,transparent_1px),linear-gradient(to_bottom,#10b98108_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
 
       {/* Floating Code Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {['<>', '{}', '[]', '()', '/>', '</', 'const', 'function', 'return', '&&', '||', '=>'].map((symbol, i) => (
           <motion.div
             key={i}
-            className="absolute text-green-400/10 font-mono text-2xl select-none"
+            className="absolute text-green-500/10 dark:text-green-400/10 font-mono text-2xl select-none"
             style={{
               left: `${10 + (i * 8) % 80}%`,
               top: `${20 + (i * 12) % 60}%`,
@@ -167,15 +167,15 @@ export function About() {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-500/30">
-                <Terminal className="w-8 h-8 text-green-400" />
+                <Terminal className="w-8 h-8 text-green-600 dark:text-green-400" />
               </div>
-              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-400">
+              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-600 dark:text-green-400">
                 $ cat about_me.md
               </h2>
             </motion.div>
 
             <motion.div
-              className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full"
+              className="w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
@@ -185,18 +185,18 @@ export function About() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
             {/* Left Column - Terminal Window */}
             <motion.div variants={itemVariants}>
-              <Card className="border border-gray-700 bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+              <Card className="border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
                 {/* Terminal Header */}
-                <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 border-b border-gray-700">
+                <div className="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
                   <div className="flex gap-2">
                     <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
-                  <span className="text-xs text-gray-400 ml-2 font-mono">lahiru@portfolio:~$</span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400 ml-2 font-mono">lahiru@portfolio:~$</span>
                 </div>
 
-                <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-900 min-h-[300px]">
+                <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-50 dark:bg-gray-900 min-h-[300px]">
                   {terminalCommands.map((cmd, index) => (
                     <motion.div
                       key={index}
@@ -205,8 +205,8 @@ export function About() {
                       className="space-y-2"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="text-green-400">$</span>
-                        <span className="text-white">
+                        <span className="text-green-600 dark:text-green-400">$</span>
+                        <span className="text-gray-800 dark:text-white">
                           {isInView && <TypewriterText text={cmd.command} delay={cmd.delay * 1000} />}
                         </span>
                       </div>
@@ -214,7 +214,7 @@ export function About() {
                         initial={{ opacity: 0 }}
                         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                         transition={{ delay: cmd.delay + 1 }}
-                        className="text-blue-300 ml-4"
+                        className="text-blue-600 dark:text-blue-300 ml-4"
                       >
                         {cmd.output}
                       </motion.div>
@@ -228,9 +228,9 @@ export function About() {
                     animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                     transition={{ delay: 4 }}
                   >
-                    <span className="text-green-400">$</span>
+                    <span className="text-green-600 dark:text-green-400">$</span>
                     <motion.div
-                      className="w-2 h-5 bg-green-400"
+                      className="w-2 h-5 bg-green-600 dark:bg-green-400"
                       animate={{ opacity: [1, 0, 1] }}
                       transition={{ duration: 1, repeat: Infinity }}
                     />
@@ -241,12 +241,12 @@ export function About() {
 
             {/* Right Column - Code Editor */}
             <motion.div variants={itemVariants}>
-              <Card className="border border-gray-700 bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+              <Card className="border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
                 {/* Code Editor Header */}
-                <div className="flex items-center justify-between px-4 py-3 bg-gray-800 border-b border-gray-700">
+                <div className="flex items-center justify-between px-4 py-3 bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
                   <div className="flex items-center gap-2">
-                    <Code2 className="w-4 h-4 text-blue-400" />
-                    <span className="text-xs text-gray-400 font-mono">Developer.ts</span>
+                    <Code2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    <span className="text-xs text-gray-600 dark:text-gray-400 font-mono">Developer.ts</span>
                   </div>
                   <div className="flex gap-2">
                     <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -255,7 +255,7 @@ export function About() {
                   </div>
                 </div>
 
-                <CardContent className="p-6 font-mono text-sm bg-gray-900 space-y-2 overflow-x-auto">
+                <CardContent className="p-6 font-mono text-sm bg-gray-50 dark:bg-gray-900 space-y-2 overflow-x-auto">
                   {codeSnippet.split('\n').map((line, index) => (
                     <motion.div
                       key={index}
@@ -263,16 +263,16 @@ export function About() {
                       transition={{ delay: index * 0.1 }}
                       className="whitespace-nowrap"
                     >
-                      <span className="text-gray-500 mr-4 select-none">{String(index + 1).padStart(2, '0')}</span>
+                      <span className="text-gray-400 dark:text-gray-500 mr-4 select-none">{String(index + 1).padStart(2, '0')}</span>
                       <span 
                         className={
-                          line.includes('interface') ? 'text-purple-400' :
+                          line.includes('interface') ? 'text-purple-600 dark:text-purple-400' :
                           line.includes('//') ? 'text-gray-500' :
-                          line.includes('"') ? 'text-green-300' :
-                          line.includes('[') || line.includes(']') ? 'text-orange-300' :
-                          line.includes('const') || line.includes('new') ? 'text-blue-400' :
-                          line.includes('console.log') ? 'text-yellow-300' :
-                          'text-blue-300'
+                          line.includes('"') ? 'text-green-600 dark:text-green-300' :
+                          line.includes('[') || line.includes(']') ? 'text-orange-600 dark:text-orange-300' :
+                          line.includes('const') || line.includes('new') ? 'text-blue-600 dark:text-blue-400' :
+                          line.includes('console.log') ? 'text-yellow-600 dark:text-yellow-300' :
+                          'text-blue-600 dark:text-blue-300'
                         }
                       >
                         {line}
@@ -287,7 +287,7 @@ export function About() {
           {/* Enhanced Highlights with Terminal Commands */}
           <motion.div variants={itemVariants} className="space-y-8">
             <div className="text-center mb-12">
-              <h3 className="text-2xl font-mono text-green-400 mb-4">$ ls capabilities/</h3>
+              <h3 className="text-2xl font-mono text-green-600 dark:text-green-400 mb-4">$ ls capabilities/</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -299,15 +299,15 @@ export function About() {
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <Card className="border border-gray-700 bg-gray-900/50 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group overflow-hidden">
+                  <Card className="border border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-900/50 backdrop-blur-sm hover:bg-gray-50/80 dark:hover:bg-gray-800/50 transition-all duration-300 group overflow-hidden">
                     <CardContent className="p-6">
                       {/* Terminal Command */}
-                      <div className="mb-4 p-3 bg-black/30 rounded border border-gray-700 font-mono text-xs">
+                      <div className="mb-4 p-3 bg-gray-100 dark:bg-black/30 rounded border border-gray-300 dark:border-gray-700 font-mono text-xs">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-green-400">$</span>
-                          <span className="text-white">{highlight.command}</span>
+                          <span className="text-green-600 dark:text-green-400">$</span>
+                          <span className="text-gray-800 dark:text-white">{highlight.command}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-green-300">
+                        <div className="flex items-center gap-2 text-green-600 dark:text-green-300">
                           <CheckCircle className="w-3 h-3" />
                           <span>{highlight.status}</span>
                         </div>
@@ -319,13 +319,13 @@ export function About() {
                           whileHover={{ rotate: [0, -5, 5, 0] }}
                           transition={{ duration: 0.5 }}
                         >
-                          <highlight.icon className="w-6 h-6 text-green-400" />
+                          <highlight.icon className="w-6 h-6 text-green-600 dark:text-green-400" />
                         </motion.div>
                         <div className="flex-1">
-                          <h4 className="font-bold text-white mb-2 font-mono">
+                          <h4 className="font-bold text-gray-900 dark:text-white mb-2 font-mono">
                             {highlight.title}
                           </h4>
-                          <p className="text-gray-300 text-sm leading-relaxed">
+                          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                             {highlight.description}
                           </p>
                         </div>
@@ -347,19 +347,19 @@ export function About() {
 
           {/* About Text as Comment Block */}
           <motion.div variants={itemVariants} className="mt-16">
-            <Card className="border border-gray-700 bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 border-b border-gray-700">
-                <FileText className="w-4 h-4 text-blue-400" />
-                <span className="text-xs text-gray-400 font-mono">README.md</span>
+            <Card className="border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+              <div className="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
+                <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span className="text-xs text-gray-600 dark:text-gray-400 font-mono">README.md</span>
               </div>
               
-              <CardContent className="p-8 font-mono text-sm bg-gray-900">
+              <CardContent className="p-8 font-mono text-sm bg-gray-50 dark:bg-gray-900">
                 <div className="space-y-4">
-                  <div className="text-green-400"># About Lahiru Tissera</div>
+                  <div className="text-green-600 dark:text-green-400"># About Lahiru Tissera</div>
                   
                   <motion.div
                     variants={codeVariants}
-                    className="text-gray-300 leading-relaxed"
+                    className="text-gray-700 dark:text-gray-300 leading-relaxed"
                   >
                     <span className="text-gray-500">/**</span><br/>
                     <span className="text-gray-500"> * Full-Stack Engineer with expertise in building modern web applications</span><br/>
@@ -368,26 +368,26 @@ export function About() {
                     <span className="text-gray-500"> */</span>
                   </motion.div>
 
-                  <motion.div variants={codeVariants} className="text-blue-300">
-                    <span className="text-purple-400">const</span> journey = {'{'}
+                  <motion.div variants={codeVariants} className="text-blue-600 dark:text-blue-300">
+                    <span className="text-purple-600 dark:text-purple-400">const</span> journey = {'{'}
                   </motion.div>
                   
                   <motion.div variants={codeVariants} className="ml-4 space-y-1">
-                    <div className="text-gray-300">
-                      education: <span className="text-green-300">"BEng Software Engineering (UK)"</span>,
+                    <div className="text-gray-700 dark:text-gray-300">
+                      education: <span className="text-green-600 dark:text-green-300">"BEng Software Engineering (UK)"</span>,
                     </div>
-                    <div className="text-gray-300">
-                      mission: <span className="text-green-300">"Bridge complex technologies with intuitive UX"</span>,
+                    <div className="text-gray-700 dark:text-gray-300">
+                      mission: <span className="text-green-600 dark:text-green-300">"Bridge complex technologies with intuitive UX"</span>,
                     </div>
-                    <div className="text-gray-300">
-                      specialties: <span className="text-orange-300">["NFT Marketplaces", "AI Music Classification", "Web3 Integration"]</span>,
+                    <div className="text-gray-700 dark:text-gray-300">
+                      specialties: <span className="text-orange-600 dark:text-orange-300">["NFT Marketplaces", "AI Music Classification", "Web3 Integration"]</span>,
                     </div>
-                    <div className="text-gray-300">
-                      approach: <span className="text-green-300">"Elegant solutions for real-world problems"</span>
+                    <div className="text-gray-700 dark:text-gray-300">
+                      approach: <span className="text-green-600 dark:text-green-300">"Elegant solutions for real-world problems"</span>
                     </div>
                   </motion.div>
 
-                  <motion.div variants={codeVariants} className="text-purple-400">
+                  <motion.div variants={codeVariants} className="text-purple-600 dark:text-purple-400">
                     {'};'}
                   </motion.div>
 
@@ -404,13 +404,13 @@ export function About() {
             variants={itemVariants}
             className="mt-16 text-center"
           >
-            <Card className="border border-gray-700 bg-gray-900/90 backdrop-blur-sm shadow-xl inline-block">
+            <Card className="border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-xl inline-block">
               <CardContent className="p-4">
-                <div className="font-mono text-sm text-green-400 flex items-center gap-2">
+                <div className="font-mono text-sm text-green-600 dark:text-green-400 flex items-center gap-2">
                   <Terminal className="w-4 h-4" />
                   <span>Ready to collaborate? Let's build something amazing together!</span>
                   <motion.div
-                    className="w-2 h-4 bg-green-400"
+                    className="w-2 h-4 bg-green-600 dark:bg-green-400"
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                   />
@@ -422,11 +422,11 @@ export function About() {
       </div>
 
       {/* Matrix Rain Effect */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-5">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-9 dark:opacity-5">
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute text-green-400 font-mono text-xs"
+            className="absolute text-green-500 dark:text-green-400 font-mono text-xs"
             style={{
               left: `${i * 7}%`,
               top: '-10%',

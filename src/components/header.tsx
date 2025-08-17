@@ -59,7 +59,7 @@ const TypewriterLogo = ({ text, delay = 0 }: { text: string; delay?: number }) =
       {displayText}
       {showCursor && (
         <motion.span
-          className="inline-block w-2 h-5 bg-green-400 align-middle ml-1"
+          className="inline-block w-2 h-5 bg-green-500 dark:bg-green-400 align-middle ml-1"
           animate={{ opacity: [1, 0, 1] }}
           transition={{ duration: 1, repeat: Infinity }}
         />
@@ -143,8 +143,8 @@ export function Header() {
         animate="animate"
         className={`fixed top-0 z-50 w-full transition-all duration-300 ${
           isScrolled 
-            ? 'border-b border-green-500/20 bg-gray-900/90 dark:bg-gray-900/90 light:bg-white/90 backdrop-blur-md shadow-lg shadow-green-500/10' 
-            : 'bg-gray-900/50 dark:bg-gray-900/50 light:bg-white/50 backdrop-blur-sm'
+            ? 'border-b border-green-500/20 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg shadow-green-500/10' 
+            : 'bg-white/80 dark:bg-gray-900/60 backdrop-blur-sm'
         }`}
       >
         <div className="container flex h-16 max-w-screen-2xl items-center justify-between">
@@ -158,10 +158,10 @@ export function Header() {
           >
             {/* Terminal Window */}
             <motion.div
-              className="flex items-center gap-2 bg-black/80 dark:bg-black/80 light:bg-gray-800/80 border border-green-500/30 rounded-lg px-3 py-2 shadow-lg"
+              className="flex items-center gap-2 bg-gray-50 dark:bg-black/80 border border-green-500/60 dark:border-green-500/30 rounded-lg px-3 py-2 shadow-lg"
               whileHover={{ 
-                boxShadow: "0 0 20px rgba(34, 197, 94, 0.3)",
-                borderColor: "rgba(34, 197, 94, 0.5)"
+                boxShadow: "0 0 20px rgba(34, 197, 94, 0.4)",
+                borderColor: "rgba(34, 197, 94, 0.6)"
               }}
               transition={{ duration: 0.3 }}
             >
@@ -174,14 +174,14 @@ export function Header() {
               
               {/* Terminal Content */}
               <div className="flex items-center gap-2 font-mono text-sm">
-                <Terminal className="w-4 h-4 text-green-400" />
-                <span className="text-green-300">$</span>
+                <Terminal className="w-4 h-4 text-green-600 dark:text-green-400" />
+                <span className="text-green-700 dark:text-green-300">$</span>
                 <TypewriterLogo text="lahiru-dev" />
               </div>
 
               {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 rounded-lg bg-green-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute inset-0 rounded-lg bg-green-500/20 dark:bg-green-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 animate={{ 
                   scale: [1, 1.05, 1],
                   opacity: [0, 0.1, 0]
@@ -198,10 +198,10 @@ export function Header() {
             >
               <Badge 
                 variant="outline"
-                className="hidden sm:flex items-center gap-1 bg-emerald-500/10 text-emerald-400 border-emerald-500/30 font-mono text-xs"
+                className="hidden sm:flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/50 dark:border-emerald-500/30 font-mono text-xs"
               >
                 <motion.div
-                  className="w-2 h-2 bg-emerald-400 rounded-full"
+                  className="w-2 h-2 bg-emerald-600 dark:bg-emerald-400 rounded-full"
                   animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
@@ -230,8 +230,8 @@ export function Header() {
                     onClick={() => scrollToSection(item.href)}
                     className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-mono font-medium transition-all duration-300 ${
                       isActive 
-                        ? 'text-green-400 bg-green-500/10 shadow-lg border border-green-500/30' 
-                        : 'text-gray-300 dark:text-gray-300 light:text-gray-700 hover:text-green-300 dark:hover:text-green-300 light:hover:text-green-600 hover:bg-gray-800/50 dark:hover:bg-gray-800/50 light:hover:bg-gray-200/50 border border-transparent'
+                        ? 'text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-500/10 shadow-lg border border-green-500/50 dark:border-green-500/30' 
+                        : 'text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 border border-transparent'
                     }`}
                   >
                     <IconComponent className="w-4 h-4" />
@@ -240,7 +240,7 @@ export function Header() {
                     {/* Active Indicator */}
                     {isActive && (
                       <motion.div
-                        className="absolute -bottom-1 left-1/2 w-2 h-2 bg-green-400 rounded-full"
+                        className="absolute -bottom-1 left-1/2 w-2 h-2 bg-green-600 dark:bg-green-400 rounded-full"
                         layoutId="activeIndicator"
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -251,11 +251,11 @@ export function Header() {
 
                   {/* Terminal Command Tooltip */}
                   <motion.div
-                    className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 dark:bg-black/90 light:bg-white/90 border border-green-500/30 rounded px-2 py-1 font-mono text-xs text-green-300 dark:text-green-300 light:text-green-600 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-[60]"
+                    className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-white/95 dark:bg-black/90 border border-green-500/50 dark:border-green-500/30 rounded px-2 py-1 font-mono text-xs text-green-700 dark:text-green-300 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-[60] shadow-lg"
                     initial={{ y: -10, opacity: 0 }}
                     whileHover={{ y: 0, opacity: 1 }}
                   >
-                    <span className="text-green-400">$ </span>
+                    <span className="text-green-600 dark:text-green-400">$ </span>
                     {item.command}
                   </motion.div>
                 </motion.div>
@@ -277,10 +277,10 @@ export function Header() {
                 variant="outline" 
                 size="sm"
                 asChild
-                className="group bg-black/50 dark:bg-black/50 light:bg-gray-100/50 border-green-500/30 text-green-300 dark:text-green-300 light:text-green-600 hover:bg-green-500/10 hover:text-green-400 hover:border-green-500/50 font-mono text-xs transition-all duration-300"
+                className="group bg-gray-50 dark:bg-black/50 border-green-500/50 dark:border-green-500/30 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-500/10 hover:text-green-600 dark:hover:text-green-400 hover:border-green-500/70 dark:hover:border-green-500/50 font-mono text-xs transition-all duration-300"
               >
                 <a href="/docs/Lakshan Tissera - SE.pdf" download className="flex items-center gap-2">
-                  <span className="text-green-400">$</span>
+                  <span className="text-green-600 dark:text-green-400">$</span>
                   <Download className="w-3 h-3 group-hover:animate-bounce" />
                   <span className="hidden lg:inline">download cv</span>
                   <span className="lg:hidden">cv</span>
@@ -293,7 +293,7 @@ export function Header() {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
-              className="p-2 rounded-lg bg-black/50 dark:bg-black/50 light:bg-gray-100/50 border border-green-500/30 hover:border-green-500/50 transition-all duration-300"
+              className="p-2 rounded-lg bg-gray-50 dark:bg-black/50 border border-green-500/50 dark:border-green-500/30 hover:border-green-500/70 dark:hover:border-green-500/50 transition-all duration-300"
             >
               <ThemeToggle />
             </motion.div>
@@ -309,7 +309,7 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="relative bg-black/50 dark:bg-black/50 light:bg-gray-100/50 border border-green-500/30 hover:bg-green-500/10 hover:border-green-500/50 text-green-300 dark:text-green-300 light:text-green-600"
+                className="relative bg-gray-50 dark:bg-black/50 border border-green-500/50 dark:border-green-500/30 hover:bg-green-100 dark:hover:bg-green-500/10 hover:border-green-500/70 dark:hover:border-green-500/50 text-green-700 dark:text-green-300"
               >
                 <motion.div
                   animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
@@ -331,7 +331,7 @@ export function Header() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
+            className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-green-600/70 dark:via-green-400/50 to-transparent"
           />
         )}
       </motion.header>
@@ -346,7 +346,7 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 z-40 bg-black/80 dark:bg-black/80 light:bg-gray-900/80 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-gray-900/60 dark:bg-black/80 backdrop-blur-sm md:hidden"
             />
 
             {/* Mobile Terminal Menu */}
@@ -357,15 +357,15 @@ export function Header() {
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="fixed top-16 left-4 right-4 z-50 md:hidden"
             >
-              <div className="bg-black/95 dark:bg-black/95 light:bg-white/95 backdrop-blur-md border border-green-500/30 rounded-2xl shadow-2xl overflow-hidden">
+              <div className="bg-white/98 dark:bg-black/95 backdrop-blur-md border border-green-500/50 dark:border-green-500/30 rounded-2xl shadow-2xl overflow-hidden">
                 {/* Terminal Header */}
-                <div className="flex items-center gap-2 px-4 py-3 bg-gray-900/50 dark:bg-gray-900/50 light:bg-gray-100/50 border-b border-green-500/20">
+                <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-900/50 border-b border-green-500/40 dark:border-green-500/20">
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                     <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   </div>
-                  <span className="text-xs text-green-400 font-mono">mobile-menu</span>
+                  <span className="text-xs text-green-700 dark:text-green-400 font-mono">mobile-menu</span>
                 </div>
 
                 {/* Navigation Items */}
@@ -386,16 +386,16 @@ export function Header() {
                           onClick={() => scrollToSection(item.href)}
                           className={`w-full flex items-center gap-3 p-3 rounded-lg text-left font-mono transition-all duration-300 ${
                             isActive 
-                              ? 'text-green-400 bg-green-500/10 border border-green-500/30' 
-                              : 'text-gray-300 dark:text-gray-300 light:text-gray-700 hover:text-green-300 dark:hover:text-green-300 light:hover:text-green-600 hover:bg-gray-800/50 dark:hover:bg-gray-800/50 light:hover:bg-gray-200/50 border border-transparent'
+                              ? 'text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-500/10 border border-green-500/50 dark:border-green-500/30' 
+                              : 'text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 border border-transparent'
                           }`}
                         >
                           {/* Terminal Prompt */}
-                          <span className="text-green-400">$</span>
+                          <span className="text-green-600 dark:text-green-400">$</span>
                           
                           {/* Icon */}
                           <motion.div
-                            className="p-1 rounded bg-gray-800/50 dark:bg-gray-800/50 light:bg-gray-200/50"
+                            className="p-1 rounded bg-gray-100 dark:bg-gray-800/50"
                             whileHover={{ rotate: 15 }}
                             transition={{ type: "spring", stiffness: 400 }}
                           >
@@ -405,7 +405,7 @@ export function Header() {
                           {/* Command */}
                           <div className="flex-1">
                             <div className="font-medium">{item.command}</div>
-                            <div className="text-xs text-gray-500 dark:text-gray-500 light:text-gray-400"># {item.name}</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-500"># {item.name}</div>
                           </div>
                           
                           {/* Active indicator */}
@@ -415,7 +415,7 @@ export function Header() {
                               animate={{ scale: 1 }}
                               transition={{ type: "spring", stiffness: 500 }}
                             >
-                              <ChevronRight className="w-4 h-4 text-green-400" />
+                              <ChevronRight className="w-4 h-4 text-green-600 dark:text-green-400" />
                             </motion.div>
                           )}
                         </button>
@@ -428,16 +428,16 @@ export function Header() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="pt-4 border-t border-green-500/20"
+                    className="pt-4 border-t border-green-500/40 dark:border-green-500/20"
                   >
                     <Button 
                       variant="outline" 
                       size="lg"
                       asChild
-                      className="w-full bg-black/50 dark:bg-black/50 light:bg-gray-100/50 border-green-500/30 text-green-300 dark:text-green-300 light:text-green-600 hover:bg-green-500/10 hover:text-green-400 font-mono transition-all duration-300"
+                      className="w-full bg-gray-50 dark:bg-black/50 border-green-500/50 dark:border-green-500/30 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-500/10 hover:text-green-600 dark:hover:text-green-400 font-mono transition-all duration-300"
                     >
                       <a href="/docs/Lakshan Tissera - SE.pdf" download className="flex items-center gap-2">
-                        <span className="text-green-400">$</span>
+                        <span className="text-green-600 dark:text-green-400">$</span>
                         <Download className="w-4 h-4" />
                         <span>download --file=cv.pdf</span>
                       </a>
@@ -446,12 +446,12 @@ export function Header() {
                 </div>
 
                 {/* Terminal Footer */}
-                <div className="px-4 py-2 bg-gray-900/50 dark:bg-gray-900/50 light:bg-gray-100/50 border-t border-green-500/20 font-mono text-xs text-gray-500 dark:text-gray-500 light:text-gray-400">
+                <div className="px-4 py-2 bg-gray-50 dark:bg-gray-900/50 border-t border-green-500/40 dark:border-green-500/20 font-mono text-xs text-gray-500">
                   <div className="flex items-center gap-2">
-                    <Activity className="w-3 h-3 text-green-400" />
+                    <Activity className="w-3 h-3 text-green-600 dark:text-green-400" />
                     <span>System ready</span>
                     <motion.div
-                      className="w-2 h-2 bg-green-400 rounded-full ml-auto"
+                      className="w-2 h-2 bg-green-600 dark:bg-green-400 rounded-full ml-auto"
                       animate={{ opacity: [1, 0.3, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
                     />

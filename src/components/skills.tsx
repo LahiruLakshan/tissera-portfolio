@@ -455,17 +455,17 @@ export function Skills() {
       id="skills"
       ref={ref}
       style={{ opacity }}
-      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 from-gray-50 via-gray-100 to-gray-50"
+      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950"
     >
-      {/* Matrix-style Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
+      {/* Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b98108_1px,transparent_1px),linear-gradient(to_bottom,#10b98108_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
 
       {/* Floating Code Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {['npm', 'git', 'docker', 'node', 'python', 'react', 'aws', 'api'].map((symbol, i) => (
           <motion.div
             key={i}
-            className="absolute text-green-400/10 dark:text-green-400/10 text-gray-600/10 font-mono text-xl select-none"
+            className="absolute text-gray-400/10 dark:text-green-400/10 font-mono text-xl select-none"
             style={{
               left: `${10 + (i * 10) % 80}%`,
               top: `${15 + (i * 12) % 70}%`,
@@ -501,15 +501,15 @@ export function Skills() {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-500/30">
-                <Terminal className="w-8 h-8 text-green-400" />
+                <Terminal className="w-8 h-8 text-green-600 dark:text-green-400" />
               </div>
-              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-400 dark:text-green-400 text-gray-900">
+              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-600 dark:text-green-400">
                 $ ls -la skills/
               </h2>
             </motion.div>
 
             <motion.div
-              className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full"
+              className="w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
@@ -518,18 +518,18 @@ export function Skills() {
 
           {/* Terminal Info Panel */}
           <motion.div variants={itemVariants} className="mb-16">
-            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+            <Card className="border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
               {/* Terminal Header */}
-              <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 dark:bg-gray-800 bg-gray-200 border-b border-gray-700 dark:border-gray-700 border-gray-300">
+              <div className="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
                 <div className="flex gap-2">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 </div>
-                <span className="text-xs text-gray-400 dark:text-gray-400 text-gray-600 ml-2 font-mono">skills@portfolio:~$</span>
+                <span className="text-xs text-gray-600 dark:text-gray-400 ml-2 font-mono">skills@portfolio:~$</span>
               </div>
 
-              <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-900 dark:bg-gray-900 bg-white min-h-[200px]">
+              <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-50 dark:bg-gray-900 min-h-[200px]">
                 {terminalCommands.map((cmd, index) => (
                   <motion.div
                     key={index}
@@ -538,8 +538,8 @@ export function Skills() {
                     className="space-y-2"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-green-400">$</span>
-                      <span className="text-white dark:text-white text-gray-900">
+                      <span className="text-green-600 dark:text-green-400">$</span>
+                      <span className="text-gray-800 dark:text-white">
                         {isInView && <TypewriterText text={cmd.command} delay={cmd.delay * 1000} />}
                       </span>
                     </div>
@@ -547,7 +547,7 @@ export function Skills() {
                       initial={{ opacity: 0 }}
                       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                       transition={{ delay: cmd.delay + 1 }}
-                      className="text-blue-300 dark:text-blue-300 text-blue-600 ml-4"
+                      className="text-blue-600 dark:text-blue-300 ml-4"
                     >
                       {cmd.output}
                     </motion.div>
@@ -561,9 +561,9 @@ export function Skills() {
                   animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ delay: 4 }}
                 >
-                  <span className="text-green-400">$</span>
+                  <span className="text-green-600 dark:text-green-400">$</span>
                   <motion.div
-                    className="w-2 h-5 bg-green-400"
+                    className="w-2 h-5 bg-green-600 dark:bg-green-400"
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                   />
@@ -575,7 +575,7 @@ export function Skills() {
           {/* Categories Terminal */}
           <motion.div variants={itemVariants} className="mb-16">
             <div className="text-center mb-12">
-              <h3 className="text-2xl font-mono text-green-400 dark:text-green-400 text-gray-900 mb-4">$ cat categories.json</h3>
+              <h3 className="text-2xl font-mono text-green-600 dark:text-green-400 mb-4">$ cat categories.json</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -587,15 +587,15 @@ export function Skills() {
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/50 dark:bg-gray-900/50 bg-white/50 backdrop-blur-sm hover:bg-gray-800/50 dark:hover:bg-gray-800/50 hover:bg-gray-50/50 transition-all duration-300 group overflow-hidden">
+                  <Card className="border border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-900/50 backdrop-blur-sm hover:bg-gray-50/80 dark:hover:bg-gray-800/50 transition-all duration-300 group overflow-hidden">
                     <CardContent className="p-6">
                       {/* Terminal Command */}
-                      <div className="mb-4 p-3 bg-black/30 dark:bg-black/30 bg-gray-100/30 rounded border border-gray-700 dark:border-gray-700 border-gray-300 font-mono text-xs">
+                      <div className="mb-4 p-3 bg-gray-100 dark:bg-black/30 rounded border border-gray-300 dark:border-gray-700 font-mono text-xs">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-green-400">$</span>
-                          <span className="text-white dark:text-white text-gray-900">{category.command}</span>
+                          <span className="text-green-600 dark:text-green-400">$</span>
+                          <span className="text-gray-800 dark:text-white">{category.command}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-green-300 dark:text-green-300 text-green-600">
+                        <div className="flex items-center gap-2 text-green-600 dark:text-green-300">
                           <CheckCircle className="w-3 h-3" />
                           <span>{category.count} packages found</span>
                         </div>
@@ -607,28 +607,26 @@ export function Skills() {
                           whileHover={{ rotate: [0, -5, 5, 0] }}
                           transition={{ duration: 0.5 }}
                         >
-                         
-                            <FontAwesomeIcon icon={category.icon} className="w-6 h-6 text-green-400" />
-                       
+                          <FontAwesomeIcon icon={category.icon} className="w-6 h-6 text-green-600 dark:text-green-400" />
                         </motion.div>
                         <div className="flex-1">
-                          <h4 className="font-bold text-white dark:text-white text-gray-900 mb-2 font-mono">
+                          <h4 className="font-bold text-gray-900 dark:text-white mb-2 font-mono">
                             {category.name}
                           </h4>
                           <div className="space-y-1">
-                            <p className="text-gray-300 dark:text-gray-300 text-gray-600 text-sm">
+                            <p className="text-gray-600 dark:text-gray-300 text-sm">
                               {category.count} technologies
                             </p>
                             <div className="flex items-center gap-2">
-                              <div className="flex-1 bg-gray-700 dark:bg-gray-700 bg-gray-300 rounded-full h-2">
+                              <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                 <motion.div
-                                  className="bg-green-400 h-2 rounded-full"
+                                  className="bg-green-500 h-2 rounded-full"
                                   initial={{ width: 0 }}
                                   animate={isInView ? { width: `${category.avg}%` } : { width: 0 }}
                                   transition={{ delay: index * 0.2, duration: 1 }}
                                 />
                               </div>
-                              <span className="text-xs font-mono text-green-400">{category.avg}%</span>
+                              <span className="text-xs font-mono text-green-600 dark:text-green-400">{category.avg}%</span>
                             </div>
                           </div>
                         </div>
@@ -643,7 +641,7 @@ export function Skills() {
           {/* Tech Stack Carousel */}
           <motion.div variants={itemVariants} className="relative">
             <div className="text-center mb-8">
-              <h3 className="text-xl font-mono text-green-400 dark:text-green-400 text-gray-900 mb-4">$ npm list --global</h3>
+              <h3 className="text-xl font-mono text-green-600 dark:text-green-400 mb-4">$ npm list --global</h3>
             </div>
 
             <div className="relative -mx-4">
@@ -686,10 +684,10 @@ export function Skills() {
                         damping: 17,
                       }}
                     >
-                      <div className="relative w-full h-full rounded-2xl bg-gray-900/80 dark:bg-gray-900/80 bg-white/80 backdrop-blur-sm border border-green-500/30 p-4 flex flex-col items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300">
+                      <div className="relative w-full h-full rounded-2xl bg-white/90 dark:bg-gray-900/80 backdrop-blur-sm border border-green-500/30 p-4 flex flex-col items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300">
                         {/* Tech Icon */}
                         <motion.div
-                          className="text-green-400 mb-2 filter drop-shadow-lg"
+                          className="text-green-600 dark:text-green-400 mb-2 filter drop-shadow-lg"
                           whileHover={{
                             rotate: [0, -10, 10, 0],
                             scale: 1.2,
@@ -710,18 +708,18 @@ export function Skills() {
                         </motion.div>
 
                         {/* Tech Name */}
-                        <span className="text-xs font-bold text-white dark:text-white text-gray-900 text-center leading-tight opacity-90 group-hover:opacity-100 transition-opacity duration-200 font-mono mb-2">
+                        <span className="text-xs font-bold text-gray-900 dark:text-white text-center leading-tight opacity-90 group-hover:opacity-100 transition-opacity duration-200 font-mono mb-2">
                           {tech.name}
                         </span>
 
                         {/* Proficiency Bar */}
                         <div className="w-full mb-2">
                           <div className="flex justify-between text-xs mb-1">
-                            <span className="text-gray-400 dark:text-gray-400 text-gray-600 font-mono">{tech.proficiency}%</span>
+                            <span className="text-gray-600 dark:text-gray-400 font-mono">{tech.proficiency}%</span>
                           </div>
-                          <div className="w-full bg-gray-700 dark:bg-gray-700 bg-gray-300 rounded-full h-1">
+                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1">
                             <motion.div
-                              className="bg-green-400 h-1 rounded-full"
+                              className="bg-green-500 h-1 rounded-full"
                               initial={{ width: 0 }}
                               animate={isInView ? { width: `${tech.proficiency}%` } : { width: 0 }}
                               transition={{ delay: index * 0.05, duration: 1 }}
@@ -731,17 +729,17 @@ export function Skills() {
 
                         {/* Category Badge */}
                         <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                          <span className="px-2 py-1 text-xs font-medium font-mono bg-gray-800/80 dark:bg-gray-800/80 bg-gray-100/80 backdrop-blur-sm rounded-full text-green-300 dark:text-green-300 text-green-600 border border-green-500/30">
+                          <span className="px-2 py-1 text-xs font-medium font-mono bg-gray-100/90 dark:bg-gray-800/80 backdrop-blur-sm rounded-full text-green-600 dark:text-green-300 border border-green-500/30">
                             {tech.category}
                           </span>
                         </div>
 
                         {/* Command Tooltip */}
                         <motion.div
-                          className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 dark:bg-black/90 bg-white/90 border border-green-500/30 rounded px-2 py-1 font-mono text-xs text-green-300 dark:text-green-300 text-green-600 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                          className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-white/95 dark:bg-black/90 border border-green-500/30 rounded px-2 py-1 font-mono text-xs text-green-600 dark:text-green-300 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                           initial={{ y: -10, opacity: 0 }}
                         >
-                          <span className="text-green-400">$ </span>
+                          <span className="text-green-600 dark:text-green-400">$ </span>
                           {tech.command}
                         </motion.div>
 
@@ -765,13 +763,13 @@ export function Skills() {
             variants={itemVariants}
             className="mt-16 text-center"
           >
-            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-xl inline-block">
+            <Card className="border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-xl inline-block">
               <CardContent className="p-4">
-                <div className="font-mono text-sm text-green-400 dark:text-green-400 text-green-600 flex items-center gap-2">
+                <div className="font-mono text-sm text-green-600 dark:text-green-400 flex items-center gap-2">
                   <Activity className="w-4 h-4" />
                   <span>Skills inventory complete. Ready for new challenges!</span>
                   <motion.div
-                    className="w-2 h-4 bg-green-400"
+                    className="w-2 h-4 bg-green-600 dark:bg-green-400"
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                   />
