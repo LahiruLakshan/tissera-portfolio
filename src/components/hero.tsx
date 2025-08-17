@@ -1,314 +1,223 @@
-// src/components/hero.tsx
 "use client";
-
 import { useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  ChevronDown,
-  Download,
   Github,
   Linkedin,
   Mail,
+  Terminal,
   MapPin,
-  Sparkles,
+  ChevronDown,
   Code2,
   Palette,
   Zap,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAppStore,
-  faCodepen,
-  faGithub,
+  faReact,
   faNodeJs,
   faPython,
-  faReact,
+  faGithub as faGithubFA,
 } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCodeBranch,
   faCodeCommit,
-  faCodeCompare,
-  faCodeFork,
-  faCodeMerge,
-  faCodePullRequest,
-  faDiagramNext,
-  faGear,
-  faMicrochip,
-  faRobot,
   faTerminal,
 } from "@fortawesome/free-solid-svg-icons";
-import { RiRobot3Line } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
+import { RiRobot3Line } from "react-icons/ri";
 
-const roles = [
-  {
-    text: "Full-Stack Developer",
-    icon: Code2,
-    color: "from-blue-500 to-cyan-500",
-  },
-  { text: "Web3 Engineer", icon: SiHiveBlockchain, color: "from-purple-500 to-pink-500" },
-  {
-    text: "UI/UX Designer",
-    icon: Palette,
-    color: "from-emerald-500 to-teal-500",
-  },
-  {
-    text: "AI/ML Researcher",
-    icon: RiRobot3Line,
-    color: "from-orange-500 to-red-500",
-  },
+// Custom typewriter component for code:
+function Typewriter({ text, speed = 40, cursor = true }: { text: string; speed?: number; cursor?: boolean }) {
+  const [displayed, setDisplayed] = useState("");
+  useEffect(() => {
+    let i = 0;
+    let timer = setInterval(() => {
+      setDisplayed(text.slice(0, i + 1));
+      i++;
+      if (i === text.length) clearInterval(timer);
+    }, speed);
+    return () => clearInterval(timer);
+  }, [text, speed]);
+  return (
+    <span>
+      {displayed}
+      {cursor && <motion.span animate={{ opacity: [1, 0, 1] }} transition={{ repeat: Infinity, duration: 1 }} className="inline-block w-2 h-5 bg-green-400 align-middle ml-1"/>}
+    </span>
+  );
+}
+
+const codeRoleIcons = [
+  Code2, SiHiveBlockchain, Palette, RiRobot3Line,
+];
+const codeRoles = [
+  "Full-Stack Developer",
+  "Web3 Engineer",
+  "UI/UX Designer",
+  "AI/ML Researcher",
 ];
 
-const floatingElements = [
-  { key:1, icon: faCodeBranch, x: "10%", y: "20%", delay: 0 },
-  { key:2, icon: faCodeMerge, x: "80%", y: "10%", delay: 1 },
-  { key:3, icon: faCodeCommit, x: "85%", y: "70%", delay: 2 },
-  { key:4, icon: faCodePullRequest, x: "15%", y: "80%", delay: 3 },
-  { key:5, icon: faCodeCompare, x: "50%", y: "50%", delay: 4 },
-  { key:6, icon: faTerminal, x: "90%", y: "30%", delay: 4 },
-  { key:7, icon: faCodeFork, x: "60%", y: "20%", delay: 4 },
+// A sample set of animated code glyphs:
+const floatingCode = [
+  "<Code/>", "{React}", "async()", "npm start", "<const>", "git commit", "()=>{}", 
 ];
 
-const skillElements = [
-  { key:1, icon: faReact, x: "10%", y: "20%", delay: 0 },
-  { key:2, icon: faMicrochip, x: "80%", y: "10%", delay: 1 },
-  { key:3, icon: faNodeJs, x: "85%", y: "70%", delay: 2 },
-  { key:4, icon: faPython, x: "15%", y: "80%", delay: 3 },
- 
-];
-
-const scrollToNext = () => {
-  const nextSection = document.getElementById("about");
-  if (nextSection) {
-    nextSection.scrollIntoView({ behavior: "smooth" });
-  }
-};
 
 export function Hero() {
   const [currentRole, setCurrentRole] = useState(0);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const { scrollY } = useScroll();
+const Icon = codeRoleIcons[currentRole];
 
-  // Parallax effects
-  const y = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
-  // Role rotation effect
+  // Cycle roles every 3s
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentRole((prev) => (prev + 1) % roles.length);
-    }, 3500);
-    return () => clearInterval(interval);
+    const id = setInterval(() => setCurrentRole(prev => (prev + 1) % codeRoles.length), 3000);
+    return () => clearInterval(id);
   }, []);
 
-  // Mouse tracking for interactive elements
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        duration: 0.8,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
-    },
-  };
-
-  const CurrentRoleIcon = roles[currentRole].icon;
+  // Used for floating background code glyphs
+  function randomInRange(a:number,b:number){return `${Math.random()*(b-a)+a}%`;}
 
   return (
     <motion.section
-      
-      // style={{ y, opacity }}
-      className="relative lg:min-h-screen  min-h-[1400px]  flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/80"
+      className="relative min-h-[900px] lg:min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950"
+      initial="hidden"
+      animate="visible"
+      exit="exit"
     >
-      {/* Animated Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+      {/* Animated Floating Terminal/Code Glyphs */}
+      <div className="absolute inset-0 pointer-events-none opacity-15">
+        {floatingCode.map((glyph, i) => (
+          <motion.div
+            key={i}
+            className="absolute font-mono text-green-400 text-lg lg:text-2xl whitespace-nowrap"
+            style={{
+              top: randomInRange(5, 90),
+              left: randomInRange(5, 90),
+            }}
+            animate={{
+              y: [-10, 10, -10],
+              opacity: [0.3, 0.5, 0.3],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 8 + i,
+              repeat: Infinity,
+              delay: i * 0.5,
+            }}
+          >{glyph}</motion.div>
+        ))}
+      </div>
 
-      {/* Floating Background Elements */}
-      {floatingElements.map((element, index) => (
-        <motion.div
-          key={index}
-          className="absolute text-4xl opacity-10 pointer-events-none select-none"
-          style={{
-            left: element.x,
-            top: element.y,
-            x: mousePosition.x * (index % 2 === 0 ? 1 : -1) * 0.5,
-            y: mousePosition.y * (index % 2 === 0 ? 1 : -1) * 0.5,
-          }}
-          animate={{
-            y: [-10, 10, -10],
-            rotate: [0, 5, -5, 0],
-          }}
-          transition={{
-            duration: 4 + index,
-            repeat: Infinity,
-            delay: element.delay,
-          }}
-        >
-          <FontAwesomeIcon icon={element.icon} className="text-3xl" />
-        </motion.div>
-      ))}
-
-      {/* Main Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
+          {/* Left Content - Terminal Code Window */}
           <motion.div
-            variants={containerVariants}
+            className="mb-16 flex flex-col gap-8 text-center lg:text-left items-center lg:items-start z-10"
             initial="hidden"
             animate="visible"
-            className="flex flex-col gap-8 text-center lg:text-left items-center lg:items-start"
+            variants={{
+              hidden: { opacity: 0, x: -40 },
+              visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+            }}
           >
-            {/* Status Badge */}
+            {/* Terminal Window */}
             <motion.div
-              variants={itemVariants}
-              className="flex justify-center lg:justify-start"
+              className="bg-black/80 border border-green-800 rounded-lg shadow-2xl font-mono mb-6 relative overflow-hidden w-full max-w-lg"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
             >
-              <Badge
-                variant="outline"
-                className="w-fit bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20 transition-colors duration-300 backdrop-blur-sm"
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-2 h-2 bg-emerald-500 rounded-full mr-2"
-                />
-                Available for new opportunities
-              </Badge>
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.div variants={itemVariants} className="space-y-4">
-              <div className="flex items-center gap-2 justify-center lg:justify-start mb-2">
-                <MapPin className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">
-                  Kadawatha, Sri Lanka
+              {/* Terminal Header */}
+              <div className="flex items-center px-4 py-2 border-b border-green-900 bg-black/50">
+                <div className="flex gap-1 mr-3">
+                  <div className="w-2 h-2 bg-red-500 rounded-full" />
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full" />
+                  <div className="w-2 h-2 bg-green-400 rounded-full" />
+                </div>
+                <span className="text-green-300 text-xs">lahiru@portfolio:~</span>
+              </div>
+              {/* Terminal Content */}
+              <div className="px-5 pt-6 pb-8 min-h-[150px] text-green-400 text-base">
+                <span className="text-green-300">$ </span>
+                <Typewriter text="echo 'Welcome to my portfolio site!'" />
+                <br />
+                <span className="text-green-300">$ </span>
+                <Typewriter text="cat about.txt" speed={32} />
+                <br/><br/>
+                <span className="text-green-300">// </span>
+                <span>
+                  Hi, I'm <span className="text-cyan-400 font-semibold">Lahiru Tissera</span> 🌐<br/>
+                  <span className="text-green-300">// </span>
+                  <span>Available for <span className="text-emerald-400">new opportunities</span>!</span>
                 </span>
               </div>
-
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold font-headline tracking-tighter">
-                Hi, I'm{" "}
-                <motion.span
-                  className="relative inline-block"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient-x bg-300%">
-                    Lahiru
-                  </span>
-                  <motion.div
-                    className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur-lg -z-10"
-                    animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                </motion.span>
-              </h1>
-
-              {/* Dynamic Role Display */}
-              
-              <div className="h-16 flex items-center justify-center lg:justify-start">
-                <motion.div
-                  key={currentRole}
-                  initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20, scale: 0.8 }}
-                  transition={{ duration: 0.5 }}
-                  className="flex items-center gap-3 "
-                >
-                  <div
-                    className={`p-2 rounded-lg bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border border-primary/50 transition-all duration-300`}
-                  >
-                    <CurrentRoleIcon className="w-6 h-6 text-primary" />
-                  </div>
-                  <span className="text-2xl sm:text-3xl font-medium text-muted-foreground">
-                    {roles[currentRole].text}
-                  </span>
-                </motion.div>
-              </div>
             </motion.div>
-
-            {/* Description */}
-            <motion.p
-              variants={itemVariants}
-              className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl"
-            >
-              Creative Full-Stack Developer with expertise in{" "}
-              <span className="text-primary font-semibold">Web3</span>,{" "}
-              <span className="text-accent font-semibold">React</span>, and{" "}
-              <span className="text-primary font-semibold">
-                Machine Learning
-              </span>
-              . I build elegant, efficient, and user-centric digital experiences
-              that solve real-world problems.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-            >
-              <Button
-                size="lg"
-                className="group relative overflow-hidden bg-[linear-gradient(45deg,rgba(168,85,247,0.3),rgba(6,182,212,0.3))]  text-primary-foreground px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
-                asChild
+            {/* Status Badge */}
+            <Badge className="w-fit bg-emerald-500/10 text-emerald-400 border-emerald-500/30 mb-4">
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-2 h-2 bg-emerald-400 rounded-full mr-2"
+              />
+              Available for new opportunities
+            </Badge>
+            {/* Location */}
+            <div className="flex items-center gap-2 justify-center lg:justify-start mb-1 text-muted-foreground">
+              <MapPin className="w-4 h-4" />
+              <span className="text-sm">Kadawatha, Sri Lanka</span>
+            </div>
+            {/* Dynamic Role Display */}
+            <div className="h-14 flex items-center justify-center lg:justify-start">
+              <motion.div
+                key={currentRole}
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.8 }}
+                transition={{ duration: 0.5 }}
+                className="flex items-center gap-3 "
               >
+                <span
+    className={`p-2 rounded-lg bg-gradient-to-r ${[
+      "from-blue-500 to-cyan-500",
+      "from-purple-500 to-pink-500",
+      "from-emerald-500 to-teal-500",
+      "from-orange-500 to-red-500",
+    ][currentRole]} backdrop-blur-sm border border-primary/40`}
+  >
+    <Icon className="w-6 h-6 text-white drop-shadow" />
+  </span>
+                <span className="text-2xl sm:text-3xl font-medium text-green-300">
+                  <Typewriter text={codeRoles[currentRole]} speed={32} cursor={false}/>
+                </span>
+              </motion.div>
+            </div>
+            <p className="text-lg sm:text-xl text-green-200 leading-relaxed max-w-2xl font-mono mt-2 mb-4">
+              Creative Full-Stack Developer with expertise in&nbsp;
+              <span className="text-cyan-400 font-semibold font-mono">Web3</span>,&nbsp;
+              <span className="text-blue-400 font-semibold font-mono">React</span>, and&nbsp;
+              <span className="text-orange-400 font-semibold font-mono">Machine Learning</span>.<br />
+              I build elegant, efficient, and user-centric digital experiences that solve real-world problems.
+            </p>
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button size="lg" className="group relative overflow-hidden border-2 border-green-700 bg-black text-green-300 font-mono px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300" asChild>
                 <a href="#projects" className="flex items-center">
-                  <span className="relative z-10">View Projects</span>
-                  <motion.div
-                    className="absolute inset-0 bg-[linear-gradient(90deg,rgba(168,85,247,0.3),rgba(6,182,212,0.3))] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    whileHover={{ scale: 1.05 }}
-                  />
+                  <Terminal className="w-5 h-5 mr-2" />
+                  View Projects
                 </a>
               </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className=" border-2 border-primary/30 hover:bg-[linear-gradient(45deg,rgba(168,85,247,0.3),rgba(6,182,212,0.3))] bg-[linear-gradient(45deg,rgba(168,85,247,0.3),rgba(6,182,212,0.3))] px-8 py-4 text-lg font-medium backdrop-blur-sm transition-all duration-300"
-                asChild
-              >
-                <a
-                  href="/docs/Lakshan Tissera - SE.pdf"
-                  download
-                  className="flex items-center"
-                >
-                  <Download className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+              <Button size="lg" variant="outline" className="border-2 border-green-500/30 bg-gray-900 text-green-200 font-mono px-8 py-4 text-lg font-medium backdrop-blur-sm transition-all duration-300" asChild>
+                <a href="/docs/Lakshan Tissera - SE.pdf" download className="flex items-center">
+                  <Terminal className="w-5 h-5 mr-2" />
                   Download CV
                 </a>
               </Button>
-            </motion.div>
-
+            </div>
             {/* Social Links */}
-            <motion.div
-              variants={itemVariants}
-              className="flex justify-center lg:justify-start space-x-6"
-            >
+            <div className="flex justify-center lg:justify-start space-x-6 mt-4">
               {[
                 {
                   icon: Github,
@@ -330,171 +239,110 @@ export function Hero() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="group relative p-3 rounded-full bg-muted/50 hover:bg-primary/10 backdrop-blur-sm transition-all duration-300"
-                  whileHover={{ scale: 1.1, y: -5 }}
+                  className="group relative p-3 rounded-full bg-black/40 hover:bg-green-800/30 backdrop-blur-sm transition-all duration-300"
+                  whileHover={{ scale: 1.1, y: -4 }}
                   whileTap={{ scale: 0.95 }}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <Icon className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-                  <motion.div
-                    className="absolute inset-0 rounded-full bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
-                    whileHover={{ scale: 1.5 }}
-                  />
+                  <Icon className="w-6 h-6 text-green-300 group-hover:text-white transition-colors duration-300" />
                 </motion.a>
               ))}
-            </motion.div>
+            </div>
           </motion.div>
-
-          {/* Right Content - Avatar & Visual Elements */}
+          
+          {/* Right - Avatar and Visuals */}
           <motion.div
-            variants={itemVariants}
-            className="relative flex justify-center items-center"
+            className="relative flex justify-center items-center z-0"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.7 }}
           >
-            {/* Background Decorative Elements */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              {/* Rotating Rings */}
+            {/* Code Editor Style Decorations */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              {/* Rotating Circles */}
               <motion.div
-                className="absolute w-96 h-96 border border-primary/10 rounded-full"
+                className="absolute w-96 h-96 border-2 border-green-700/30 rounded-full"
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
               />
               <motion.div
-                className="absolute w-80 h-80 border border-accent/10 rounded-full"
+                className="absolute w-72 h-72 border-2 border-cyan-700/15 rounded-full"
                 animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 23, repeat: Infinity, ease: "linear" }}
               />
-
-              {/* Pulsing Gradient Background */}
               <motion.div
-                className="absolute w-72 h-72 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-full blur-3xl"
+                className="absolute w-52 h-52 border-2 border-orange-700/15 rounded-full"
                 animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3],
+                  scale: [1, 1.13, 1],
+                  opacity: [0.3, 0.7, 0.3],
                 }}
-                transition={{ duration: 4, repeat: Infinity }}
+                transition={{ duration: 8, repeat: Infinity }}
               />
             </div>
-
             {/* Main Avatar */}
             <motion.div
               className="relative z-10"
-              style={{
-                x: mousePosition.x * 0.5,
-                y: mousePosition.y * 0.5,
-              }}
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="relative">
-                <Avatar className="w-64 h-64 lg:w-80 lg:h-80 border-4 border-primary/30 shadow-2xl hover:shadow-primary/25 transition-all duration-500">
-                  <Image
-                    // src="https://media.licdn.com/dms/image/v2/D5603AQFIxldwSUganw/profile-displayphoto-shrink_800_800/B56ZTbJ6yyHEAc-/0/1738843599819?e=1758153600&v=beta&t=9BpUbCLBKPItzXiRt9Ax_WXb87nswTR3KNbDjUQWNcU"
-                    src="/images/graduation-img.JPG"
-                    alt="Lahiru Tissera"
-                    className="object-cover hover:scale-110 transition-transform duration-700"
-                    width={1000}
-                    height={1000}
-                  />
-                  {/* <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-primary to-accent text-primary-foreground">
-                    LT
-                  </AvatarFallback> */}
-                </Avatar>
-
-                {/* Status Indicators */}
-                <motion.div
-                  className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs px-3 py-1 rounded-full shadow-lg backdrop-blur-sm"
-                  animate={{ y: [-2, 2, -2] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  Available
-                </motion.div>
-
-                {/* Skill Badges Around Avatar */}
-                <div className="absolute inset-0 pointer-events-none">
-                  {skillElements.map(
-                    (skill, index) => (
-                      <motion.div
-                        key={skill.key}
-                        className="absolute"
-                        style={{
-                          top: `${20 + Math.sin((index * Math.PI) / 2) * 40}%`,
-                          left: `${20 + Math.cos((index * Math.PI) / 2) * 40}%`,
-                        }}
-                        animate={{
-                          y: [0, -10, 0],
-                          rotate: [0, 5, -5, 0],
-                        }}
-                        transition={{
-                          duration: 3 + index * 0.5,
-                          repeat: Infinity,
-                          delay: index * 0.5,
-                        }}
-                      >
-                        <Badge
-                          variant="secondary"
-                          className="bg-background/80 backdrop-blur-sm shadow-lg border border-primary/20"
-                        >
-                           <FontAwesomeIcon icon={skill.icon} className="text-sm" />
-                          {/* {skill} */}
-                        </Badge>
-                      </motion.div>
-                    )
-                  )}
-                </div>
-              </div>
+              <Avatar className="w-64 h-64 lg:w-80 lg:h-80 border-4 border-green-400/30 shadow-2xl hover:shadow-green-300/25 transition-all duration-500 ring-8 ring-black/50">
+                <Image
+                  src="/images/graduation-img.JPG"
+                  alt="Lahiru Tissera"
+                  className="object-cover hover:scale-110 transition-transform duration-700"
+                  width={1000}
+                  height={1000}
+                />
+              </Avatar>
             </motion.div>
-
-            {/* Stats Cards */}
-            <div className="absolute bottom-[-120px] left-0 right-0 flex justify-center gap-4 pointer-events-none">
-              {[
-                { label: "Years Exp", value: "3+" },
-                { label: "Projects", value: "20+" },
-                { label: "Technologies", value: "15+" },
-              ].map((stat, index) => (
+            {/* Code Badges */}
+            <div className="absolute inset-0 pointer-events-none z-20">
+              {[faReact, faNodeJs, faPython, faGithubFA].map((icon, idx) => (
                 <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.5 + index * 0.2 }}
+                  key={idx}
+                  className="absolute"
+                  style={{
+                    top: `${20 + Math.sin((idx * Math.PI) / 2) * 35}%`,
+                    left: `${20 + Math.cos((idx * Math.PI) / 2) * 35}%`,
+                  }}
+                  animate={{
+                    y: [0, -10, 0], rotate: [0, 8, -8, 0],
+                  }}
+                  transition={{
+                    duration: 2.5 + idx * 0.5,
+                    repeat: Infinity,
+                    delay: idx * 0.6,
+                  }}
                 >
-                  <Card className="bg-background/80 backdrop-blur-sm border-primary/20 shadow-lg">
-                    <CardContent className="p-3 text-center">
-                      <div className="text-lg font-bold text-primary">
-                        {stat.value}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {stat.label}
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <Badge
+                    variant="secondary"
+                    className="bg-gray-900/80 border-green-400/30 text-green-300 font-mono px-3 py-2 rounded-full text-xs shadow-lg"
+                  >
+                    <FontAwesomeIcon icon={icon} className="text-base mr-1" />
+                    {["React", "Node.js", "Python", "GitHub"][idx]}
+                  </Badge>
                 </motion.div>
               ))}
             </div>
           </motion.div>
         </div>
-
-        {/* Scroll Indicator */}
+        {/* Scroll To Next */}
         <button
-          onClick={scrollToNext}
-          className="group flex flex-col items-center space-y-2 text-white/80 hover:text-white transition-all duration-300"
+          onClick={() => {
+            const nextSection = document.getElementById("about");
+            nextSection?.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="group flex flex-col items-center space-y-2 text-green-300 hover:text-white transition-all duration-300 mt-20"
           aria-label="Scroll to next section"
         >
+          <span className="text-xs font-mono">Scroll to explore</span>
           <motion.div
-            variants={itemVariants}
-            className="absolute lg:bottom-[150px] md:bottom-[10px] bottom-[0px] left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="rounded-full items-center flex flex-col"
           >
-            <span className="text-xs text-muted-foreground">
-              Scroll to explore
-            </span>
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="p-2 rounded-full  backdrop-blur-sm items-center flex flex-col"
-            >
-              <div className="w-8 h-12 border-2 dark:border-white/60 border-black/60 rounded-full flex justify-center items-start p-1 dark:group-hover:border-white group-hover:border-black transition-colors duration-300">
-                <div className="w-1 h-3 dark:bg-white/80 bg-black/80 rounded-full animate-scroll-bounce dark:group-hover:bg-white group-hover:bg-black transition-colors duration-300"></div>
-              </div>
-              <ChevronDown className="w-5 h-5 text-muted-foreground" />
-            </motion.div>
+            <ChevronDown className="w-6 h-6" />
           </motion.div>
         </button>
       </div>
