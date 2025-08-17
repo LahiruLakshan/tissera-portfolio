@@ -13,7 +13,8 @@ import {
   CheckCircle,
   Zap,
   Coffee,
-  Heart
+  Heart,
+  Terminal
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -46,6 +47,14 @@ const contactInfo = [
     href: "#",
     color: "from-purple-500 to-pink-500",
     description: "Based in Sri Lanka, Open to remote work"
+  },
+  {
+    icon: Terminal,
+    label: "Dev Mode",
+    value: "tissera-portfolio.vercel.app",
+    href: "https://tissera-portfolio.vercel.app/",
+    color: "from-orange-500 to-red-500",
+    description: "Explore my developer portfolio"
   }
 ];
 
@@ -500,7 +509,7 @@ export function Contact() {
               </div>
 
               {/* Quick Response Promise */}
-              <Card className="border-0 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 backdrop-blur-sm">
+              {/* <Card className="border-0 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 backdrop-blur-sm">
                 <CardContent className="p-6 text-center">
                   <motion.div
                     animate={{ scale: [1, 1.05, 1] }}
@@ -518,7 +527,7 @@ export function Contact() {
                     {availabilityStatus.timezone}
                   </Badge>
                 </CardContent>
-              </Card>
+              </Card> */}
             </motion.div>
           </div>
         </motion.div>

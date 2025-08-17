@@ -46,14 +46,14 @@ const techIcons = [
 ];
 
 const floatingElements = [
-  { icon: "⚛️", x: "10%", y: "20%", delay: 0 },
-  { icon: "🚀", x: "80%", y: "15%", delay: 0.5 },
-  { icon: "💡", x: "85%", y: "70%", delay: 1 },
-  { icon: "🎨", x: "15%", y: "80%", delay: 1.5 },
-  { icon: "⚡", x: "70%", y: "40%", delay: 2 },
-  { icon: "💻", x: "20%", y: "60%", delay: 2.5 },
-  { icon: "🔗", x: "90%", y: "50%", delay: 3 },
-  { icon: "🤖", x: "5%", y: "40%", delay: 3.5 }
+  { icon: "</>", x: "10%", y: "20%", delay: 0 },
+  { icon: "{ }", x: "80%", y: "15%", delay: 0.5 },
+  { icon: "=>", x: "85%", y: "70%", delay: 1 },
+  { icon: "()", x: "15%", y: "80%", delay: 1.5 },
+  { icon: "[]", x: "70%", y: "40%", delay: 2 },
+  { icon: "const", x: "20%", y: "60%", delay: 2.5 },
+  { icon: "function", x: "90%", y: "50%", delay: 3 },
+  { icon: "async", x: "5%", y: "40%", delay: 3.5 }
 ];
 
 export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
@@ -133,21 +133,24 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
         exit="exit"
         className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-br from-background via-background/95 to-background/80 overflow-hidden"
       >
-        {/* Animated Background Grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+        {/* Animated Background Grid - Light/Dark Theme Adaptive */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,theme(colors.border)_1px,transparent_1px),linear-gradient(to_bottom,theme(colors.border)_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-30 dark:opacity-20" />
+        
+        {/* Light Theme Background Accent */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-accent/5 dark:from-primary/10 dark:to-accent/10" />
         
         {/* Floating Background Elements */}
         {floatingElements.map((element, index) => (
           <motion.div
             key={index}
-            className="absolute text-6xl opacity-10 pointer-events-none select-none"
+            className="absolute text-6xl opacity-8 dark:opacity-10 pointer-events-none select-none text-primary/20 dark:text-primary/10 font-mono"
             style={{
               left: element.x,
               top: element.y,
             }}
             initial={{ opacity: 0, scale: 0, rotate: -180 }}
             animate={{ 
-              opacity: 0.1, 
+              opacity: 0.08, // Lighter for light theme
               scale: 1, 
               rotate: 0,
               y: [-10, 10, -10],
@@ -184,21 +187,21 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
             >
               {/* Outer Ring */}
               <motion.div
-                className="absolute inset-0 rounded-full border-4 border-primary/30"
+                className="absolute inset-0 rounded-full border-4 border-primary/40 dark:border-primary/30"
                 animate={{ rotate: -360 }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
               />
               
               {/* Inner Ring */}
               <motion.div
-                className="absolute inset-2 rounded-full border-2 border-accent/50"
+                className="absolute inset-2 rounded-full border-2 border-accent/60 dark:border-accent/50"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               />
               
               {/* Center Icon */}
               <motion.div
-                className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-primary/20 to-accent/20 rounded-full backdrop-blur-sm"
+                className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-primary/30 to-accent/30 dark:from-primary/20 dark:to-accent/20 rounded-full backdrop-blur-sm border border-primary/20 dark:border-primary/10"
                 whileHover={{ scale: 1.1 }}
               >
                 <Code2 className="w-8 h-8 text-primary" />
@@ -206,10 +209,10 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
 
               {/* Pulsing Glow */}
               <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 blur-xl"
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/30 to-accent/30 dark:from-primary/20 dark:to-accent/20 blur-xl"
                 animate={{ 
                   scale: [1, 1.5, 1],
-                  opacity: [0.3, 0.6, 0.3]
+                  opacity: [0.4, 0.7, 0.4]
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
@@ -259,13 +262,13 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                     }}
                     whileHover={{ scale: 1.2, y: -5 }}
                   >
-                    <div className="p-3 rounded-lg bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border border-border/50 group-hover:border-primary/50 transition-all duration-300">
+                    <div className="p-3 rounded-lg bg-gradient-to-r from-card to-card/80 backdrop-blur-sm border border-border/50 group-hover:border-primary/50 transition-all duration-300 shadow-sm dark:shadow-none">
                       <IconComponent className="w-5 h-5 text-primary" />
                     </div>
                     
                     {/* Tooltip */}
                     <motion.div
-                      className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-foreground text-background text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap"
+                      className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-popover text-popover-foreground text-xs px-2 py-1 rounded border shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap"
                       initial={{ opacity: 0, y: 10 }}
                       whileHover={{ opacity: 1, y: 0 }}
                     >
@@ -300,11 +303,11 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
               <div className="relative">
                 <Progress 
                   value={progress} 
-                  className="h-2 bg-muted/50 border border-border/30"
+                  className="h-2 bg-muted/70 border border-border/30"
                 />
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-sm"
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
+                  className="absolute inset-0 bg-gradient-to-r from-primary/30 to-accent/30 dark:from-primary/20 dark:to-accent/20 rounded-full blur-sm"
+                  animate={{ opacity: [0.4, 0.7, 0.4] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
               </div>
@@ -341,16 +344,14 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", stiffness: 500 }}
                   >
-                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500" />
                   </motion.div>
-                  <span className="text-sm font-medium text-green-500">
+                  <span className="text-sm font-medium text-emerald-600 dark:text-emerald-500">
                     Ready to explore!
                   </span>
                 </motion.div>
               )}
             </AnimatePresence>
-
-           
           </motion.div>
 
           {/* Loading Dots Animation */}
@@ -361,10 +362,10 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
             {[0, 1, 2].map((index) => (
               <motion.div
                 key={index}
-                className="w-2 h-2 bg-primary/60 rounded-full"
+                className="w-2 h-2 bg-primary/70 dark:bg-primary/60 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
-                  opacity: [0.5, 1, 0.5]
+                  opacity: [0.6, 1, 0.6]
                 }}
                 transition={{
                   duration: 1.5,
@@ -385,7 +386,6 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
               exit={{ opacity: 0 }}
               className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
             >
-              {/* Option 1: Terminal/Code Success Animation */}
               <motion.div
                 className="relative"
                 initial={{ scale: 0, opacity: 0 }}
@@ -397,22 +397,22 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                   delay: 0.2
                 }}
               >
-                {/* Terminal Window */}
-                <div className="bg-gray-900 rounded-lg p-4 shadow-2xl border border-gray-700 min-w-[300px]">
+                {/* Terminal Window - Light Theme Adaptive */}
+                <div className="bg-card border-2 border-border rounded-lg p-4 shadow-2xl min-w-[300px] backdrop-blur-sm">
                   {/* Terminal Header */}
-                  <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-700">
+                  <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border">
                     <div className="flex gap-1">
                       <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                       <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
                     </div>
-                    <span className="text-xs text-gray-400 ml-2">Terminal</span>
+                    <span className="text-xs text-muted-foreground ml-2">Terminal</span>
                   </div>
                   
                   {/* Terminal Content */}
                   <div className="font-mono text-sm">
                     <motion.div 
-                      className="text-green-400"
+                      className="text-emerald-600 dark:text-emerald-400"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.5 }}
@@ -421,7 +421,7 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                     </motion.div>
                     
                     <motion.div 
-                      className="text-blue-400 mt-1"
+                      className="text-blue-600 dark:text-blue-400 mt-1"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.7 }}
@@ -430,16 +430,16 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                     </motion.div>
                     
                     <motion.div 
-                      className="text-yellow-400 mt-1"
+                      className="text-amber-600 dark:text-amber-400 mt-1"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.9 }}
                     >
-                      ✓ Ready on https://lahirulakshan.web.app/
+                      ✓ Ready on lahirulakshan.web.app
                     </motion.div>
                     
                     <motion.div 
-                      className="text-green-400 mt-2 flex items-center gap-2"
+                      className="text-emerald-600 dark:text-emerald-400 mt-2 flex items-center gap-2"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1.1 }}
@@ -450,7 +450,7 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                     
                     {/* Blinking Cursor */}
                     <motion.div 
-                      className="inline-block w-2 h-4 bg-green-400 mt-1"
+                      className="inline-block w-2 h-4 bg-primary mt-1 rounded-sm"
                       animate={{ opacity: [1, 0, 1] }}
                       transition={{ duration: 1, repeat: Infinity, delay: 1.3 }}
                     />
@@ -461,14 +461,14 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                 {[...Array(6)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute text-primary/30"
+                    className="absolute text-primary/40 dark:text-primary/30 font-mono text-lg"
                     style={{
                       left: `${-50 + Math.random() * 400}px`,
                       top: `${-30 + Math.random() * 60}px`,
                     }}
                     initial={{ opacity: 0, scale: 0, rotate: -180 }}
                     animate={{ 
-                      opacity: [0, 0.6, 0],
+                      opacity: [0, 0.7, 0],
                       scale: [0, 1, 0],
                       rotate: [0, 360],
                       y: [-20, -40, -60]
@@ -483,7 +483,7 @@ export function LoadingPage({ onLoadingComplete }: LoadingPageProps) {
                      i % 6 === 1 ? '{}' : 
                      i % 6 === 2 ? '()' : 
                      i % 6 === 3 ? '[]' : 
-                     i % 6 === 4 ? '</>' : '💻'}
+                     i % 6 === 4 ? '</>' : '{}'}
                   </motion.div>
                 ))}
               </motion.div>
