@@ -1,14 +1,14 @@
 // src/components/experience.tsx
 "use client";
 
-import { useRef } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { 
-  Briefcase, 
-  MapPin, 
-  Calendar, 
-  Users, 
-  Trophy, 
+import { useRef } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import {
+  Briefcase,
+  MapPin,
+  Calendar,
+  Users,
+  Trophy,
   TrendingUp,
   ExternalLink,
   Building,
@@ -19,38 +19,50 @@ import {
   Palette,
   Smartphone,
   Zap,
-  Award
-} from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+  Award,
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const experiences = [
   {
     id: 1,
-    role: "Software Engineer", 
+    role: "Software Engineer",
     company: "Beebee Digital Pvt Ltd",
     location: "Colombo, Sri Lanka",
     period: "Dec 2024 - Jul 2025",
     duration: "8 months",
     type: "Full-time",
     status: "Recent",
-    description: "Developed and enhanced multiple client projects including NFT platforms and digital marketplaces with modern web technologies.",
+    description:
+      "Built and maintained NFT marketplace platforms including ohhNFT and Owlies NFT Store with strong focus on Web3 integration, analytics, and user experience.",
     achievements: [
-      "Enhanced ohhNFT platform UI components",
-      "Resolved critical mobile wallet integration issues",
-      "Implemented GraphQL endpoints for seamless functionality",
-      "Delivered 5+ client projects successfully"
+      "Developed and maintained ohhNFT web and Owlies NFT Store",
+      "Implemented NFT creation, listing, and trading features",
+      "Designed and built an analytics dashboard for marketplace insights",
+      "Integrated blockchain functionalities and wallet connectivity",
+      "Conducted code reviews and optimized application performance",
     ],
-    technologies: ["Next.js", "Node.js", "MySQL", "GraphQL", "Heroku", "Web3"],
-    projects: ["ohhNFT Platform"],
+    technologies: [
+      "React.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Ethers.js",
+      "React Query",
+      "Web3",
+      "Wagmi",
+      "AWS",
+      "React Native",
+    ],
+    projects: ["ohhNFT", "Owlies NFT Store"],
     highlights: {
-      impact: "Improved platform performance by 40%",
-      growth: "Delivered 5+ successful projects",
-      team: "Collaborated with 3-person dev team"
+      impact: "Built high-performing NFT marketplaces",
+      growth: "Enhanced insights with analytics dashboards",
+      team: "Collaborated with teams for timely delivery",
     },
-    color: "from-purple-500 to-pink-500",
-    icon: Code2
+    color: "from-indigo-500 to-blue-500",
+    icon: Code2,
   },
   {
     id: 2,
@@ -61,89 +73,107 @@ const experiences = [
     duration: "1 year",
     type: "Full-time",
     status: "Completed",
-    description: "Led development of Vesta Web & Mobile Application, a comprehensive Web3 NFT marketplace with advanced trading features and analytics dashboard.",
+    description:
+      "Led development of Vesta Web & Mobile Application, a comprehensive Web3 NFT marketplace with advanced trading features and analytics dashboard.",
     achievements: [
       "Built complete Web3 NFT marketplace from scratch",
       "Implemented advanced trading algorithms and analytics",
       "Managed React Native mobile app development",
-      "Integrated multiple blockchain networks and wallets"
+      "Integrated multiple blockchain networks and wallets",
     ],
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Ethers.js", "React Native", "Web3", "AWS"],
+    technologies: [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Ethers.js",
+      "React Native",
+      "Web3",
+      "AWS",
+    ],
     projects: ["Vesta NFT Marketplace"],
     highlights: {
       impact: "Led core product development",
       growth: "Handled $500K+ in transactions",
-      team: "Mentored 2 junior developers"
+      team: "Mentored 2 junior developers",
     },
     color: "from-purple-500 to-indigo-600",
-    icon: Zap
+    icon: Zap,
   },
   {
     id: 3,
-    role: "Full-Stack Developer", 
+    role: "Full-Stack Developer",
     company: "Beebee Digital Pvt Ltd",
     location: "Colombo, Sri Lanka",
     period: "Jan 2023 - Oct 2023",
     duration: "10 months",
     type: "Full-time",
     status: "Completed",
-    description: "Developed and enhanced multiple client projects including NFT platforms and digital marketplaces with modern web technologies.",
+    description:
+      "Developed and enhanced multiple client projects including NFT platforms and digital marketplaces with modern web technologies.",
     achievements: [
       "Enhanced ohhNFT platform UI components",
       "Resolved critical mobile wallet integration issues",
       "Implemented GraphQL endpoints for seamless functionality",
-      "Delivered 5+ client projects successfully"
+      "Delivered 5+ client projects successfully",
     ],
     technologies: ["Next.js", "Node.js", "MySQL", "GraphQL", "Heroku", "Web3"],
     projects: ["ohhNFT Platform"],
     highlights: {
       impact: "Improved platform performance by 40%",
       growth: "Delivered 5+ successful projects",
-      team: "Collaborated with 3-person dev team"
+      team: "Collaborated with 3-person dev team",
     },
     color: "from-emerald-500 to-teal-600",
-    icon: Code2
+    icon: Code2,
   },
   {
     id: 4,
     role: "Software Engineer (Intern)",
     company: "Zynergyx Technologies Pvt Ltd",
-    location: "Colombo, Sri Lanka", 
+    location: "Colombo, Sri Lanka",
     period: "Sep 2021 - Sep 2022",
     duration: "1 year",
     type: "Internship",
     status: "Foundation",
-    description: "Started my professional journey developing enterprise solutions, admin dashboards, and blockchain-based platforms while learning industry best practices.",
+    description:
+      "Started my professional journey developing enterprise solutions, admin dashboards, and blockchain-based platforms while learning industry best practices.",
     achievements: [
       "Built enterprise admin dashboard from scratch",
       "Developed VIP blockchain verification platform",
       "Created Emirates Offroaders mobile app and admin panel",
-      "Learned modern development practices and team collaboration"
+      "Learned modern development practices and team collaboration",
     ],
-    technologies: ["React.js", "Scala", "Flutter", "Firebase", "Azure", "MySQL"],
+    technologies: [
+      "React.js",
+      "Scala",
+      "Flutter",
+      "Firebase",
+      "Azure",
+      "MySQL",
+    ],
     projects: ["VIP Platform", "Emirates Offroaders", "Enterprise Dashboard"],
     highlights: {
       impact: "Built 3 major applications",
       growth: "Transitioned from intern to full-time offer",
-      team: "Worked closely with senior architects"
+      team: "Worked closely with senior architects",
     },
     color: "from-orange-500 to-red-500",
-    icon: Building
-  }
+    icon: Building,
+  },
 ];
 
 const stats = [
   { label: "Years Experience", value: "3+", icon: Clock },
   { label: "Companies Worked", value: "3", icon: Building },
   { label: "Projects Delivered", value: "15+", icon: Trophy },
-  { label: "Technologies Mastered", value: "20+", icon: Star }
+  { label: "Technologies Mastered", value: "20+", icon: Star },
 ];
 
 const skills = [
   { name: "Leadership", level: 85, category: "Soft Skills" },
   { name: "Problem Solving", level: 95, category: "Soft Skills" },
   { label: "Full-Stack Development", level: 90, category: "Technical" },
-  { name: "Team Collaboration", level: 88, category: "Soft Skills" }
+  { name: "Team Collaboration", level: 88, category: "Soft Skills" },
 ];
 
 export function Experience() {
@@ -151,7 +181,7 @@ export function Experience() {
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
@@ -163,27 +193,27 @@ export function Experience() {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        duration: 0.8
-      }
-    }
+        duration: 0.8,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
-    }
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
   };
 
   const timelineVariants = {
     hidden: { opacity: 0, scaleY: 0 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scaleY: 1,
-      transition: { duration: 1.2, ease: "easeInOut", delay: 0.5 }
-    }
+      transition: { duration: 1.2, ease: "easeInOut", delay: 0.5 },
+    },
   };
 
   const cardVariants = {
@@ -195,21 +225,21 @@ export function Experience() {
       transition: {
         delay: 0.8 + index * 0.3,
         duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    })
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    }),
   };
 
   return (
     <motion.section
-    id='experience'
+      id="experience"
       ref={ref}
       style={{ opacity }}
       className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-background via-muted/10 to-background"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
-      
+
       {/* Floating Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(10)].map((_, i) => (
@@ -217,8 +247,8 @@ export function Experience() {
             key={i}
             className="absolute w-2 h-2 bg-primary/10 rounded-full"
             style={{
-              left: `${15 + (i * 10)}%`,
-              top: `${20 + (i * 8)}%`,
+              left: `${15 + i * 10}%`,
+              top: `${20 + i * 8}%`,
             }}
             animate={{
               y: [-15, 15, -15],
@@ -242,10 +272,7 @@ export function Experience() {
           className="max-w-6xl mx-auto"
         >
           {/* Section Header */}
-          <motion.div 
-            variants={itemVariants}
-            className="text-center mb-20"
-          >
+          <motion.div variants={itemVariants} className="text-center mb-20">
             <motion.div
               className="inline-flex items-center gap-3 mb-6"
               whileHover={{ scale: 1.05 }}
@@ -262,19 +289,26 @@ export function Experience() {
                 Professional Journey
               </h2>
             </motion.div>
-            
-            <motion.p 
+
+            <motion.p
               className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              My evolution as a developer, from intern to full-stack engineer, 
-              building <span className="text-primary font-semibold">innovative solutions</span> and 
-              gaining <span className="text-accent font-semibold">valuable experience</span> along the way.
+              My evolution as a developer, from intern to full-stack engineer,
+              building{" "}
+              <span className="text-primary font-semibold">
+                innovative solutions
+              </span>{" "}
+              and gaining{" "}
+              <span className="text-accent font-semibold">
+                valuable experience
+              </span>{" "}
+              along the way.
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
@@ -304,8 +338,12 @@ export function Experience() {
                       >
                         <IconComponent className="w-6 h-6 text-primary" />
                       </motion.div>
-                      <div className="text-2xl font-bold text-primary mb-1">{stat.value}</div>
-                      <div className="text-sm text-muted-foreground">{stat.label}</div>
+                      <div className="text-2xl font-bold text-primary mb-1">
+                        {stat.value}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        {stat.label}
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -326,14 +364,14 @@ export function Experience() {
               {experiences.map((exp, index) => {
                 const IconComponent = exp.icon;
                 const isEven = index % 2 === 0;
-                
+
                 return (
                   <motion.div
                     key={exp.id}
                     variants={cardVariants}
                     custom={index}
                     className={`relative flex items-center ${
-                      isEven ? 'md:flex-row' : 'md:flex-row-reverse'
+                      isEven ? "md:flex-row" : "md:flex-row-reverse"
                     } group`}
                   >
                     {/* Timeline Node */}
@@ -344,14 +382,14 @@ export function Experience() {
                     >
                       <motion.div
                         className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-accent"
-                        animate={{ 
+                        animate={{
                           scale: [1, 1.5, 1],
-                          opacity: [1, 0.5, 1]
+                          opacity: [1, 0.5, 1],
                         }}
-                        transition={{ 
-                          duration: 2, 
+                        transition={{
+                          duration: 2,
                           repeat: Infinity,
-                          delay: index * 0.5
+                          delay: index * 0.5,
                         }}
                       />
                     </motion.div>
@@ -359,7 +397,7 @@ export function Experience() {
                     {/* Experience Card */}
                     <motion.div
                       className={`w-full md:w-5/12 ml-16 md:ml-0 ${
-                        isEven ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
+                        isEven ? "md:mr-auto md:pr-8" : "md:ml-auto md:pl-8"
                       }`}
                       whileHover={{ scale: 1.02, y: -5 }}
                       transition={{ type: "spring", stiffness: 300 }}
@@ -376,14 +414,18 @@ export function Experience() {
                         <CardHeader className="pb-4 relative">
                           {/* Status Badge */}
                           <div className="absolute top-4 right-4">
-                            <Badge 
-                              variant={exp.status === 'Recent' ? 'default' : 'secondary'}
+                            <Badge
+                              variant={
+                                exp.status === "Recent"
+                                  ? "default"
+                                  : "secondary"
+                              }
                               className={
-                                exp.status === 'Recent' 
-                                  ? 'bg-green-500 text-white' 
-                                  : exp.status === 'Foundation'
-                                  ? 'bg-blue-500 text-white'
-                                  : ''
+                                exp.status === "Recent"
+                                  ? "bg-green-500 text-white"
+                                  : exp.status === "Foundation"
+                                  ? "bg-blue-500 text-white"
+                                  : ""
                               }
                             >
                               {exp.status}
@@ -402,13 +444,13 @@ export function Experience() {
                               </motion.div>
                               {exp.role}
                             </CardTitle>
-                            
+
                             <div className="space-y-1">
                               <div className="flex items-center gap-2 text-accent font-semibold">
                                 <Building className="w-4 h-4" />
                                 {exp.company}
                               </div>
-                              
+
                               <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                                 <div className="flex items-center gap-1">
                                   <MapPin className="w-4 h-4" />
@@ -444,11 +486,19 @@ export function Experience() {
                                   key={idx}
                                   className="flex items-start gap-2 text-sm"
                                   initial={{ opacity: 0, x: -10 }}
-                                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                                  transition={{ delay: 1.2 + index * 0.3 + idx * 0.1 }}
+                                  animate={
+                                    isInView
+                                      ? { opacity: 1, x: 0 }
+                                      : { opacity: 0, x: -10 }
+                                  }
+                                  transition={{
+                                    delay: 1.2 + index * 0.3 + idx * 0.1,
+                                  }}
                                 >
                                   <ChevronRight className="w-3 h-3 text-primary shrink-0 mt-0.5" />
-                                  <span className="text-muted-foreground">{achievement}</span>
+                                  <span className="text-muted-foreground">
+                                    {achievement}
+                                  </span>
                                 </motion.div>
                               ))}
                             </div>
@@ -462,7 +512,11 @@ export function Experience() {
                             </h4>
                             <div className="flex flex-wrap gap-2">
                               {exp.technologies.map((tech) => (
-                                <Badge key={tech} variant="secondary" className="text-xs hover:bg-primary/20 transition-colors cursor-default">
+                                <Badge
+                                  key={tech}
+                                  variant="secondary"
+                                  className="text-xs hover:bg-primary/20 transition-colors cursor-default"
+                                >
                                   {tech}
                                 </Badge>
                               ))}
@@ -476,12 +530,21 @@ export function Experience() {
                               Impact & Growth
                             </h4>
                             <div className="grid grid-cols-1 gap-2">
-                              {Object.entries(exp.highlights).map(([key, value]) => (
-                                <div key={key} className="flex items-center justify-between text-sm bg-muted/30 rounded-lg p-2">
-                                  <span className="text-muted-foreground capitalize">{key}:</span>
-                                  <span className="font-medium text-primary">{value}</span>
-                                </div>
-                              ))}
+                              {Object.entries(exp.highlights).map(
+                                ([key, value]) => (
+                                  <div
+                                    key={key}
+                                    className="flex items-center justify-between text-sm bg-muted/30 rounded-lg p-2"
+                                  >
+                                    <span className="text-muted-foreground capitalize">
+                                      {key}:
+                                    </span>
+                                    <span className="font-medium text-primary">
+                                      {value}
+                                    </span>
+                                  </div>
+                                )
+                              )}
                             </div>
                           </div>
 
@@ -491,7 +554,11 @@ export function Experience() {
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                             >
-                              <Button variant="outline" size="sm" className="w-full group border-primary/30 hover:border-primary hover:bg-primary/5">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="w-full group border-primary/30 hover:border-primary hover:bg-primary/5"
+                              >
                                 <span className="group-hover:text-primary transition-colors">
                                   View Projects ({exp.projects.length})
                                 </span>
