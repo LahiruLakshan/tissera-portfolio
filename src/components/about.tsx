@@ -3,7 +3,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { User, Target, Heart, Lightbulb, Coffee, Terminal, Code2, CheckCircle } from "lucide-react";
+import { User, Target, Heart, Lightbulb, Coffee, Terminal, Code2, CheckCircle, FileText, Database, Brain } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const highlights = [
@@ -12,33 +12,51 @@ const highlights = [
     title: "Problem Solver",
     description: "I love tackling complex challenges and finding elegant solutions",
     command: "solve --complexity=high --approach=elegant",
+    status: "SUCCESS",
   },
   {
     icon: Heart,
     title: "User-Focused",
     description: "Every line of code is written with the end user experience in mind",
     command: "design --user-centric --priority=ux",
+    status: "SUCCESS",
   },
   {
     icon: Lightbulb,
     title: "Innovation Drive",
     description: "Constantly exploring new technologies and development approaches",
     command: "explore --tech=cutting-edge --mindset=growth",
+    status: "SUCCESS",
   },
   {
     icon: Coffee,
     title: "Team Player",
     description: "Thriving in collaborative environments and mentoring fellow developers",
     command: "collaborate --team=awesome --mentor=true",
+    status: "SUCCESS",
   },
 ];
 
 const terminalCommands = [
-  { command: "whoami", output: "lahiru-tissera" },
-  { command: "cat experience.txt", output: "Full-Stack Engineer | Web3 | AI/ML | Mobile" },
-  { command: "ls skills/", output: "react/ nextjs/ python/ web3/ ai-ml/ mobile/" },
-  { command: "git log --oneline", output: "* Building innovative solutions since 2020" },
+  { command: "whoami", output: "lahiru-tissera", delay: 0 },
+  { command: "cat experience.txt", output: "Full-Stack Engineer | Web3 | AI/ML | Mobile", delay: 0.8 },
+  { command: "ls education/", output: "BEng_Software_Engineering_UK.pdf", delay: 1.6 },
+  { command: "git log --oneline", output: "* Building innovative solutions since 2020", delay: 2.4 },
 ];
+
+const codeSnippet = `interface Developer {
+  name: "Lahiru Tissera";
+  role: "Full-Stack Engineer";
+  education: "BEng Software Engineering (UK)";
+  passion: ["Web3", "AI/ML", "Mobile"];
+  mission: "Building innovative solutions";
+  location: "Kadawatha, Sri Lanka";
+  status: "Available for opportunities";
+}
+
+// Constantly learning and evolving
+const developer = new Developer();
+console.log("Ready to collaborate!");`;
 
 const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {
   const [displayText, setDisplayText] = useState("");
@@ -103,7 +121,7 @@ export function About() {
       id="about"
       ref={ref}
       style={{ opacity }}
-      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-900 via-background to-gray-900"
+      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950"
     >
       {/* Matrix-style Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
@@ -113,7 +131,7 @@ export function About() {
         {['<>', '{}', '[]', '()', '/>', '</', 'const', 'function', 'return', '&&', '||', '=>'].map((symbol, i) => (
           <motion.div
             key={i}
-            className="absolute text-primary/10 font-mono text-2xl select-none"
+            className="absolute text-green-400/10 font-mono text-2xl select-none"
             style={{
               left: `${10 + (i * 8) % 80}%`,
               top: `${20 + (i * 12) % 60}%`,
@@ -178,24 +196,24 @@ export function About() {
                   <span className="text-xs text-gray-400 ml-2 font-mono">lahiru@portfolio:~$</span>
                 </div>
 
-                <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-900">
+                <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-900 min-h-[300px]">
                   {terminalCommands.map((cmd, index) => (
                     <motion.div
                       key={index}
                       variants={codeVariants}
-                      transition={{ delay: index * 0.8 }}
+                      transition={{ delay: cmd.delay }}
                       className="space-y-2"
                     >
                       <div className="flex items-center gap-2">
                         <span className="text-green-400">$</span>
                         <span className="text-white">
-                          {isInView && <TypewriterText text={cmd.command} delay={index * 800} />}
+                          {isInView && <TypewriterText text={cmd.command} delay={cmd.delay * 1000} />}
                         </span>
                       </div>
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                        transition={{ delay: (index * 0.8) + 1 }}
+                        transition={{ delay: cmd.delay + 1 }}
                         className="text-blue-300 ml-4"
                       >
                         {cmd.output}
@@ -221,7 +239,7 @@ export function About() {
               </Card>
             </motion.div>
 
-            {/* Right Column - Code Block */}
+            {/* Right Column - Code Editor */}
             <motion.div variants={itemVariants}>
               <Card className="border border-gray-700 bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
                 {/* Code Editor Header */}
@@ -237,36 +255,30 @@ export function About() {
                   </div>
                 </div>
 
-                <CardContent className="p-6 font-mono text-sm bg-gray-900 space-y-3">
-                  <motion.div variants={codeVariants} className="text-purple-400">
-                    interface <span className="text-yellow-300">Developer</span> {'{'}
-                  </motion.div>
-                  
-                  <motion.div variants={codeVariants} className="ml-4 space-y-2">
-                    <div className="text-blue-300">
-                      name: <span className="text-green-300">"Lahiru Tissera"</span>;
-                    </div>
-                    <div className="text-blue-300">
-                      role: <span className="text-green-300">"Full-Stack Engineer"</span>;
-                    </div>
-                    <div className="text-blue-300">
-                      education: <span className="text-green-300">"BEng Software Engineering (UK)"</span>;
-                    </div>
-                    <div className="text-blue-300">
-                      passion: <span className="text-orange-300">["Web3", "AI/ML", "Mobile"]</span>;
-                    </div>
-                    <div className="text-blue-300">
-                      mission: <span className="text-green-300">"Building innovative solutions"</span>;
-                    </div>
-                  </motion.div>
-
-                  <motion.div variants={codeVariants} className="text-purple-400">
-                    {'}'}
-                  </motion.div>
-
-                  <motion.div variants={codeVariants} className="pt-4 text-gray-500">
-                    <span className="text-gray-600">// Constantly learning and evolving</span>
-                  </motion.div>
+                <CardContent className="p-6 font-mono text-sm bg-gray-900 space-y-2 overflow-x-auto">
+                  {codeSnippet.split('\n').map((line, index) => (
+                    <motion.div
+                      key={index}
+                      variants={codeVariants}
+                      transition={{ delay: index * 0.1 }}
+                      className="whitespace-nowrap"
+                    >
+                      <span className="text-gray-500 mr-4 select-none">{String(index + 1).padStart(2, '0')}</span>
+                      <span 
+                        className={
+                          line.includes('interface') ? 'text-purple-400' :
+                          line.includes('//') ? 'text-gray-500' :
+                          line.includes('"') ? 'text-green-300' :
+                          line.includes('[') || line.includes(']') ? 'text-orange-300' :
+                          line.includes('const') || line.includes('new') ? 'text-blue-400' :
+                          line.includes('console.log') ? 'text-yellow-300' :
+                          'text-blue-300'
+                        }
+                      >
+                        {line}
+                      </span>
+                    </motion.div>
+                  ))}
                 </CardContent>
               </Card>
             </motion.div>
@@ -297,7 +309,7 @@ export function About() {
                         </div>
                         <div className="flex items-center gap-2 text-green-300">
                           <CheckCircle className="w-3 h-3" />
-                          <span>Success</span>
+                          <span>{highlight.status}</span>
                         </div>
                       </div>
 
@@ -333,6 +345,60 @@ export function About() {
             </div>
           </motion.div>
 
+          {/* About Text as Comment Block */}
+          <motion.div variants={itemVariants} className="mt-16">
+            <Card className="border border-gray-700 bg-gray-900/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+              <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 border-b border-gray-700">
+                <FileText className="w-4 h-4 text-blue-400" />
+                <span className="text-xs text-gray-400 font-mono">README.md</span>
+              </div>
+              
+              <CardContent className="p-8 font-mono text-sm bg-gray-900">
+                <div className="space-y-4">
+                  <div className="text-green-400"># About Lahiru Tissera</div>
+                  
+                  <motion.div
+                    variants={codeVariants}
+                    className="text-gray-300 leading-relaxed"
+                  >
+                    <span className="text-gray-500">/**</span><br/>
+                    <span className="text-gray-500"> * Full-Stack Engineer with expertise in building modern web applications</span><br/>
+                    <span className="text-gray-500"> * and integrating cutting-edge technologies. Experience spanning Web3,</span><br/>
+                    <span className="text-gray-500"> * AI/ML, and mobile development.</span><br/>
+                    <span className="text-gray-500"> */</span>
+                  </motion.div>
+
+                  <motion.div variants={codeVariants} className="text-blue-300">
+                    <span className="text-purple-400">const</span> journey = {'{'}
+                  </motion.div>
+                  
+                  <motion.div variants={codeVariants} className="ml-4 space-y-1">
+                    <div className="text-gray-300">
+                      education: <span className="text-green-300">"BEng Software Engineering (UK)"</span>,
+                    </div>
+                    <div className="text-gray-300">
+                      mission: <span className="text-green-300">"Bridge complex technologies with intuitive UX"</span>,
+                    </div>
+                    <div className="text-gray-300">
+                      specialties: <span className="text-orange-300">["NFT Marketplaces", "AI Music Classification", "Web3 Integration"]</span>,
+                    </div>
+                    <div className="text-gray-300">
+                      approach: <span className="text-green-300">"Elegant solutions for real-world problems"</span>
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={codeVariants} className="text-purple-400">
+                    {'};'}
+                  </motion.div>
+
+                  <motion.div variants={codeVariants} className="pt-4 text-gray-500">
+                    <span>// Always exploring new technologies and frameworks</span>
+                  </motion.div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
           {/* Footer Terminal Prompt */}
           <motion.div 
             variants={itemVariants}
@@ -355,14 +421,14 @@ export function About() {
         </motion.div>
       </div>
 
-      {/* Matrix Rain Effect (Optional) */}
+      {/* Matrix Rain Effect */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-5">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute text-green-400 font-mono text-xs"
             style={{
-              left: `${i * 5}%`,
+              left: `${i * 7}%`,
               top: '-10%',
             }}
             animate={{

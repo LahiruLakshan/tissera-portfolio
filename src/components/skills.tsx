@@ -1,11 +1,11 @@
 // src/components/skills.tsx
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
-import { Brain, Code, Code2 } from "lucide-react";
+import { Terminal, Code2, CheckCircle, Activity, Monitor, Database, MonitorCheck } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faReact,
@@ -42,297 +42,314 @@ import {
   faServer,
   faLayerGroup,
   faCodeBranch,
+  faComputer,
+  faLaptop,
 } from "@fortawesome/free-solid-svg-icons";
+import { Card, CardContent } from "@/components/ui/card";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/effect-coverflow";
-import NextJS from "./icons/nextjs";
+
+// React Icons imports
 import { RiNextjsFill } from "react-icons/ri";
-import { SiTypescript } from "react-icons/si";
-import { SiMongodb } from "react-icons/si";
+import { SiTypescript, SiMongodb, SiMysql, SiWeb3Dotjs, SiEthers, SiPytorch, SiTensorflow, SiScikitlearn, SiOpencv, SiExpress } from "react-icons/si";
 import { BiLogoPostgresql } from "react-icons/bi";
-import { SiMysql } from "react-icons/si";
 import { IoLogoFirebase } from "react-icons/io5";
-import { TbBrandAdobeXd } from "react-icons/tb";
+import { TbBrandAdobeXd, TbBrandReactNative, TbApi } from "react-icons/tb";
 import { FaFlutter } from "react-icons/fa6";
-import { TbBrandReactNative } from "react-icons/tb";
-import { SiWeb3Dotjs } from "react-icons/si";
-import { SiEthers } from "react-icons/si";
 import { RiTailwindCssFill } from "react-icons/ri";
 import { GrGraphQl } from "react-icons/gr";
-import { TbApi } from "react-icons/tb";
-import { SiPytorch } from "react-icons/si";
-import { SiTensorflow } from "react-icons/si";
-import { SiScikitlearn } from "react-icons/si";
-import { SiOpencv } from "react-icons/si";
-import { SiExpress } from "react-icons/si";
 
-// Enhanced tech stack with Font Awesome icons
+// Terminal commands for skills
+const terminalCommands = [
+  { command: "npm list --depth=0", output: "📦 Package inventory complete", delay: 0 },
+  { command: "git log --technologies", output: "🔧 35+ technologies mastered", delay: 0.8 },
+  { command: "ls categories/", output: "Frontend/ Backend/ Mobile/ AI-ML/ Blockchain/", delay: 1.6 },
+  { command: "systemctl status developer", output: "● Active: learning (since 2020)", delay: 2.4 },
+];
+
+// Enhanced tech stack with proper icons
 const techStack = [
   {
     name: "React",
     icon: faReact,
     category: "Frontend",
-    color: "from-blue-400 to-blue-600",
+    command: "npm install react",
+    proficiency: 95,
     type: "brand",
   },
   {
     name: "Next.js",
-    icon: faCode,
     iconFile: RiNextjsFill,
     category: "Frontend",
-    color: "from-gray-700 to-black",
-    type: "solid",
+    command: "npx create-next-app",
+    proficiency: 90,
+    type: "custom",
   },
   {
     name: "TypeScript",
-    icon: faCode,
     iconFile: SiTypescript,
     category: "Language",
-    color: "from-blue-500 to-blue-700",
-    type: "solid",
+    command: "tsc --init",
+    proficiency: 88,
+    type: "custom",
   },
   {
     name: "JavaScript",
     icon: faJs,
     category: "Language",
-    color: "from-yellow-400 to-yellow-600",
+    command: "node --version",
+    proficiency: 95,
     type: "brand",
   },
   {
     name: "Node.js",
     icon: faNodeJs,
     category: "Backend",
-    color: "from-green-500 to-green-700",
+    command: "npm start",
+    proficiency: 90,
     type: "brand",
   },
   {
     name: "Python",
     icon: faPython,
     category: "Language",
-    color: "from-green-400 to-blue-500",
+    command: "python --version",
+    proficiency: 85,
     type: "brand",
   },
   {
     name: "Java",
     icon: faJava,
     category: "Language",
-    color: "from-orange-500 to-red-600",
+    command: "javac Main.java",
+    proficiency: 80,
     type: "brand",
   },
   {
     name: "MongoDB",
-    icon: faDatabase,
     iconFile: SiMongodb,
     category: "Database",
-    color: "from-green-400 to-green-600",
-    type: "solid",
+    command: "mongod --start",
+    proficiency: 85,
+    type: "custom",
   },
   {
     name: "PostgreSQL",
-    icon: faDatabase,
     iconFile: BiLogoPostgresql,
     category: "Database",
-    color: "from-blue-600 to-blue-800",
-    type: "solid",
+    command: "psql -U postgres",
+    proficiency: 80,
+    type: "custom",
   },
   {
     name: "MySQL",
-    icon: faDatabase,
     iconFile: SiMysql,
     category: "Database",
-    color: "from-orange-400 to-orange-600",
-    type: "solid",
+    command: "mysql -u root",
+    proficiency: 85,
+    type: "custom",
   },
   {
     name: "Firebase",
-    icon: faFire,
     iconFile: IoLogoFirebase,
     category: "Backend",
-    color: "from-orange-400 to-yellow-500",
-    type: "solid",
+    command: "firebase deploy",
+    proficiency: 88,
+    type: "custom",
   },
   {
     name: "AWS",
     icon: faAws,
     category: "Cloud",
-    color: "from-orange-400 to-orange-600",
+    command: "aws s3 ls",
+    proficiency: 75,
     type: "brand",
   },
   {
     name: "Docker",
     icon: faDocker,
     category: "DevOps",
-    color: "from-blue-400 to-blue-600",
+    command: "docker run -it",
+    proficiency: 80,
     type: "brand",
   },
   {
     name: "Git",
     icon: faGitAlt,
     category: "Tools",
-    color: "from-gray-600 to-gray-800",
+    command: "git commit -m",
+    proficiency: 95,
     type: "brand",
   },
   {
     name: "GitHub",
     icon: faGithub,
     category: "Tools",
-    color: "from-gray-700 to-black",
+    command: "gh repo create",
+    proficiency: 90,
     type: "brand",
   },
   {
     name: "Figma",
     icon: faFigma,
     category: "Design",
-    color: "from-purple-400 to-pink-500",
+    command: "figma --export",
+    proficiency: 85,
     type: "brand",
   },
   {
     name: "Adobe XD",
-    icon: faPalette,
     iconFile: TbBrandAdobeXd,
     category: "Design",
-    color: "from-purple-500 to-pink-600",
-    type: "solid",
+    command: "xd --preview",
+    proficiency: 80,
+    type: "custom",
   },
   {
     name: "Flutter",
-    icon: faMobile,
     iconFile: FaFlutter,
     category: "Mobile",
-    color: "from-blue-400 to-cyan-500",
-    type: "solid",
+    command: "flutter run",
+    proficiency: 85,
+    type: "custom",
   },
   {
     name: "React Native",
-    icon: faReact,
     iconFile: TbBrandReactNative,
     category: "Mobile",
-    color: "from-blue-500 to-purple-600",
-    type: "brand",
+    command: "npx react-native run",
+    proficiency: 88,
+    type: "custom",
   },
   {
     name: "Web3",
-    icon: faChain,
     iconFile: SiWeb3Dotjs,
     category: "Blockchain",
-    color: "from-purple-500 to-indigo-600",
-    type: "solid",
+    command: "web3 --connect",
+    proficiency: 80,
+    type: "custom",
   },
   {
     name: "Ethers.js",
-    icon: faLightbulb,
     iconFile: SiEthers,
     category: "Blockchain",
-    color: "from-yellow-400 to-orange-500",
-    type: "solid",
+    command: "ethers deploy",
+    proficiency: 75,
+    type: "custom",
   },
   {
     name: "Solidity",
     icon: faGem,
     category: "Blockchain",
-    color: "from-gray-600 to-gray-800",
+    command: "solc --compile",
+    proficiency: 70,
     type: "solid",
   },
   {
     name: "TailwindCSS",
-    icon: faCss3Alt,
     iconFile: RiTailwindCssFill,
     category: "Styling",
-    color: "from-cyan-400 to-blue-500",
-    type: "brand",
+    command: "tailwind build",
+    proficiency: 92,
+    type: "custom",
   },
   {
     name: "SASS",
     icon: faCss3Alt,
     category: "Styling",
-    color: "from-pink-400 to-pink-600",
+    command: "sass --watch",
+    proficiency: 85,
     type: "brand",
   },
   {
     name: "GraphQL",
-    icon: faChartBar,
     iconFile: GrGraphQl,
     category: "API",
-    color: "from-pink-500 to-purple-600",
-    type: "solid",
+    command: "graphql-codegen",
+    proficiency: 80,
+    type: "custom",
   },
   {
     name: "REST API",
-    icon: faPlug,
     iconFile: TbApi,
     category: "API",
-    color: "from-green-400 to-blue-500",
-    type: "solid",
+    command: "curl -X GET",
+    proficiency: 90,
+    type: "custom",
   },
   {
     name: "PyTorch",
-    icon: faBrain,
     iconFile: SiPytorch,
     category: "AI/ML",
-    color: "from-orange-500 to-red-600",
-    type: "solid",
+    command: "torch.cuda.is_available()",
+    proficiency: 75,
+    type: "custom",
   },
   {
     name: "TensorFlow",
-    icon: faBrain,
     iconFile: SiTensorflow,
     category: "AI/ML",
-    color: "from-orange-400 to-yellow-500",
-    type: "solid",
+    command: "tf.keras.model",
+    proficiency: 78,
+    type: "custom",
   },
   {
     name: "Scikit-learn",
-    icon: faRocket,
     iconFile: SiScikitlearn,
     category: "AI/ML",
-    color: "from-blue-400 to-green-500",
-    type: "solid",
+    command: "sklearn.fit()",
+    proficiency: 82,
+    type: "custom",
   },
   {
     name: "OpenCV",
-    icon: faEye,
     iconFile: SiOpencv,
     category: "AI/ML",
-    color: "from-green-400 to-blue-600",
-    type: "solid",
+    command: "cv2.imread()",
+    proficiency: 80,
+    type: "custom",
   },
   {
     name: "HTML5",
     icon: faHtml5,
     category: "Frontend",
-    color: "from-orange-500 to-red-500",
+    command: "<!DOCTYPE html>",
+    proficiency: 95,
     type: "brand",
   },
   {
     name: "CSS3",
     icon: faCss3Alt,
     category: "Frontend",
-    color: "from-blue-500 to-blue-700",
+    command: "@media query",
+    proficiency: 90,
     type: "brand",
   },
   {
     name: "Express.js",
-    icon: faServer,
     iconFile: SiExpress,
     category: "Backend",
-    color: "from-green-600 to-green-800",
-    type: "solid",
+    command: "express --start",
+    proficiency: 88,
+    type: "custom",
   },
   {
     name: "Android",
     icon: faAndroid,
     category: "Mobile",
-    color: "from-green-500 to-green-700",
+    command: "adb devices",
+    proficiency: 80,
     type: "brand",
   },
   {
     name: "iOS",
     icon: faApple,
     category: "Mobile",
-    color: "from-gray-600 to-gray-800",
+    command: "xcodebuild",
+    proficiency: 75,
     type: "brand",
   },
 ];
@@ -340,30 +357,58 @@ const techStack = [
 const skillCategories = [
   {
     name: "Frontend",
-    color: "from-blue-500 to-cyan-500",
+    icon: faLaptop,
+    command: "ls frontend/",
     count: techStack.filter((t) => t.category === "Frontend").length,
+    avg: Math.round(techStack.filter((t) => t.category === "Frontend").reduce((acc, curr) => acc + curr.proficiency, 0) / techStack.filter((t) => t.category === "Frontend").length)
   },
   {
     name: "Backend",
-    color: "from-green-500 to-emerald-500",
+    icon: faServer,
+    command: "ps aux | grep server",
     count: techStack.filter((t) => t.category === "Backend").length,
+    avg: Math.round(techStack.filter((t) => t.category === "Backend").reduce((acc, curr) => acc + curr.proficiency, 0) / techStack.filter((t) => t.category === "Backend").length)
   },
   {
     name: "Mobile",
-    color: "from-purple-500 to-pink-500",
+    icon: faMobile,
+    command: "adb devices",
     count: techStack.filter((t) => t.category === "Mobile").length,
+    avg: Math.round(techStack.filter((t) => t.category === "Mobile").reduce((acc, curr) => acc + curr.proficiency, 0) / techStack.filter((t) => t.category === "Mobile").length)
   },
   {
     name: "AI/ML",
-    color: "from-orange-500 to-red-500",
+    icon: faBrain,
+    command: "python train_model.py",
     count: techStack.filter((t) => t.category === "AI/ML").length,
+    avg: Math.round(techStack.filter((t) => t.category === "AI/ML").reduce((acc, curr) => acc + curr.proficiency, 0) / techStack.filter((t) => t.category === "AI/ML").length)
   },
   {
     name: "Blockchain",
-    color: "from-violet-500 to-purple-500",
+    icon: faChain,
+    command: "web3 --network mainnet",
     count: techStack.filter((t) => t.category === "Blockchain").length,
+    avg: Math.round(techStack.filter((t) => t.category === "Blockchain").reduce((acc, curr) => acc + curr.proficiency, 0) / techStack.filter((t) => t.category === "Blockchain").length)
   },
 ];
+
+const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (currentIndex < text.length) {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }
+    }, delay + currentIndex * speed);
+
+    return () => clearTimeout(timer);
+  }, [currentIndex, text, delay, speed]);
+
+  return <span>{displayText}</span>;
+};
 
 export function Skills() {
   const ref = useRef(null);
@@ -396,38 +441,47 @@ export function Skills() {
     },
   };
 
+  const codeVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
+  };
+
   return (
     <motion.section
       id="skills"
       ref={ref}
       style={{ opacity }}
-      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-background via-muted/20 to-background"
+      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 from-gray-50 via-gray-100 to-gray-50"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
+      {/* Matrix-style Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
 
-      {/* Floating Background Elements */}
+      {/* Floating Code Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {[faApple, faDatabase, faAndroid, faAws, faChain].map((Icon, i) => (
+        {['npm', 'git', 'docker', 'node', 'python', 'react', 'aws', 'api'].map((symbol, i) => (
           <motion.div
             key={i}
-            className="absolute text-primary/30"
+            className="absolute text-green-400/10 dark:text-green-400/10 text-gray-600/10 font-mono text-xl select-none"
             style={{
-              left: `${10 + (i * 20)}%`,
-              top: `${20 + (i * 15)}%`,
+              left: `${10 + (i * 10) % 80}%`,
+              top: `${15 + (i * 12) % 70}%`,
             }}
             animate={{
-              y: [-10, 10, -10],
-              rotate: [0, 5, -5, 0],
-              opacity: [0.05, 0.15, 0.05],
+              y: [-15, 15, -15],
+              opacity: [0.1, 0.3, 0.1],
+              rotate: [-3, 3, -3],
             }}
             transition={{
               duration: 8 + i,
               repeat: Infinity,
-              delay: i * 0.5,
+              delay: i * 0.4,
             }}
           >
-            <FontAwesomeIcon icon={Icon} className="text-3xl" />
+            {symbol}
           </motion.div>
         ))}
       </div>
@@ -439,31 +493,159 @@ export function Skills() {
           animate={isInView ? "visible" : "hidden"}
           className="max-w-6xl mx-auto"
         >
-          {/* Skills Header */}
+          {/* Terminal Header */}
           <motion.div variants={itemVariants} className="text-center mb-20">
             <motion.div
               className="inline-flex items-center gap-3 mb-6"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="p-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm">
-                <Code className="w-8 h-8 text-primary" />
+              <div className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-500/30">
+                <Terminal className="w-8 h-8 text-green-400" />
               </div>
-              <h2 className="text-4xl sm:text-5xl font-headline font-bold">
-                Technical Skills
+              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-400 dark:text-green-400 text-gray-900">
+                $ ls -la skills/
               </h2>
             </motion.div>
 
             <motion.div
-              className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"
+              className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             />
           </motion.div>
 
+          {/* Terminal Info Panel */}
+          <motion.div variants={itemVariants} className="mb-16">
+            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+              {/* Terminal Header */}
+              <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 dark:bg-gray-800 bg-gray-200 border-b border-gray-700 dark:border-gray-700 border-gray-300">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+                <span className="text-xs text-gray-400 dark:text-gray-400 text-gray-600 ml-2 font-mono">skills@portfolio:~$</span>
+              </div>
+
+              <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-900 dark:bg-gray-900 bg-white min-h-[200px]">
+                {terminalCommands.map((cmd, index) => (
+                  <motion.div
+                    key={index}
+                    variants={codeVariants}
+                    transition={{ delay: cmd.delay }}
+                    className="space-y-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-400">$</span>
+                      <span className="text-white dark:text-white text-gray-900">
+                        {isInView && <TypewriterText text={cmd.command} delay={cmd.delay * 1000} />}
+                      </span>
+                    </div>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                      transition={{ delay: cmd.delay + 1 }}
+                      className="text-blue-300 dark:text-blue-300 text-blue-600 ml-4"
+                    >
+                      {cmd.output}
+                    </motion.div>
+                  </motion.div>
+                ))}
+
+                {/* Blinking Cursor */}
+                <motion.div
+                  className="flex items-center gap-2"
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ delay: 4 }}
+                >
+                  <span className="text-green-400">$</span>
+                  <motion.div
+                    className="w-2 h-5 bg-green-400"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                </motion.div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Categories Terminal */}
+          <motion.div variants={itemVariants} className="mb-16">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl font-mono text-green-400 dark:text-green-400 text-gray-900 mb-4">$ cat categories.json</h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {skillCategories.map((category, index) => (
+                <motion.div
+                  key={category.name}
+                  variants={itemVariants}
+                  custom={index}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/50 dark:bg-gray-900/50 bg-white/50 backdrop-blur-sm hover:bg-gray-800/50 dark:hover:bg-gray-800/50 hover:bg-gray-50/50 transition-all duration-300 group overflow-hidden">
+                    <CardContent className="p-6">
+                      {/* Terminal Command */}
+                      <div className="mb-4 p-3 bg-black/30 dark:bg-black/30 bg-gray-100/30 rounded border border-gray-700 dark:border-gray-700 border-gray-300 font-mono text-xs">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-green-400">$</span>
+                          <span className="text-white dark:text-white text-gray-900">{category.command}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-green-300 dark:text-green-300 text-green-600">
+                          <CheckCircle className="w-3 h-3" />
+                          <span>{category.count} packages found</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-4">
+                        <motion.div 
+                          className="p-3 rounded-lg bg-gradient-to-r from-green-500/20 to-blue-500/20 group-hover:from-green-500/30 group-hover:to-blue-500/30 transition-all duration-300 border border-green-500/30"
+                          whileHover={{ rotate: [0, -5, 5, 0] }}
+                          transition={{ duration: 0.5 }}
+                        >
+                         
+                            <FontAwesomeIcon icon={category.icon} className="w-6 h-6 text-green-400" />
+                       
+                        </motion.div>
+                        <div className="flex-1">
+                          <h4 className="font-bold text-white dark:text-white text-gray-900 mb-2 font-mono">
+                            {category.name}
+                          </h4>
+                          <div className="space-y-1">
+                            <p className="text-gray-300 dark:text-gray-300 text-gray-600 text-sm">
+                              {category.count} technologies
+                            </p>
+                            <div className="flex items-center gap-2">
+                              <div className="flex-1 bg-gray-700 dark:bg-gray-700 bg-gray-300 rounded-full h-2">
+                                <motion.div
+                                  className="bg-green-400 h-2 rounded-full"
+                                  initial={{ width: 0 }}
+                                  animate={isInView ? { width: `${category.avg}%` } : { width: 0 }}
+                                  transition={{ delay: index * 0.2, duration: 1 }}
+                                />
+                              </div>
+                              <span className="text-xs font-mono text-green-400">{category.avg}%</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
           {/* Tech Stack Carousel */}
           <motion.div variants={itemVariants} className="relative">
+            <div className="text-center mb-8">
+              <h3 className="text-xl font-mono text-green-400 dark:text-green-400 text-gray-900 mb-4">$ npm list --global</h3>
+            </div>
+
             <div className="relative -mx-4">
               <Swiper
                 modules={[Autoplay, EffectCoverflow]}
@@ -494,7 +676,7 @@ export function Skills() {
                 }}
               >
                 {techStack.map((tech, index) => (
-                  <SwiperSlide key={tech.name} className="!w-32 !h-32">
+                  <SwiperSlide key={tech.name} className="!w-36 !h-36">
                     <motion.div
                       className="w-full h-full group cursor-pointer"
                       whileHover={{ scale: 1.1 }}
@@ -504,12 +686,10 @@ export function Skills() {
                         damping: 17,
                       }}
                     >
-                      <div
-                        className={`relative w-full h-full rounded-2xl bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border border-primary/50 p-4 flex flex-col items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 `}
-                      >
-                        {/* Tech Icon - Font Awesome */}
+                      <div className="relative w-full h-full rounded-2xl bg-gray-900/80 dark:bg-gray-900/80 bg-white/80 backdrop-blur-sm border border-green-500/30 p-4 flex flex-col items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300">
+                        {/* Tech Icon */}
                         <motion.div
-                          className="text-white mb-2 filter drop-shadow-lg"
+                          className="text-green-400 mb-2 filter drop-shadow-lg"
                           whileHover={{
                             rotate: [0, -10, 10, 0],
                             scale: 1.2,
@@ -520,33 +700,56 @@ export function Skills() {
                           }}
                         >
                           {tech?.iconFile ? (
-                             <tech.iconFile className="text-3xl text-primary "/>
+                            <tech.iconFile className="text-3xl" />
                           ) : (
                             <FontAwesomeIcon
                               icon={tech.icon}
-                              className="text-3xl text-primary"
+                              className="text-3xl"
                             />
                           )}
                         </motion.div>
 
                         {/* Tech Name */}
-                        <span className="text-xs font-bold  text-center leading-tight opacity-90 group-hover:opacity-100 transition-opacity duration-200 font-headline mb-2 group-hover:text-primary">
+                        <span className="text-xs font-bold text-white dark:text-white text-gray-900 text-center leading-tight opacity-90 group-hover:opacity-100 transition-opacity duration-200 font-mono mb-2">
                           {tech.name}
                         </span>
 
+                        {/* Proficiency Bar */}
+                        <div className="w-full mb-2">
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-gray-400 dark:text-gray-400 text-gray-600 font-mono">{tech.proficiency}%</span>
+                          </div>
+                          <div className="w-full bg-gray-700 dark:bg-gray-700 bg-gray-300 rounded-full h-1">
+                            <motion.div
+                              className="bg-green-400 h-1 rounded-full"
+                              initial={{ width: 0 }}
+                              animate={isInView ? { width: `${tech.proficiency}%` } : { width: 0 }}
+                              transition={{ delay: index * 0.05, duration: 1 }}
+                            />
+                          </div>
+                        </div>
+
                         {/* Category Badge */}
                         <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                          <span className="px-2 py-1 text-xs font-medium  backdrop-blur-sm rounded-full  border dark:bg-white/10 dark:border-white/10 bg-black/10 border-black/10">
+                          <span className="px-2 py-1 text-xs font-medium font-mono bg-gray-800/80 dark:bg-gray-800/80 bg-gray-100/80 backdrop-blur-sm rounded-full text-green-300 dark:text-green-300 text-green-600 border border-green-500/30">
                             {tech.category}
                           </span>
                         </div>
 
+                        {/* Command Tooltip */}
+                        <motion.div
+                          className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 dark:bg-black/90 bg-white/90 border border-green-500/30 rounded px-2 py-1 font-mono text-xs text-green-300 dark:text-green-300 text-green-600 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                          initial={{ y: -10, opacity: 0 }}
+                        >
+                          <span className="text-green-400">$ </span>
+                          {tech.command}
+                        </motion.div>
+
                         {/* Glow Effect */}
                         <motion.div
-                          className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          className="absolute inset-0 rounded-2xl bg-gradient-to-br from-green-400/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                           whileHover={{
-                            backgroundImage:
-                              "linear-gradient(45deg, rgba(255,255,255,0.2), transparent)",
+                            background: "linear-gradient(45deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1))",
                           }}
                         />
                       </div>
@@ -555,6 +758,26 @@ export function Skills() {
                 ))}
               </Swiper>
             </div>
+          </motion.div>
+
+          {/* Terminal Footer */}
+          <motion.div 
+            variants={itemVariants}
+            className="mt-16 text-center"
+          >
+            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-xl inline-block">
+              <CardContent className="p-4">
+                <div className="font-mono text-sm text-green-400 dark:text-green-400 text-green-600 flex items-center gap-2">
+                  <Activity className="w-4 h-4" />
+                  <span>Skills inventory complete. Ready for new challenges!</span>
+                  <motion.div
+                    className="w-2 h-4 bg-green-400"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
         </motion.div>
       </div>

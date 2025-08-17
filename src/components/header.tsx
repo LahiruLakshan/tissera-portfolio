@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Code2, 
+  Terminal, 
   Menu, 
   X, 
   Home,
@@ -13,29 +13,65 @@ import {
   FolderOpen,
   Award,
   MessageSquare,
-  ExternalLink,
   Download,
   Zap,
-  Star
+  Code2,
+  ChevronRight,
+  Activity
 } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 
 const navigationItems = [
-  { name: "Home", href: "#", icon: Home },
-  { name: "About", href: "#about", icon: User },
-  { name: "Services", href: "#services", icon: Zap },
-  { name: "Projects", href: "#projects", icon: FolderOpen },
-  { name: "Experience", href: "#experience", icon: Briefcase },
-  { name: "Achievements", href: "#achievements", icon: Award },
-  { name: "Contact", href: "#contact", icon: MessageSquare }
+  { name: "Home", href: "#", icon: Home, command: "cd ~/" },
+  { name: "About", href: "#about", icon: User, command: "cat about.md" },
+  { name: "Services", href: "#services", icon: Zap, command: "ls services/" },
+  { name: "Projects", href: "#projects", icon: FolderOpen, command: "git log --projects" },
+  { name: "Experience", href: "#experience", icon: Briefcase, command: "cat experience.json" },
+  { name: "Achievements", href: "#achievements", icon: Award, command: "grep -r 'success'" },
+  { name: "Contact", href: "#contact", icon: MessageSquare, command: "ping contact" }
 ];
+
+// Terminal typewriter effect for logo
+const TypewriterLogo = ({ text, delay = 0 }: { text: string; delay?: number }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+
+  useEffect(() => {
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i <= text.length) {
+        setDisplayText(text.slice(0, i));
+        i++;
+      } else {
+        clearInterval(timer);
+        setTimeout(() => setShowCursor(false), 1000);
+      }
+    }, 100);
+
+    return () => clearInterval(timer);
+  }, [text]);
+
+  return (
+    <span className="font-mono">
+      {displayText}
+      {showCursor && (
+        <motion.span
+          className="inline-block w-2 h-5 bg-green-400 align-middle ml-1"
+          animate={{ opacity: [1, 0, 1] }}
+          transition={{ duration: 1, repeat: Infinity }}
+        />
+      )}
+    </span>
+  );
+};
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [showTerminal, setShowTerminal] = useState(false);
 
   // Handle scroll effects
   useEffect(() => {
@@ -94,83 +130,67 @@ export function Header() {
     }
   };
 
-  const logoVariants = {
-    hover: { 
-      scale: 1.05,
-      rotate: [0, -5, 5, 0],
-      transition: { duration: 0.6 }
-    }
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const navItemVariants = {
-    hover: { 
-      scale: 1.05,
-      y: -2,
-      transition: { type: "spring", stiffness: 400 }
-    }
-  };
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
   return (
     <>
       <motion.header
-      id="home"
+        id="home"
         variants={headerVariants}
         initial="initial"
         animate="animate"
         className={`fixed top-0 z-50 w-full transition-all duration-300 ${
           isScrolled 
-            ? 'border-b border-border/50 bg-background/80 backdrop-blur-md shadow-lg' 
-            : ''
+            ? 'border-b border-green-500/20 bg-gray-900/90 backdrop-blur-md shadow-lg shadow-green-500/10' 
+            : 'bg-gray-900/50 backdrop-blur-sm'
         }`}
       >
         <div className="container flex h-16 max-w-screen-2xl items-center justify-between">
           
-          {/* Logo Section */}
+          {/* Terminal Logo Section */}
           <motion.div 
-          onClick={scrollToTop}
-            className="flex items-center gap-3 cursor-pointer"
-            variants={logoVariants}
-            whileHover="hover"
+            onClick={scrollToTop}
+            className="flex items-center gap-3 cursor-pointer group"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 400 }}
           >
+            {/* Terminal Window */}
             <motion.div
-              className="relative p-2 rounded-lg bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm"
+              className="flex items-center gap-2 bg-black/80 border border-green-500/30 rounded-lg px-3 py-2 shadow-lg"
               whileHover={{ 
-                boxShadow: "0 0 20px rgba(168, 85, 247, 0.4)",
-                background: "linear-gradient(45deg, rgba(168, 85, 247, 0.3), rgba(6, 182, 212, 0.3))"
+                boxShadow: "0 0 20px rgba(34, 197, 94, 0.3)",
+                borderColor: "rgba(34, 197, 94, 0.5)"
               }}
               transition={{ duration: 0.3 }}
             >
-              <Code2 className="h-6 w-6 text-primary" />
+              {/* Terminal Dots */}
+              <div className="flex gap-1">
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              </div>
+              
+              {/* Terminal Content */}
+              <div className="flex items-center gap-2 font-mono text-sm">
+                <Terminal className="w-4 h-4 text-green-400" />
+                <span className="text-green-300">$</span>
+                <TypewriterLogo text="lahiru-dev" />
+              </div>
+
+              {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 to-accent/10"
+                className="absolute inset-0 rounded-lg bg-green-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 animate={{ 
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3]
+                  scale: [1, 1.05, 1],
+                  opacity: [0, 0.1, 0]
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
               />
             </motion.div>
-            
-            <div className="flex flex-col">
-              <motion.span 
-                className="font-bold font-headline text-lg leading-none"
-                whileHover={{ color: "hsl(var(--primary))" }}
-              >
-                Lahiru Tissera
-              </motion.span>
-              <motion.span 
-                className="text-xs text-muted-foreground leading-none"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                Software Engineer
-              </motion.span>
-            </div>
 
-            {/* Status Indicator */}
+            {/* Status Badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -178,18 +198,19 @@ const scrollToTop = () => {
             >
               <Badge 
                 variant="outline"
-                className="hidden sm:flex items-center gap-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
+                className="hidden sm:flex items-center gap-1 bg-emerald-500/10 text-emerald-400 border-emerald-500/30 font-mono text-xs"
               >
                 <motion.div
-                  className="w-2 h-2 bg-emerald-500 rounded-full"
+                  className="w-2 h-2 bg-emerald-400 rounded-full"
                   animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
-                Available
+                ONLINE
               </Badge>
             </motion.div>
           </motion.div>
-          {/* Desktop Navigation */}
+
+          {/* Desktop Navigation - Terminal Style */}
           <nav className="hidden md:flex items-center space-x-1">
             {navigationItems.map((item, index) => {
               const IconComponent = item.icon;
@@ -197,42 +218,55 @@ const scrollToTop = () => {
               const isActive = activeSection === sectionName;
               
               return (
-                <motion.button
+                <motion.div
                   key={item.name}
-                  onClick={() => scrollToSection(item.href)}
-                  className={`relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    isActive 
-                      ? 'text-primary bg-primary/10 shadow-lg' 
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                  }`}
-                  variants={navItemVariants}
-                  whileHover="hover"
+                  className="relative group"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + index * 0.1 }}
+                  whileHover={{ y: -2 }}
                 >
-                  <IconComponent className="w-4 h-4" />
-                  <span>{item.name}</span>
-                  
-                  {/* Active Indicator */}
-                  {isActive && (
-                    <motion.div
-                      className="absolute bottom-0 left-1/2 w-1 h-1 bg-primary rounded-full"
-                      layoutId="activeIndicator"
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    />
-                  )}
-                </motion.button>
+                  <button
+                    onClick={() => scrollToSection(item.href)}
+                    className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-mono font-medium transition-all duration-300 ${
+                      isActive 
+                        ? 'text-green-400 bg-green-500/10 shadow-lg border border-green-500/30' 
+                        : 'text-gray-300 hover:text-green-300 hover:bg-gray-800/50 border border-transparent'
+                    }`}
+                  >
+                    <IconComponent className="w-4 h-4" />
+                    <span>{item.name}</span>
+                    
+                    {/* Active Indicator */}
+                    {isActive && (
+                      <motion.div
+                        className="absolute -bottom-1 left-1/2 w-2 h-2 bg-green-400 rounded-full"
+                        layoutId="activeIndicator"
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                      />
+                    )}
+                  </button>
+
+                  {/* Terminal Command Tooltip */}
+                  <motion.div
+                    className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 border border-green-500/30 rounded px-2 py-1 font-mono text-xs text-green-300 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    initial={{ y: -10, opacity: 0 }}
+                    whileHover={{ y: 0, opacity: 1 }}
+                  >
+                    <span className="text-green-400">$ </span>
+                    {item.command}
+                  </motion.div>
+                </motion.div>
               );
             })}
           </nav>
 
-          {/* Right Section */}
+          {/* Right Section - Terminal Style */}
           <div className="flex items-center gap-3">
             
-            {/* Download CV Button */}
+            {/* Download CV Button - Terminal Style */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -243,26 +277,28 @@ const scrollToTop = () => {
                 variant="outline" 
                 size="sm"
                 asChild
-                className="group hover:bg-primary hover:text-primary-foreground border-primary/30 hover:border-primary transition-all duration-300"
+                className="group bg-black/50 border-green-500/30 text-green-300 hover:bg-green-500/10 hover:text-green-400 hover:border-green-500/50 font-mono text-xs transition-all duration-300"
               >
-                <a href="/Lakshan-Tissera-SE.pdf" download>
-                  <Download className="w-4 h-4 mr-2 group-hover:animate-bounce" />
-                  <span className="hidden lg:inline">Download CV</span>
-                  <span className="lg:hidden">CV</span>
+                <a href="/docs/Lakshan Tissera - SE.pdf" download className="flex items-center gap-2">
+                  <span className="text-green-400">$</span>
+                  <Download className="w-3 h-3 group-hover:animate-bounce" />
+                  <span className="hidden lg:inline">download cv</span>
+                  <span className="lg:hidden">cv</span>
                 </a>
               </Button>
             </motion.div>
 
-            {/* Theme Toggle */}
+            {/* Terminal Theme Toggle */}
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
+              className="p-2 rounded-lg bg-black/50 border border-green-500/30 hover:border-green-500/50 transition-all duration-300"
             >
               <ThemeToggle />
             </motion.div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Terminal Style */}
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -273,25 +309,34 @@ const scrollToTop = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="relative"
+                className="relative bg-black/50 border border-green-500/30 hover:bg-green-500/10 hover:border-green-500/50 text-green-300"
               >
                 <motion.div
                   animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
                 >
                   {isMobileMenuOpen ? (
-                    <X className="h-5 w-5" />
+                    <X className="h-4 w-4" />
                   ) : (
-                    <Menu className="h-5 w-5" />
+                    <Menu className="h-4 w-4" />
                   )}
                 </motion.div>
               </Button>
             </motion.div>
           </div>
         </div>
+
+        {/* Terminal Command Line at bottom */}
+        {isScrolled && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
+          />
+        )}
       </motion.header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Terminal Style */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -301,10 +346,10 @@ const scrollToTop = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm md:hidden"
             />
 
-            {/* Mobile Menu */}
+            {/* Mobile Terminal Menu */}
             <motion.div
               initial={{ opacity: 0, y: -100, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -312,73 +357,106 @@ const scrollToTop = () => {
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="fixed top-16 left-4 right-4 z-50 md:hidden"
             >
-              <div className="bg-card/95 backdrop-blur-md border border-border/50 rounded-2xl shadow-2xl p-6 space-y-1">
-                {navigationItems.map((item, index) => {
-                  const IconComponent = item.icon;
-                  const sectionName = item.href.replace('#', '') || 'home';
-                  const isActive = activeSection === sectionName;
-                  
-                  return (
-                    <motion.button
-                      key={item.name}
-                      onClick={() => scrollToSection(item.href)}
-                      className={`w-full flex items-center gap-3 p-4 rounded-xl text-left transition-all duration-300 ${
-                        isActive 
-                          ? 'text-primary bg-primary/10 shadow-lg' 
-                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                      }`}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ scale: 1.02, x: 5 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <motion.div
-                        className={`p-2 rounded-lg ${
-                          isActive 
-                            ? 'bg-primary/20' 
-                            : 'bg-muted/50'
-                        }`}
-                        whileHover={{ rotate: 15 }}
-                        transition={{ type: "spring", stiffness: 400 }}
-                      >
-                        <IconComponent className="w-4 h-4" />
-                      </motion.div>
-                      <span className="font-medium">{item.name}</span>
-                      {isActive && (
-                        <motion.div
-                          className="ml-auto"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: "spring", stiffness: 500 }}
-                        >
-                          <Star className="w-4 h-4 text-primary fill-primary" />
-                        </motion.div>
-                      )}
-                    </motion.button>
-                  );
-                })}
+              <div className="bg-black/95 backdrop-blur-md border border-green-500/30 rounded-2xl shadow-2xl overflow-hidden">
+                {/* Terminal Header */}
+                <div className="flex items-center gap-2 px-4 py-3 bg-gray-900/50 border-b border-green-500/20">
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  </div>
+                  <span className="text-xs text-green-400 font-mono">mobile-menu</span>
+                </div>
 
-                {/* Mobile CV Download */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="pt-4 border-t border-border/50"
-                >
-                  <Button 
-                    variant="outline" 
-                    size="lg"
-                    asChild
-                    className="w-full group hover:bg-primary hover:text-primary-foreground border-primary/30 hover:border-primary transition-all duration-300"
+                {/* Navigation Items */}
+                <div className="p-4 space-y-2">
+                  {navigationItems.map((item, index) => {
+                    const IconComponent = item.icon;
+                    const sectionName = item.href.replace('#', '') || 'home';
+                    const isActive = activeSection === sectionName;
+                    
+                    return (
+                      <motion.div
+                        key={item.name}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <button
+                          onClick={() => scrollToSection(item.href)}
+                          className={`w-full flex items-center gap-3 p-3 rounded-lg text-left font-mono transition-all duration-300 ${
+                            isActive 
+                              ? 'text-green-400 bg-green-500/10 border border-green-500/30' 
+                              : 'text-gray-300 hover:text-green-300 hover:bg-gray-800/50 border border-transparent'
+                          }`}
+                        >
+                          {/* Terminal Prompt */}
+                          <span className="text-green-400">$</span>
+                          
+                          {/* Icon */}
+                          <motion.div
+                            className="p-1 rounded bg-gray-800/50"
+                            whileHover={{ rotate: 15 }}
+                            transition={{ type: "spring", stiffness: 400 }}
+                          >
+                            <IconComponent className="w-4 h-4" />
+                          </motion.div>
+                          
+                          {/* Command */}
+                          <div className="flex-1">
+                            <div className="font-medium">{item.command}</div>
+                            <div className="text-xs text-gray-500"># {item.name}</div>
+                          </div>
+                          
+                          {/* Active indicator */}
+                          {isActive && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: "spring", stiffness: 500 }}
+                            >
+                              <ChevronRight className="w-4 h-4 text-green-400" />
+                            </motion.div>
+                          )}
+                        </button>
+                      </motion.div>
+                    );
+                  })}
+
+                  {/* Mobile CV Download */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="pt-4 border-t border-green-500/20"
                   >
-                    <a href="/docs/Lakshan Tissera - SE.pdf" download className="flex items-center gap-2">
-                      <Download className="w-4 h-4 group-hover:animate-bounce" />
-                      Download CV
-                      <ExternalLink className="w-4 h-4 ml-auto" />
-                    </a>
-                  </Button>
-                </motion.div>
+                    <Button 
+                      variant="outline" 
+                      size="lg"
+                      asChild
+                      className="w-full bg-black/50 border-green-500/30 text-green-300 hover:bg-green-500/10 hover:text-green-400 font-mono transition-all duration-300"
+                    >
+                      <a href="/docs/Lakshan Tissera - SE.pdf" download className="flex items-center gap-2">
+                        <span className="text-green-400">$</span>
+                        <Download className="w-4 h-4" />
+                        <span>download --file=cv.pdf</span>
+                      </a>
+                    </Button>
+                  </motion.div>
+                </div>
+
+                {/* Terminal Footer */}
+                <div className="px-4 py-2 bg-gray-900/50 border-t border-green-500/20 font-mono text-xs text-gray-500">
+                  <div className="flex items-center gap-2">
+                    <Activity className="w-3 h-3 text-green-400" />
+                    <span>System ready</span>
+                    <motion.div
+                      className="w-2 h-2 bg-green-400 rounded-full ml-auto"
+                      animate={{ opacity: [1, 0.3, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  </div>
+                </div>
               </div>
             </motion.div>
           </>
@@ -386,4 +464,4 @@ const scrollToTop = () => {
       </AnimatePresence>
     </>
   );
-}
+};

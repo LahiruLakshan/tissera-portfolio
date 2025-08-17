@@ -1,7 +1,7 @@
 // src/components/services.tsx
 "use client";
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { 
   Code2, 
@@ -18,7 +18,13 @@ import {
   Users,
   ArrowRight,
   CheckCircle,
-  Sparkles
+  Sparkles,
+  Terminal,
+  Activity,
+  Monitor,
+  Server,
+  FileCode,
+  Play
 } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -30,69 +36,124 @@ const services = [
     title: "Full-Stack Development",
     description: "End-to-end web application development using React, Next.js, Node.js, and modern databases",
     features: ["React/Next.js", "Node.js/Express", "Database Design", "API Development"],
-    color: "from-blue-500 to-cyan-500",
-    bgColor: "from-blue-500/10 to-cyan-500/10",
+    command: "npm run full-stack",
+    price: "$2000+",
+    deliveryTime: "4-8 weeks",
+    status: "ACTIVE",
     delay: 0.1,
-    popular: false
   },
   {
     icon: Palette,
     title: "UI/UX Design",
     description: "Creating intuitive and visually appealing user interfaces with modern design principles",
     features: ["Figma/Adobe XD", "Responsive Design", "User Research", "Prototyping"],
-    color: "from-purple-500 to-pink-500",
-    bgColor: "from-purple-500/10 to-pink-500/10",
+    command: "design --responsive --modern",
+    price: "$800+",
+    deliveryTime: "2-4 weeks",
+    status: "POPULAR",
     delay: 0.2,
-    popular: true
   },
   {
     icon: Smartphone,
     title: "Mobile Development",
     description: "Cross-platform mobile applications using React Native and Flutter frameworks",
     features: ["React Native", "Flutter", "iOS/Android", "App Store Deploy"],
-    color: "from-emerald-500 to-teal-500",
-    bgColor: "from-emerald-500/10 to-teal-500/10",
+    command: "mobile-dev --cross-platform",
+    price: "$3000+",
+    deliveryTime: "6-12 weeks",
+    status: "ACTIVE",
     delay: 0.3,
-    popular: false
   },
   {
     icon: Zap,
     title: "Web3 Development",
     description: "Blockchain integration, smart contracts, and decentralized application development",
     features: ["Smart Contracts", "DeFi/NFT", "Ethers.js", "Web3 Integration"],
-    color: "from-violet-500 to-purple-500",
-    bgColor: "from-violet-500/10 to-purple-500/10",
+    command: "web3 deploy --mainnet",
+    price: "$5000+",
+    deliveryTime: "8-16 weeks",
+    status: "BETA",
     delay: 0.4,
-    popular: false
   },
   {
     icon: Cpu,
     title: "AI/ML Integration",
     description: "Machine learning solutions and AI-powered features for intelligent applications",
     features: ["PyTorch/TensorFlow", "Computer Vision", "NLP", "Data Analysis"],
-    color: "from-orange-500 to-red-500",
-    bgColor: "from-orange-500/10 to-red-500/10",
+    command: "python train_model.py",
+    price: "$4000+",
+    deliveryTime: "6-10 weeks",
+    status: "ACTIVE",
     delay: 0.5,
-    popular: false
   },
   {
     icon: Cloud,
     title: "Cloud & DevOps",
     description: "Scalable cloud architecture, deployment automation, and infrastructure management",
     features: ["AWS/Firebase", "Docker", "CI/CD", "Performance Opt"],
-    color: "from-indigo-500 to-blue-500",
-    bgColor: "from-indigo-500/10 to-blue-500/10",
+    command: "aws deploy --auto-scale",
+    price: "$1500+",
+    deliveryTime: "3-6 weeks",
+    status: "ACTIVE",
     delay: 0.6,
-    popular: false
   }
 ];
 
 const processSteps = [
-  { step: "01", title: "Discovery", description: "Understanding your vision and requirements" },
-  { step: "02", title: "Planning", description: "Creating detailed roadmap and architecture" },
-  { step: "03", title: "Development", description: "Building with latest technologies and best practices" },
-  { step: "04", title: "Delivery", description: "Testing, deployment, and ongoing support" }
+  { 
+    step: "01", 
+    title: "$ git init", 
+    subtitle: "Discovery", 
+    description: "Understanding your vision and requirements",
+    command: "git init project && git add requirements"
+  },
+  { 
+    step: "02", 
+    title: "$ npm plan", 
+    subtitle: "Planning", 
+    description: "Creating detailed roadmap and architecture",
+    command: "npm run plan --architecture --roadmap"
+  },
+  { 
+    step: "03", 
+    title: "$ npm build", 
+    subtitle: "Development", 
+    description: "Building with latest technologies and best practices",
+    command: "npm run build --production --optimize"
+  },
+  { 
+    step: "04", 
+    title: "$ git deploy", 
+    subtitle: "Delivery", 
+    description: "Testing, deployment, and ongoing support",
+    command: "git push origin production && npm test"
+  }
 ];
+
+const terminalServices = [
+  { command: "ls -la services/", output: "📁 6 service packages available", delay: 0 },
+  { command: "systemctl status developer", output: "● Active: coding (since 2020)", delay: 0.8 },
+  { command: "cat portfolio_stats.json", output: "✅ 20+ projects delivered successfully", delay: 1.6 },
+  { command: "npm list --global", output: "🚀 Full-stack → Mobile → AI/ML → Web3", delay: 2.4 },
+];
+
+const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (currentIndex < text.length) {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }
+    }, delay + currentIndex * speed);
+
+    return () => clearTimeout(timer);
+  }, [currentIndex, text, delay, speed]);
+
+  return <span>{displayText}</span>;
+};
 
 export function Services() {
   const ref = useRef(null);
@@ -142,37 +203,48 @@ export function Services() {
     })
   };
 
+  const codeVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
+  };
+
   return (
     <motion.section
-    id='services'
+      id='services'
       ref={ref}
       style={{ opacity }}
-      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-background via-muted/20 to-background"
+      className="py-24 sm:py-32 relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 from-gray-50 via-gray-100 to-gray-50"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+      {/* Matrix-style Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0008_1px,transparent_1px),linear-gradient(to_bottom,#00ff0008_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
       
-      {/* Floating Background Elements */}
+      {/* Floating Code Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(8)].map((_, i) => (
+        {['npm', 'git', 'docker', 'api', 'deploy', 'build', 'test', 'push'].map((symbol, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-primary/20 rounded-full"
+            className="absolute text-green-400/10 dark:text-green-400/10 text-gray-600/10 font-mono text-lg select-none"
             style={{
-              left: `${10 + (i * 12)}%`,
-              top: `${20 + (i * 8)}%`,
+              left: `${15 + (i * 10) % 70}%`,
+              top: `${10 + (i * 12) % 80}%`,
             }}
             animate={{
               y: [-15, 15, -15],
-              opacity: [0.2, 0.8, 0.2],
-              scale: [1, 1.5, 1],
+              opacity: [0.1, 0.3, 0.1],
+              rotate: [-2, 2, -2],
             }}
             transition={{
-              duration: 3 + i * 0.5,
+              duration: 6 + i,
               repeat: Infinity,
-              delay: i * 0.3,
+              delay: i * 0.4,
             }}
-          />
+          >
+            {symbol}
+          </motion.div>
         ))}
       </div>
 
@@ -183,7 +255,7 @@ export function Services() {
           animate={isInView ? "visible" : "hidden"}
           className="max-w-7xl mx-auto"
         >
-          {/* Section Header */}
+          {/* Terminal Header */}
           <motion.div 
             variants={itemVariants}
             className="text-center mb-20"
@@ -193,32 +265,88 @@ export function Services() {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="p-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm">
-                <Rocket className="w-8 h-8 text-primary" />
+              <div className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-500/30">
+                <Terminal className="w-8 h-8 text-green-400" />
               </div>
-              <h2 className="text-4xl sm:text-5xl font-headline font-bold">
-                Services I Offer
+              <h2 className="text-4xl sm:text-5xl font-mono font-bold text-green-400 dark:text-green-400 text-gray-900">
+                $ cat services.json
               </h2>
             </motion.div>
             
-            <motion.p 
-              className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-            >
-              I provide end-to-end solutions to bring your digital vision to life with 
-              <span className="text-primary font-semibold"> quality</span>, 
-              <span className="text-accent font-semibold"> precision</span>, and 
-              <span className="text-primary font-semibold"> innovation</span>.
-            </motion.p>
-            
             <motion.div 
-              className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"
+              className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full mb-8"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             />
+
+            <motion.p 
+              className="text-lg sm:text-xl text-gray-300 dark:text-gray-300 text-gray-600 max-w-3xl mx-auto font-mono"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              <span className="text-gray-500 dark:text-gray-500 text-gray-400">// </span>
+              End-to-end solutions with <span className="text-green-400">quality</span>, 
+              <span className="text-blue-400"> precision</span>, and 
+              <span className="text-purple-400"> innovation</span>
+            </motion.p>
+          </motion.div>
+
+          {/* Terminal Info Panel */}
+          <motion.div variants={itemVariants} className="mb-16">
+            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-2xl overflow-hidden">
+              {/* Terminal Header */}
+              <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 dark:bg-gray-800 bg-gray-200 border-b border-gray-700 dark:border-gray-700 border-gray-300">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+                <span className="text-xs text-gray-400 dark:text-gray-400 text-gray-600 ml-2 font-mono">services@portfolio:~$</span>
+              </div>
+
+              <CardContent className="p-6 font-mono text-sm space-y-4 bg-gray-900 dark:bg-gray-900 bg-white min-h-[180px]">
+                {terminalServices.map((cmd, index) => (
+                  <motion.div
+                    key={index}
+                    variants={codeVariants}
+                    transition={{ delay: cmd.delay }}
+                    className="space-y-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-400">$</span>
+                      <span className="text-white dark:text-white text-gray-900">
+                        {isInView && <TypewriterText text={cmd.command} delay={cmd.delay * 1000} />}
+                      </span>
+                    </div>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                      transition={{ delay: cmd.delay + 1 }}
+                      className="text-blue-300 dark:text-blue-300 text-blue-600 ml-4"
+                    >
+                      {cmd.output}
+                    </motion.div>
+                  </motion.div>
+                ))}
+
+                {/* Blinking Cursor */}
+                <motion.div
+                  className="flex items-center gap-2"
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ delay: 4 }}
+                >
+                  <span className="text-green-400">$</span>
+                  <motion.div
+                    className="w-2 h-5 bg-green-400"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                </motion.div>
+              </CardContent>
+            </Card>
           </motion.div>
 
           {/* Services Grid */}
@@ -233,63 +361,85 @@ export function Services() {
                   initial="hidden"
                   animate={isInView ? "visible" : "hidden"}
                   whileHover={{ 
-                    scale: 1.05, 
+                    scale: 1.02, 
                     y: -10,
                     transition: { type: "spring", stiffness: 300 }
                   }}
                   className="group relative"
                 >
-                  <Card className="relative h-full border-0 bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-500 overflow-hidden">
-                    
-
-                    {/* Background Gradient */}
-                    <motion.div
-                      className={`absolute inset-0 bg-gradient-to-br ${service.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-                      whileHover={{ opacity: 1 }}
-                    />
+                  <Card className="relative h-full border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/80 dark:bg-gray-900/80 bg-white/80 backdrop-blur-sm hover:bg-gray-800/90 dark:hover:bg-gray-800/90 hover:bg-gray-50/90 transition-all duration-500 overflow-hidden">
+                    {/* Terminal Command Header */}
+                    <div className="px-4 py-3 bg-gray-800 dark:bg-gray-800 bg-gray-200 border-b border-gray-700 dark:border-gray-700 border-gray-300 font-mono text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="text-green-400">$</span>
+                        <span className="text-white dark:text-white text-gray-900">{service.command}</span>
+                      </div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <Badge 
+                          variant={service.status === 'POPULAR' ? 'default' : service.status === 'BETA' ? 'secondary' : 'outline'}
+                          className={`text-xs font-mono ${
+                            service.status === 'POPULAR' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
+                            service.status === 'BETA' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' :
+                            'bg-blue-500/20 text-blue-400 border-blue-500/30'
+                          }`}
+                        >
+                          {service.status}
+                        </Badge>
+                        <span className="text-gray-400 dark:text-gray-400 text-gray-600">{service.deliveryTime}</span>
+                      </div>
+                    </div>
 
                     <CardHeader className="relative z-10 pb-4">
                       {/* Icon */}
                       <motion.div 
-                        className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${service.color} mb-4 shadow-lg`}
+                        className="inline-flex p-3 rounded-lg bg-gradient-to-r from-green-500/20 to-blue-500/20 mb-4 border border-green-500/30"
                         whileHover={{ 
                           rotate: [0, -5, 5, 0],
                           scale: 1.1
                         }}
                         transition={{ duration: 0.5 }}
                       >
-                        <IconComponent className="w-8 h-8 text-white" />
+                        <IconComponent className="w-6 h-6 text-green-400" />
                       </motion.div>
 
                       {/* Title */}
-                      <h3 className="text-xl font-semibold font-headline mb-2 group-hover:text-primary transition-colors duration-300">
+                      <h3 className="text-xl font-semibold font-mono mb-2 text-white dark:text-white text-gray-900 group-hover:text-green-400 dark:group-hover:text-green-400 group-hover:text-green-600 transition-colors duration-300">
                         {service.title}
                       </h3>
+
+                      {/* Price */}
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl font-bold text-green-400 font-mono">{service.price}</span>
+                        <Badge variant="outline" className="font-mono text-xs bg-gray-800/50 dark:bg-gray-800/50 bg-gray-100/50 border-gray-600 dark:border-gray-600 border-gray-400">
+                          Starting from
+                        </Badge>
+                      </div>
                     </CardHeader>
 
                     <CardContent className="relative z-10 space-y-6">
                       {/* Description */}
-                      <p className="text-muted-foreground leading-relaxed text-justify">
+                      <p className="text-gray-300 dark:text-gray-300 text-gray-600 leading-relaxed text-sm">
+                        <span className="text-gray-500 dark:text-gray-500 text-gray-400 font-mono">// </span>
                         {service.description}
                       </p>
 
                       {/* Features */}
                       <div className="space-y-3">
-                        <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                          <Eye className="w-4 h-4 text-primary" />
-                          Key Features
+                        <h4 className="text-sm font-semibold text-green-400 flex items-center gap-2 font-mono">
+                          <FileCode className="w-4 h-4" />
+                          include/
                         </h4>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="space-y-2">
                           {service.features.map((feature, idx) => (
                             <motion.div
                               key={feature}
-                              className="flex items-center gap-2 text-sm"
+                              className="flex items-center gap-2 text-sm font-mono"
                               initial={{ opacity: 0, x: -10 }}
                               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
                               transition={{ delay: service.delay + idx * 0.1 }}
                             >
-                              <CheckCircle className="w-3 h-3 text-green-500 shrink-0" />
-                              <span className="text-muted-foreground">{feature}</span>
+                              <CheckCircle className="w-3 h-3 text-green-400 shrink-0" />
+                              <span className="text-gray-300 dark:text-gray-300 text-gray-600">{feature}</span>
                             </motion.div>
                           ))}
                         </div>
@@ -301,33 +451,20 @@ export function Services() {
                         whileTap={{ scale: 0.98 }}
                       >
                         <Button 
-                          variant="ghost" 
-                          className="w-full group/btn hover:bg-primary/10 border border-primary/20 hover:border-primary/40 transition-all duration-300"
+                          variant="outline" 
+                          className="w-full bg-black/50 dark:bg-black/50 bg-gray-100/50 border-green-500/30 text-green-400 dark:text-green-400 text-green-600 hover:bg-green-500/10 font-mono transition-all duration-300"
                         >
-                          <span className="group-hover/btn:text-primary transition-colors">
-                            Learn More
-                          </span>
-                          <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                          <Play className="w-4 h-4 mr-2" />
+                          <span>./start_project.sh</span>
                         </Button>
                       </motion.div>
                     </CardContent>
 
                     {/* Glow Effect */}
                     <motion.div
-                      className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{
-                        background: `linear-gradient(135deg, transparent, ${service.color.includes('blue') ? '#3b82f620' : 
-                          service.color.includes('purple') ? '#a855f720' : 
-                          service.color.includes('emerald') ? '#10b98120' :
-                          service.color.includes('violet') ? '#8b5cf620' :
-                          service.color.includes('orange') ? '#f97316' + '20' :
-                          '#6366f120'})`,
-                        boxShadow: `0 0 20px ${service.color.includes('blue') ? '#3b82f610' : 
-                          service.color.includes('purple') ? '#a855f710' : 
-                          service.color.includes('emerald') ? '#10b98110' :
-                          service.color.includes('violet') ? '#8b5cf610' :
-                          service.color.includes('orange') ? '#f97316' + '10' :
-                          '#6366f110'}`
+                      className="absolute inset-0 bg-gradient-to-br from-green-400/5 to-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      whileHover={{
+                        background: "linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1))",
                       }}
                     />
                   </Card>
@@ -336,21 +473,22 @@ export function Services() {
             })}
           </div>
 
-          {/* Process Section */}
+          {/* Process Section - Terminal Style */}
           <motion.div
             variants={itemVariants}
             className="text-center mb-16"
           >
-            <h3 className="text-3xl font-headline font-bold mb-4 flex items-center justify-center gap-3">
-              <Users className="w-8 h-8 text-primary" />
-              How I Work
+            <h3 className="text-3xl font-mono font-bold mb-4 text-green-400 dark:text-green-400 text-gray-900 flex items-center justify-center gap-3">
+              <Terminal className="w-8 h-8" />
+              $ cat workflow.md
             </h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              My proven process ensures your project is delivered on time, within budget, and exceeds expectations
+            <p className="text-gray-300 dark:text-gray-300 text-gray-600 max-w-2xl mx-auto font-mono">
+              <span className="text-gray-500 dark:text-gray-500 text-gray-400">// </span>
+              Proven development pipeline for successful project delivery
             </p>
           </motion.div>
 
-          {/* Process Steps */}
+          {/* Process Steps - Terminal Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {processSteps.map((step, index) => (
               <motion.div
@@ -361,33 +499,41 @@ export function Services() {
                 animate={isInView ? "visible" : "hidden"}
                 whileHover={{ scale: 1.05, y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="text-center group"
+                className="text-center group relative"
               >
-                <Card className="border-0 bg-card/30 backdrop-blur-sm hover:bg-card/50 transition-all duration-300 p-6">
+                <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/80 dark:bg-gray-900/80 bg-white/80 backdrop-blur-sm hover:bg-gray-800/90 dark:hover:bg-gray-800/90 hover:bg-gray-50/90 transition-all duration-300 p-6 overflow-hidden">
+                  {/* Terminal Header */}
+                  <div className="mb-4 p-2 bg-black/20 dark:bg-black/20 bg-gray-100/20 rounded border border-gray-700 dark:border-gray-700 border-gray-300 font-mono text-xs">
+                    <div className="text-green-400">$ {step.title}</div>
+                    <div className="text-gray-500 dark:text-gray-500 text-gray-400 mt-1"># {step.subtitle}</div>
+                  </div>
+
                   {/* Step Number */}
                   <motion.div
-                    className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-white font-bold text-lg shadow-lg"
+                    className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-400 to-blue-400 flex items-center justify-center text-black font-bold text-sm shadow-lg"
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
                     {step.step}
                   </motion.div>
 
-                  {/* Step Title */}
-                  <h4 className="text-xl font-semibold font-headline mb-2 group-hover:text-primary transition-colors">
-                    {step.title}
-                  </h4>
-
                   {/* Step Description */}
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-gray-300 dark:text-gray-300 text-gray-600 leading-relaxed font-mono">
+                    <span className="text-gray-500 dark:text-gray-500 text-gray-400">// </span>
                     {step.description}
                   </p>
+
+                  {/* Command */}
+                  <div className="mt-4 p-2 bg-black/30 dark:bg-black/30 bg-gray-100/30 rounded font-mono text-xs">
+                    <span className="text-green-400">$ </span>
+                    <span className="text-gray-300 dark:text-gray-300 text-gray-600">{step.command}</span>
+                  </div>
                 </Card>
 
-                {/* Connection Line (hidden on last item) */}
+                {/* Connection Line */}
                 {index < processSteps.length - 1 && (
                   <motion.div
-                    className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-primary/50 to-accent/50 transform -translate-y-1/2"
+                    className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-green-400/50 to-blue-400/50 transform -translate-y-1/2"
                     initial={{ scaleX: 0 }}
                     animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
                     transition={{ delay: 1 + index * 0.2, duration: 0.6 }}
@@ -397,37 +543,34 @@ export function Services() {
             ))}
           </div>
 
-          {/* CTA Section */}
-          {/* <motion.div
+          {/* Terminal Footer */}
+          <motion.div 
             variants={itemVariants}
-            className="text-center mt-20"
+            className="mt-20 text-center"
           >
-            <Card className="border-0 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 backdrop-blur-sm p-8">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="space-y-6"
-              >
-                <h3 className="text-2xl font-headline font-bold">
-                  Ready to Start Your Project?
-                </h3>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Let's discuss how I can help bring your ideas to life with cutting-edge technology and exceptional design.
-                </p>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
+            <Card className="border border-gray-700 dark:border-gray-700 border-gray-300 bg-gray-900/90 dark:bg-gray-900/90 bg-white/90 backdrop-blur-sm shadow-xl inline-block">
+              <CardContent className="p-6">
+                <div className="font-mono text-sm text-green-400 dark:text-green-400 text-green-600 flex items-center gap-2">
+                  <Activity className="w-4 h-4" />
+                  <span>Services loaded successfully. Ready to execute your project!</span>
+                  <motion.div
+                    className="w-2 h-4 bg-green-400"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                </div>
+                <div className="mt-4">
                   <Button 
                     size="lg"
-                    className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="bg-gradient-to-r from-green-500/20 to-blue-500/20 hover:from-green-500/30 hover:to-blue-500/30 text-green-400 dark:text-green-400 text-green-600 border border-green-500/30 font-mono px-8 py-4 transition-all duration-300"
                   >
-                    Get In Touch
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    <span className="text-green-400">$ </span>
+                    ./contact_me.sh --start-project
                   </Button>
-                </motion.div>
-              </motion.div>
+                </div>
+              </CardContent>
             </Card>
-          </motion.div> */}
+          </motion.div>
         </motion.div>
       </div>
     </motion.section>
