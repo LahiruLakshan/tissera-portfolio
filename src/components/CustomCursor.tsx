@@ -1,36 +1,91 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
+  // Use motion values for better performance
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
+  // Apply spring physics for smooth movement
+  const springX = useSpring(cursorX, { 
+    stiffness: 500, 
+    damping: 28,
+    mass: 0.5
+  });
+  const springY = useSpring(cursorY, { 
+    stiffness: 500, 
+    damping: 28,
+    mass: 0.5
+  });
+
+  const isHoveringRef = useRef(false);
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Use RAF for smoother updates
+    let rafId: number;
+    
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
-
-    document.addEventListener('mousemove', updateMousePosition);
-
-    const interactiveElements = document.querySelectorAll('a, button, [role="button"]');
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
-    });
-
-    return () => {
-      document.removeEventListener('mousemove', updateMousePosition);
-      interactiveElements.forEach(el => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      
+      rafId = requestAnimationFrame(() => {
+        cursorX.set(e.clientX);
+        cursorY.set(e.clientY);
       });
     };
-  }, []);
+
+    const handleMouseEnter = () => {
+      isHoveringRef.current = true;
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = 'scale(1.5)';
+        cursorRef.current.style.borderColor = 'rgb(34 197 94)';
+        cursorRef.current.style.backgroundColor = 'rgba(34, 197, 94, 0.2)';
+      }
+    };
+
+    const handleMouseLeave = () => {
+      isHoveringRef.current = false;
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = 'scale(1)';
+        cursorRef.current.style.borderColor = 'rgba(34, 197, 94, 0.6)';
+        cursorRef.current.style.backgroundColor = 'transparent';
+      }
+    };
+
+    // Passive listeners for better performance
+    document.addEventListener('mousemove', updateMousePosition, { passive: true });
+
+    // Use delegation for better performance
+    const handleDelegatedMouseEnter = (e: MouseEvent) => {
+      const target = e.target as Element;
+      if (target.matches('a, button, [role="button"], input, textarea, select')) {
+        handleMouseEnter();
+      }
+    };
+
+    const handleDelegatedMouseLeave = (e: MouseEvent) => {
+      const target = e.target as Element;
+      if (target.matches('a, button, [role="button"], input, textarea, select')) {
+        handleMouseLeave();
+      }
+    };
+
+    document.addEventListener('mouseover', handleDelegatedMouseEnter, { passive: true });
+    document.addEventListener('mouseout', handleDelegatedMouseLeave, { passive: true });
+
+    return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      document.removeEventListener('mousemove', updateMousePosition);
+      document.removeEventListener('mouseover', handleDelegatedMouseEnter);
+      document.removeEventListener('mouseout', handleDelegatedMouseLeave);
+    };
+  }, [cursorX, cursorY]);
 
   return (
     <>
@@ -38,7 +93,12 @@ export function CustomCursor() {
         * {
           cursor: none !important;
         }
-        @media (hover: none) {
+        @media (hover: none) and (pointer: coarse) {
+          * {
+            cursor: auto !important;
+          }
+        }
+        @media (max-width: 768px) {
           * {
             cursor: auto !important;
           }
@@ -46,25 +106,27 @@ export function CustomCursor() {
       `}</style>
 
       <motion.div
-        className="fixed pointer-events-none z-[9999] w-6 h-6 hidden md:block"
-        animate={{
-          x: mousePosition.x - 12,
-          y: mousePosition.y - 12,
-          scale: isHovering ? 1.5 : 1,
-        }}
-        transition={{
-          type: "spring",
-          damping: 20,
-          stiffness: 400,
-          mass: 0.5,
+        ref={cursorRef}
+        className="fixed pointer-events-none z-[9999] w-6 h-6 hidden md:block will-change-transform"
+        style={{
+          translateX: springX,
+          translateY: springY,
+          translateZ: 0, // Force GPU acceleration
         }}
       >
-        <div className={`w-full h-full rounded-full border-2 transition-colors duration-200 ${
-          isHovering 
-            ? 'border-green-600 bg-green-600/20' 
-            : 'border-green-600/60 bg-transparent'
-        }`} />
-        <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-green-600 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+        <div 
+          className="w-full h-full rounded-full border-2 transition-colors duration-150 ease-out"
+          style={{
+            borderColor: 'rgba(34, 197, 94, 0.6)',
+            backgroundColor: 'transparent',
+          }}
+        />
+        <div 
+          className="absolute top-1/2 left-1/2 w-1 h-1 bg-green-600 rounded-full"
+          style={{
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
       </motion.div>
     </>
   );
