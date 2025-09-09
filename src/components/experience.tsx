@@ -27,6 +27,39 @@ import { Button } from "@/components/ui/button";
 
 const experiences = [
   {
+    id: 0,
+    role: "Senior Software Engineer",
+    company: "Pan Asia Banking Corporation PLC ",
+    location: "Colombo, Sri Lanka",
+    period: "Sep 2025 - Present",
+    duration: "",
+    type: "Full-time",
+    status: "Recent",
+    description:
+      "Built and maintained Mobile Applications",
+    achievements: [
+      "Developed and maintained Mobile Apps",
+      "Implemented Banking Apps",
+      
+    ],
+    technologies: [
+      "Flutter",
+      "React.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "React Query",
+      
+    ],
+    projects: [],
+    highlights: {
+      impact: "Built high-performing Banking Apps",
+      growth: "Enhanced insights with analytics dashboards",
+      team: "Collaborated with teams for timely delivery",
+    },
+    color: "from-purple-500 to-pink-500",
+    icon: Code2,
+  },
+  {
     id: 1,
     role: "Software Engineer",
     company: "Beebee Digital Pvt Ltd",
@@ -34,7 +67,7 @@ const experiences = [
     period: "Dec 2024 - Jul 2025",
     duration: "8 months",
     type: "Full-time",
-    status: "Recent",
+    status: "Completed",
     description:
       "Built and maintained NFT marketplace platforms including ohhNFT and Owlies NFT Store with strong focus on Web3 integration, analytics, and user experience.",
     achievements: [
@@ -460,9 +493,9 @@ export function Experience() {
                                   <Calendar className="w-4 h-4" />
                                   {exp.period}
                                 </div>
-                                <Badge variant="outline" className="text-xs">
+                                {exp.duration !== "" && <Badge variant="outline" className="text-xs">
                                   {exp.duration}
-                                </Badge>
+                                </Badge>}
                               </div>
                             </div>
                           </div>
