@@ -65,9 +65,9 @@ import { GrGraphQl } from "react-icons/gr";
 // Terminal commands for skills
 const terminalCommands = [
   { command: "npm list --depth=0", output: "📦 Package inventory complete", delay: 0 },
-  { command: "git log --technologies", output: "🔧 35+ technologies mastered", delay: 0.8 },
-  { command: "ls categories/", output: "Frontend/ Backend/ Mobile/ AI-ML/ Blockchain/", delay: 1.6 },
-  { command: "systemctl status developer", output: "● Active: learning (since 2020)", delay: 2.4 },
+  { command: "git log --technologies", output: "🔧 35+ technologies mastered", delay: 0 },
+  { command: "ls categories/", output: "Frontend/ Backend/ Mobile/ AI-ML/ Blockchain/", delay: 0 },
+  { command: "systemctl status developer", output: "● Active: learning (since 2020)", delay: 0 },
 ];
 
 // Enhanced tech stack with proper icons

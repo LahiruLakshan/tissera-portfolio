@@ -39,9 +39,9 @@ const highlights = [
 
 const terminalCommands = [
   { command: "whoami", output: "lahiru-tissera", delay: 0 },
-  { command: "cat experience.txt", output: "Full-Stack Engineer | Web3 | AI/ML | Mobile", delay: 0.8 },
-  { command: "ls education/", output: "BEng_Software_Engineering_UK.pdf", delay: 1.6 },
-  { command: "git log --oneline", output: "* Building innovative solutions since 2020", delay: 2.4 },
+  { command: "cat experience.txt", output: "Full-Stack Engineer | Web3 | AI/ML | Mobile", delay: 0 },
+  { command: "ls education/", output: "BEng_Software_Engineering_UK.pdf", delay: 0 },
+  { command: "git log --oneline", output: "* Building innovative solutions since 2020", delay: 0 },
 ];
 
 const codeSnippet = `interface Developer {

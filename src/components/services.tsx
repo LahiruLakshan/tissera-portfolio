@@ -132,9 +132,9 @@ const processSteps = [
 
 const terminalServices = [
   { command: "ls -la services/", output: "📁 6 service packages available", delay: 0 },
-  { command: "systemctl status developer", output: "● Active: coding (since 2020)", delay: 0.8 },
-  { command: "cat portfolio_stats.json", output: "✅ 20+ projects delivered successfully", delay: 1.6 },
-  { command: "npm list --global", output: "🚀 Full-stack → Mobile → AI/ML → Web3", delay: 2.4 },
+  { command: "systemctl status developer", output: "● Active: coding (since 2020)", delay: 0 },
+  { command: "cat portfolio_stats.json", output: "✅ 20+ projects delivered successfully", delay: 0 },
+  { command: "npm list --global", output: "🚀 Full-stack → Mobile → AI/ML → Web3", delay: 0 },
 ];
 
 const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {

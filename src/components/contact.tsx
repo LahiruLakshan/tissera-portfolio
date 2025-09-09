@@ -79,9 +79,9 @@ const workPreferences = [
 
 const terminalContact = [
   { command: "ping lahiru-dev.com", output: "PONG - Response time: 1ms", delay: 0 },
-  { command: "systemctl status contact-form", output: "● Active: accepting connections", delay: 0.8 },
-  { command: "curl -X GET /api/availability", output: "✅ Status: ONLINE - Ready for collaboration", delay: 1.6 },
-  { command: "grep -r 'response_time' logs/", output: "📧 Average response: < 24 hours", delay: 2.4 },
+  { command: "systemctl status contact-form", output: "● Active: accepting connections", delay: 0 },
+  { command: "curl -X GET /api/availability", output: "✅ Status: ONLINE - Ready for collaboration", delay: 0 },
+  { command: "grep -r 'response_time' logs/", output: "📧 Average response: < 24 hours", delay: 0 },
 ];
 
 const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {

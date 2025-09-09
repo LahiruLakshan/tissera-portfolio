@@ -161,9 +161,9 @@ const categories = [
 
 const terminalProjects = [
   { command: "git log --oneline --projects", output: "📁 6 repositories found", delay: 0 },
-  { command: "docker ps -a", output: "🐳 All projects containerized", delay: 0.8 },
-  { command: "grep -r 'success' deployments/", output: "✅ 100% deployment success rate", delay: 1.6 },
-  { command: "wc -l src/**/*.{js,ts,py}", output: "📊 50K+ lines of code written", delay: 2.4 },
+  { command: "docker ps -a", output: "🐳 All projects containerized", delay: 0 },
+  { command: "grep -r 'success' deployments/", output: "✅ 100% deployment success rate", delay: 0 },
+  { command: "wc -l src/**/*.{js,ts,py}", output: "📊 50K+ lines of code written", delay: 0 },
 ];
 
 const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {

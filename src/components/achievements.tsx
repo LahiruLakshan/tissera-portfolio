@@ -171,9 +171,9 @@ const milestones = [
 
 const terminalAchievements = [
   { command: "ls -la achievements/", output: "📜 6 major achievements unlocked", delay: 0 },
-  { command: "grep -r 'recognition' awards/", output: "🏆 Academic + Industry recognition", delay: 0.8 },
-  { command: "git log --since='2020' --achievements", output: "⭐ 5-year journey of continuous growth", delay: 1.6 },
-  { command: "systemctl status developer", output: "● Active: achieving excellence since 2020", delay: 2.4 },
+  { command: "grep -r 'recognition' awards/", output: "🏆 Academic + Industry recognition", delay: 0 },
+  { command: "git log --since='2020' --achievements", output: "⭐ 5-year journey of continuous growth", delay: 0 },
+  { command: "systemctl status developer", output: "● Active: achieving excellence since 2020", delay: 0 },
 ];
 
 const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {

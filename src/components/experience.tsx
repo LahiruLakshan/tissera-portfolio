@@ -183,9 +183,9 @@ const stats = [
 
 const terminalExperience = [
   { command: "whoami", output: "senior-developer with 3+ years experience", delay: 0 },
-  { command: "ls -la experience/", output: "📁 4 positions across 3 companies", delay: 0.8 },
-  { command: "grep -r 'success' projects/", output: "✅ 15+ projects delivered successfully", delay: 1.6 },
-  { command: "git log --since='2021' --oneline", output: "🚀 From intern to senior in 3 years", delay: 2.4 },
+  { command: "ls -la experience/", output: "📁 4 positions across 3 companies", delay: 0 },
+  { command: "grep -r 'success' projects/", output: "✅ 15+ projects delivered successfully", delay: 0 },
+  { command: "git log --since='2021' --oneline", output: "🚀 From intern to senior in 3 years", delay: 0 },
 ];
 
 const TypewriterText = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {
